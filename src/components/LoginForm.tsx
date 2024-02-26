@@ -1,19 +1,24 @@
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Compass, LogIn } from "lucide-react";
-import { ChangeEvent, useState } from "react";
-import clsx from "clsx";
 import pb from "@/lib/pocketbase.ts";
+import clsx from "clsx";
+import { Compass, LogIn } from "lucide-react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const [step, setStep] = useState(1);
+
   const [formData, setFormData] = useState<{
     url: string;
     email: string;
     password: string;
   }>({ url: "", email: "", password: "" });
+
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,16 +36,22 @@ function LoginForm() {
   async function login() {
     try {
       setLoading(true);
-      const authData = await pb
+      await pb
         .collection("users")
         .authWithPassword(formData.email, formData.password);
       setLoading(false);
-      alert(JSON.stringify(authData));
-    } catch (error) {
-      alert(error);
+      navigate("/dashboard");
+    } catch {
+      alert("Something went wrong! Please check your input.");
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (pb.authStore) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <>
