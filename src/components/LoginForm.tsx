@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Compass, LogIn } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import clsx from "clsx";
+import pb from "@/lib/pocketbase.ts"
 
 function LoginForm() {
   const [step, setStep] = useState(1);
@@ -24,6 +25,10 @@ function LoginForm() {
     }
     localStorage.setItem("backendUrl", formData.url);
     setStep(2);
+  }
+
+  function login() {
+
   }
 
   return (
@@ -58,7 +63,7 @@ function LoginForm() {
         <LogIn size={70} className='mb-2' />
         <Input
           type='email'
-          name='url'
+          name='email'
           placeholder='Email'
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -66,7 +71,7 @@ function LoginForm() {
             }
           }}
           onChange={handleChange}
-          value={formData.url}
+          value={formData.email}
         />
         <Input
           type='password'
@@ -78,7 +83,7 @@ function LoginForm() {
             }
           }}
           onChange={handleChange}
-          value={formData.url}
+          value={formData.password}
         />
         <Button onClick={saveUrl}>Submit</Button>
       </Card>
