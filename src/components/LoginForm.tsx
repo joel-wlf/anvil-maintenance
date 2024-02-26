@@ -46,7 +46,7 @@ function LoginForm() {
     <>
       <Card
         className={clsx(
-          "w-3/4 md:w-1/4 px-4 py-7 flex gap-2 flex-col items-center",
+          "w-3/4 md:w-2/6 px-4 py-7 flex gap-2 flex-col items-center",
           { hidden: step != 1 }
         )}
       >
@@ -63,7 +63,12 @@ function LoginForm() {
           onChange={handleChange}
           value={formData.url}
         />
-        <Button onClick={saveUrl}>Submit</Button>
+        <div className='flex w-full justify-between pt-3'>
+          <Button variant='ghost' disabled={true}>
+            Back
+          </Button>
+          <Button onClick={saveUrl}>Submit</Button>
+        </div>
       </Card>
       <Card
         className={clsx(
@@ -99,9 +104,14 @@ function LoginForm() {
           onChange={handleChange}
           value={formData.password}
         />
-        <Button onClick={login} disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
-        </Button>
+        <div className='flex w-full justify-between pt-3'>
+          <Button variant='ghost' onClick={() => setStep(1)} disabled={loading}>
+            Back
+          </Button>
+          <Button onClick={login} disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
+          </Button>
+        </div>
       </Card>
     </>
   );
