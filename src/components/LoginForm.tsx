@@ -48,7 +48,7 @@ function LoginForm() {
   }
 
   useEffect(() => {
-    if (pb.authStore) {
+    if (pb.authStore.isValid) {
       navigate("/dashboard");
     }
   }, []);
