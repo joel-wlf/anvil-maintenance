@@ -11,21 +11,34 @@ function LoginForm() {
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   }
 
   function saveUrl() {
-    setStep(2)
+    if (!formData.url) {
+      alert("Please enter a domain");
+      return;
+    }
     localStorage.setItem("backendUrl", formData.url);
+    setStep(2);
   }
 
   return (
-    <Card className={clsx('w-3/4 md:w-1/4 px-4 py-7 flex gap-2 flex-col items-center', {'hidden': step != 1})}>
+    <Card
+      className={clsx(
+        "w-3/4 md:w-1/4 px-4 py-7 flex gap-2 flex-col items-center",
+        { hidden: step != 1 }
+      )}
+    >
       <Compass size={70} className='mb-2' />
       <Input
         type='url'
         name='url'
         placeholder='Enter Domain'
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            saveUrl();
+          }
+        }}
         onChange={handleChange}
         value={formData.url}
       />
