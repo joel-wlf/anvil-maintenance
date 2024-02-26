@@ -67,11 +67,14 @@ function LoginForm() {
       </Card>
       <Card
         className={clsx(
-          "w-3/4 md:w-1/4 px-4 py-7 flex gap-2 flex-col items-center",
+          "w-3/4 md:w-2/6 px-4 py-7 flex gap-2 flex-col items-center",
           { hidden: step != 2 }
         )}
       >
         <LogIn size={70} className='mb-2' />
+        <code className='w-full text-center font-semibold text-sm underline underline-offset-2'>
+          {formData.url}
+        </code>
         <Input
           type='email'
           name='email'
