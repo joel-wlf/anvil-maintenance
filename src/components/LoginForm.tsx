@@ -13,6 +13,7 @@ function LoginForm() {
     email: string;
     password: string;
   }>({ url: "", email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,12 +30,15 @@ function LoginForm() {
 
   async function login() {
     try {
+      setLoading(true);
       const authData = await pb
         .collection("users")
         .authWithPassword(formData.email, formData.password);
+      setLoading(false);
       alert(JSON.stringify(authData));
     } catch (error) {
       alert(error);
+      setLoading(false);
     }
   }
 
@@ -92,7 +96,9 @@ function LoginForm() {
           onChange={handleChange}
           value={formData.password}
         />
-        <Button onClick={login}>Submit</Button>
+        <Button onClick={login} disabled={loading}>
+          {loading ? "Loading..." : "Submit"}
+        </Button>
       </Card>
     </>
   );
