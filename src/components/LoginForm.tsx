@@ -46,7 +46,7 @@ function LoginForm() {
     <>
       <Card
         className={clsx(
-          "w-3/4 md:w-2/6 px-4 py-7 flex gap-2 flex-col items-center",
+          "w-4/5 md:w-2/6 px-4 py-7 flex gap-2 flex-col items-center",
           { hidden: step != 1 }
         )}
       >
@@ -72,7 +72,7 @@ function LoginForm() {
       </Card>
       <Card
         className={clsx(
-          "w-3/4 md:w-2/6 px-4 py-7 flex gap-2 flex-col items-center",
+          "w-4/5 md:w-2/6 px-4 py-7 flex gap-2 flex-col items-center",
           { hidden: step != 2 }
         )}
       >
