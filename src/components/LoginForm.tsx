@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Compass, LogIn } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import clsx from "clsx";
-import pb from "@/lib/pocketbase.ts"
+import pb from "@/lib/pocketbase.ts";
 
 function LoginForm() {
   const [step, setStep] = useState(1);
@@ -27,8 +27,15 @@ function LoginForm() {
     setStep(2);
   }
 
-  function login() {
-
+  async function login() {
+    try {
+      const authData = await pb
+        .collection("users")
+        .authWithPassword(formData.email, formData.password);
+      alert(JSON.stringify(authData));
+    } catch (error) {
+      alert(error);
+    }
   }
 
   return (
@@ -67,7 +74,7 @@ function LoginForm() {
           placeholder='Email'
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              saveUrl();
+              login();
             }
           }}
           onChange={handleChange}
@@ -79,13 +86,13 @@ function LoginForm() {
           placeholder='Password'
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              saveUrl();
+              login();
             }
           }}
           onChange={handleChange}
           value={formData.password}
         />
-        <Button onClick={saveUrl}>Submit</Button>
+        <Button onClick={login}>Submit</Button>
       </Card>
     </>
   );

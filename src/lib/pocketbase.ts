@@ -1,5 +1,7 @@
 import PocketBase from "pocketbase";
 
-const pb: PocketBase = new PocketBase("https://bbgbew-anvil.pockethost.io/");
+const backendUrl: string = localStorage.getItem("backendUrl") || "";
+
+const pb: PocketBase = new PocketBase(backendUrl);
 
 export default pb;
