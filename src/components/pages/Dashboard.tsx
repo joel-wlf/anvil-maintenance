@@ -1,4 +1,4 @@
-import pb from "@/lib/pocketbase";
+import pb from "@/lib/pocketbase"; 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,12 @@ function Dashboard() {
       navigate("/login");
     }
   }, []);
-  return <>Dashboard</>;
+  return (
+  <>
+    Hello {pb.authStore.isValid && pb.authStore.model?.name && pb.authStore.model.name}
+    <button onClick={() => pb.authStore.clear()}>log out</button>
+  </>
+  )
 }
 
 export default Dashboard;
