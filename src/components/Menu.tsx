@@ -4,6 +4,7 @@ import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
+import { Separator } from "./ui/separator";
 
 interface Props {
   children: React.ReactNode;
@@ -49,6 +50,7 @@ const Menu: FunctionComponent<Props> = ({ children }) => {
               Log Out
             </Button>
           </div>
+          <Separator />
         </div>
         <div className='w-4/5 h-full'>{children}</div>
       </div>
