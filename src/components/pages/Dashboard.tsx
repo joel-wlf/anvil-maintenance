@@ -1,6 +1,7 @@
 import pb from "@/lib/pocketbase"; 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Dashboard() {
   return (
   <>
     Hello {pb.authStore.model?.name && pb.authStore.model.name}
-    <button onClick={() => pb.authStore.clear()}>log out</button>
+    <Button onClick={() => pb.authStore.clear()}>log out</Button>
   </>
   )
 }
