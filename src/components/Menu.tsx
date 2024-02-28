@@ -29,7 +29,7 @@ const Menu: FunctionComponent<Props> = ({ children }) => {
   return (
     <>
       <div className='hidden md:flex h-lvh w-lvw'>
-        <div className='md:w-2/5 lg:w-1/4 h-full border-r border-[#222] p-3 flex flex-col gap-3'>
+        <div className='md:w-2/5 lg:w-1/5 h-full border-r border-[#222] p-3 flex flex-col gap-3'>
           <div className='flex justify-start items-center gap-3 p-3 pb-1'>
             <Anvil size={64} />
             <h2 className='font-bold text-3xl'>{pb.authStore.model?.name}</h2>
