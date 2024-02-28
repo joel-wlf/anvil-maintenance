@@ -1,7 +1,6 @@
-import pb from "@/lib/pocketbase"; 
+import pb from "@/lib/pocketbase";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 
 function Dashboard() {
   const navigate = useNavigate();
