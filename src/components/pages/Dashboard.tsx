@@ -13,8 +13,7 @@ function Dashboard() {
   }, []);
   return (
   <>
-    Hello {pb.authStore.model?.name && pb.authStore.model.name}
-    <Button onClick={() => pb.authStore.clear()}>log out</Button>
+    Dashboard
   </>
   )
 }
