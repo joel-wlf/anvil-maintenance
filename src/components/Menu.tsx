@@ -13,7 +13,9 @@ const Menu: FunctionComponent<Props> = ({ children }) => {
   return (
     <>
       <div className='hidden md:flex h-lvh w-lvw'>
-        <div className='w-1/5 h-full'></div>
+        <div className='w-1/5 h-full border-r border-gray-500'>
+          <h2 className="font-bold text-50">{pb.authStore.model?.name}</h2>
+        </div>
         <div className='w-4/5 h-full'>{children}</div>
       </div>
     </>
