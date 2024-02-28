@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { Compass, LogIn } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "./ui/use-toast";
 
 function LoginForm() {
   const [step, setStep] = useState(1);
@@ -20,13 +21,18 @@ function LoginForm() {
 
   const navigate = useNavigate();
 
+  const { toast } = useToast();
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   function saveUrl() {
     if (!formData.url) {
-      alert("Please enter a domain");
+      toast({
+        description: "Please enter your Domain",
+        variant: "destructive",
+      });
       return;
     }
     localStorage.setItem("backendUrl", formData.url);
@@ -42,7 +48,11 @@ function LoginForm() {
       setLoading(false);
       navigate("/dashboard");
     } catch {
-      alert("Something went wrong! Please check your input.");
+      toast({
+        title: "Something went wrong",
+        description: "Please check your input",
+        variant: "destructive",
+      });
       setLoading(false);
     }
   }

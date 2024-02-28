@@ -1,12 +1,14 @@
 import Auth from "@/components/pages/Auth";
 import Dashboard from "@/components/pages/Dashboard";
 import { ThemeProvider } from "@/components/theme-provider";
-import Menu from "./components/Menu";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Menu from "./components/Menu";
+import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   return (
     <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+      <Toaster />
       <BrowserRouter>
         <Routes>
           <Route path='/'>
