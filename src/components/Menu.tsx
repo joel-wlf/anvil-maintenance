@@ -41,7 +41,7 @@ const Menu: FunctionComponent<Props> = ({ children }) => {
             </code>
           </Card>
           <div className='flex w-full gap-2'>
-            <Button className='w-full' variant='outline' onClick={logout}>
+            <Button className='w-full' variant='outline'>
               <Settings className='mr-2' size='1.3em' />
               Settings
             </Button>
