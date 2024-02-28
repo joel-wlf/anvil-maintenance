@@ -29,13 +29,13 @@ const Menu: FunctionComponent<Props> = ({ children }) => {
   return (
     <>
       <div className='hidden md:flex h-lvh w-lvw'>
-        <div className='md:w-2/5 lg:w-1/5 h-full border-r border-[#222] p-3 flex flex-col gap-3'>
+        <div className='w-72 h-full border-r border-[#222] p-3 flex flex-col gap-3'>
           <div className='flex justify-start items-center gap-3 p-3 pb-1'>
             <Anvil size={64} />
             <h2 className='font-bold text-3xl'>{pb.authStore.model?.name}</h2>
           </div>
           <Card className='flex justify-center items-center p-2'>
-            <Compass className='mr-2' size='1.3em' />
+            <Compass className='mr-2 w-10' size='1.3em' />
             <code className='text-ellipsis text-sm underline underline-offset-2'>
               {backendUrl()}
             </code>
