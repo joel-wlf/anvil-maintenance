@@ -1,10 +1,20 @@
 import { pb } from "@/lib/pocketbase";
-import { Anvil, Compass, LogOut, Settings } from "lucide-react";
+import {
+  Anvil,
+  Compass,
+  LogOut,
+  Settings,
+  LandPlot,
+  CheckCircle,
+  FileBadge,
+  ShieldHalf,
+} from "lucide-react";
 import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
+import MenuItem from "./MenuItem";
 
 interface MenuProps {
   children: React.ReactNode;
@@ -16,10 +26,6 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
   };
 
   const navigate = useNavigate();
-
-  if (pb.authStore.model?.role == "admin") {
-    console.log("admin");
-  }
 
   function logout() {
     pb.authStore.clear();
@@ -51,6 +57,33 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             </Button>
           </div>
           <Separator />
+          <MenuItem
+            icon={<Compass className='mr-3' size='1.3em' />}
+            title='Dashboard'
+            to='/dashboard'
+          />
+          <MenuItem
+            icon={<CheckCircle className='mr-3' size='1.3em' />}
+            title='Tasks'
+            to='/tasks'
+          />
+          <MenuItem
+            icon={<LandPlot className='mr-3' size='1.3em' />}
+            title='Facility'
+            to='/facility'
+          />
+          <MenuItem
+            icon={<FileBadge className='mr-3' size='1.3em' />}
+            title='Documentation'
+            to='/documentation'
+          />
+          {pb.authStore.model?.role == "admin" && (
+            <MenuItem
+              icon={<ShieldHalf className='mr-2' size='1.3em' />}
+              title='Admin'
+              to='/admin'
+            />
+          )}
         </div>
         <div className='w-4/5 h-full'>{children}</div>
       </div>
