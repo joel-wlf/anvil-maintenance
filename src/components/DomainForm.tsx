@@ -7,11 +7,11 @@ import { ChangeEvent, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { FunctionComponent } from "react";
 
-interface Props {
+interface DomainFormProps {
   setStep: (step: number) => void
 }
 
-const DomainForm: FunctionComponent<Props> = ({ setStep }) => {
+const DomainForm: FunctionComponent<DomainFormProps> = ({ setStep }) => {
 
   const [formData, setFormData] = useState<{
     url: string;

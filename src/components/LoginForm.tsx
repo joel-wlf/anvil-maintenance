@@ -8,11 +8,11 @@ import { ChangeEvent, FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "./ui/use-toast";
 
-interface Props {
+interface LoginFormProps {
   setStep: (step: number) => void;
 }
 
-const LoginForm: FunctionComponent<Props> = ({ setStep }) => {
+const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
   const [formData, setFormData] = useState<{
     email: string;
     password: string;

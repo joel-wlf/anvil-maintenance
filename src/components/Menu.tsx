@@ -6,11 +6,11 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 
-interface Props {
+interface MenuProps {
   children: React.ReactNode;
 }
 
-const Menu: FunctionComponent<Props> = ({ children }) => {
+const Menu: FunctionComponent<MenuProps> = ({ children }) => {
   const backendUrl: () => string = () => {
     return localStorage.getItem("backendUrl") || "";
   };
