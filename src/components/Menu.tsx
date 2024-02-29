@@ -4,6 +4,7 @@ import {
   Compass,
   LogOut,
   Settings,
+  LayoutDashboard,
   LandPlot,
   CheckCircle,
   FileBadge,
@@ -58,7 +59,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
           </div>
           <Separator />
           <MenuItem
-            icon={<Compass className='mr-3' size='1.3em' />}
+            icon={<LayoutDashboard className='mr-3' size='1.3em' />}
             title='Dashboard'
             to='/dashboard'
           />
