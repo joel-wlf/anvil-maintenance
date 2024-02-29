@@ -2,7 +2,7 @@ import { pb } from "@/lib/pocketbase";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Dashboard() {
+function Admin() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -10,7 +10,7 @@ function Dashboard() {
       navigate("/login");
     }
   }, []);
-  return <>Dashboard</>;
+  return <>Admin</>;
 }
 
-export default Dashboard;
+export default Admin;

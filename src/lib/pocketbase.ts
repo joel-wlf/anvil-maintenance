@@ -4,4 +4,9 @@ const backendUrl: string = localStorage.getItem("backendUrl") || "";
 
 const pb: PocketBase = new PocketBase(backendUrl);
 
-export default pb;
+function initializePb(url: string | null) {
+  let pb: PocketBase = new PocketBase(<string | undefined>url);
+  return pb;
+}
+
+export { pb, initializePb };
