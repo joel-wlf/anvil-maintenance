@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import pb from "@/lib/pocketbase.ts";
+import { initializePb } from "@/lib/pocketbase.ts";
 import clsx from "clsx";
 import { LogIn } from "lucide-react";
 import { ChangeEvent, FunctionComponent, useState } from "react";
@@ -30,6 +30,7 @@ const LoginForm: FunctionComponent<Props> = ({ setStep }) => {
 
   async function login() {
     try {
+      let pb = initializePb(localStorage.getItem('backendUrl'))
       setLoading(true);
       await pb
         .collection("users")
@@ -54,7 +55,7 @@ const LoginForm: FunctionComponent<Props> = ({ setStep }) => {
     >
       <LogIn size={70} className='mb-2' />
       <code className='w-full text-center font-semibold text-sm underline underline-offset-2'>
-        {localStorage.getItem('backendUrl')}
+        {localStorage.getItem("backendUrl")}
       </code>
       <Input
         type='email'

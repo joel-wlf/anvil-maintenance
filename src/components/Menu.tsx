@@ -1,4 +1,4 @@
-import pb from "@/lib/pocketbase";
+import { pb } from "@/lib/pocketbase";
 import { Anvil, Compass, LogOut, Settings } from "lucide-react";
 import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
