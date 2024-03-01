@@ -18,6 +18,7 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import MenuItem from "./MenuItem";
+import MobileMenuItem from "./MobileMenuItem";
 
 interface MenuProps {
   children: React.ReactNode;
@@ -140,40 +141,45 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
                 <X color='#adadad' />
               </Button>
             </nav>
-            {/* <main className='menu'>
-              <Grid.Container gap={0}>
-                <MenuItem
-                  icon={<LayoutDashboard />}
-                  text='Dashboard'
-                  page='/'
-                  child='1'
+            <div className='fixed top-[10vh] w-lvw h-[90vh] px-5 text-[#adadad]'>
+              <MobileMenuItem
+                title='Dashboard'
+                icon={<LayoutDashboard />}
+                to='/dashboard'
+                child={1}
+                setMenuOpen={setMenuOpen}
+              />
+              <MobileMenuItem
+                title='Tasks'
+                icon={<CheckCircle />}
+                to='/tasks'
+                child={2}
+                setMenuOpen={setMenuOpen}
+              />
+              <MobileMenuItem
+                title='Facility'
+                icon={<LandPlot />}
+                to='/facility'
+                child={3}
+                setMenuOpen={setMenuOpen}
+              />
+              <MobileMenuItem
+                title='Documentation'
+                icon={<FileBadge />}
+                to='/documentation'
+                child={4}
+                setMenuOpen={setMenuOpen}
+              />
+              {pb.authStore.model?.role == "admin" && (
+                <MobileMenuItem
+                  title='Admin'
+                  icon={<ShieldHalf />}
+                  to='/admin'
+                  child={5}
+                  setMenuOpen={setMenuOpen}
                 />
-                <MenuItem
-                  icon={<Newspaper />}
-                  text='News'
-                  page='/news'
-                  child='2'
-                />
-                <MenuItem
-                  icon={<Home />}
-                  text='My Home'
-                  page='/home'
-                  child='4'
-                />
-                <MenuItem
-                  icon={<CarFront />}
-                  text='My Car'
-                  page='/car'
-                  child='5'
-                />
-                <MenuItem
-                  icon={<Ticket />}
-                  text='Services'
-                  page='/services'
-                  child='6'
-                />
-              </Grid.Container>
-            </main> */}
+              )}
+            </div>
           </>
         )}
         {children}
