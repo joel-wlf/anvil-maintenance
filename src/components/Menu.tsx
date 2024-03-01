@@ -10,6 +10,7 @@ import {
   FileBadge,
   ShieldHalf,
   MenuIcon,
+  X,
 } from "lucide-react";
 import { FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -111,7 +112,66 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             </Button>
           </nav>
         ) : (
-          "test"
+          <>
+            <div className='fixed h-[110vh] w-lvw -top-[10vh]  backdrop-blur-sm saturate-150'></div>
+            <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 bg-[rgba(0, 0, 0, 0.85)] h-[10vh] w-full z-50'>
+              {/* <User
+                name='Joel Wolf'
+                src='./profile-pic.jpeg'
+                className='fadein'
+                style={{ animationDelay: "50ms" }}
+                marginRight='auto'
+              /> */}
+              <Button
+                variant='ghost'
+                className='p-[5px] h-[48px] m-0 fadein'
+                onClick={() => setMenuOpen(false)}
+              >
+                <LogOut color='#adadad' />
+              </Button>
+              <Button
+                variant='ghost'
+                className='p-[5px] h-[48px] m-0 fadein'
+                onClick={() => setMenuOpen(false)}
+              >
+                <X color='#adadad' />
+              </Button>
+            </nav>
+            {/* <main className='menu'>
+              <Grid.Container gap={0}>
+                <MenuItem
+                  icon={<LayoutDashboard />}
+                  text='Dashboard'
+                  page='/'
+                  child='1'
+                />
+                <MenuItem
+                  icon={<Newspaper />}
+                  text='News'
+                  page='/news'
+                  child='2'
+                />
+                <MenuItem
+                  icon={<Home />}
+                  text='My Home'
+                  page='/home'
+                  child='4'
+                />
+                <MenuItem
+                  icon={<CarFront />}
+                  text='My Car'
+                  page='/car'
+                  child='5'
+                />
+                <MenuItem
+                  icon={<Ticket />}
+                  text='Services'
+                  page='/services'
+                  child='6'
+                />
+              </Grid.Container>
+            </main> */}
+          </>
         )}
         {children}
       </div>
