@@ -99,7 +99,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
           <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 bg-[rgba(0, 0, 0, 0.85)] h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
-            <Anvil className='mr-2 delay-[100ms]' size='1.7em' />
+            <Anvil className='fadedown mr-2 delay-150' size='1.7em' />
             <p className='delay-[50ms] text-white mr-auto font-semibold fadedown'>
               {pb.authStore.model?.name}
             </p>
@@ -132,7 +132,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
               <Button
                 variant='ghost'
                 className='p-[5px] h-[48px] m-0 fadein'
-                onClick={() => setMenuOpen(false)}
+                onClick={logout}
               >
                 <X color='#adadad' />
               </Button>
