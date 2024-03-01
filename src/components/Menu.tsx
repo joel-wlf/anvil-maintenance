@@ -9,8 +9,9 @@ import {
   CheckCircle,
   FileBadge,
   ShieldHalf,
+  MenuIcon,
 } from "lucide-react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -27,6 +28,12 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
   };
 
   const navigate = useNavigate();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function toggleMenu() {
+    setMenuOpen((prevState) => !prevState);
+  }
 
   function logout() {
     pb.authStore.clear();
@@ -80,13 +87,33 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
           />
           {pb.authStore.model?.role == "admin" && (
             <MenuItem
-              icon={<ShieldHalf className='mr-2' size='1.3em' />}
+              icon={<ShieldHalf className='mr-3' size='1.3em' />}
               title='Admin'
               to='/admin'
             />
           )}
         </div>
         <div className='w-4/5 h-full'>{children}</div>
+      </div>
+      <div className='md:hidden before:block before:h-[10vh]'>
+        {!menuOpen ? (
+          <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 bg-[rgba(0, 0, 0, 0.85)] h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
+            <Anvil className='mr-2 delay-[100ms]' size='1.7em' />
+            <p className='delay-[50ms] text-white mr-auto font-semibold fadedown'>
+              {pb.authStore.model?.name}
+            </p>
+            <Button
+              variant='ghost'
+              className='p-[5px] m-0 fadedown'
+              onClick={toggleMenu}
+            >
+              <MenuIcon color='#adadad' />
+            </Button>
+          </nav>
+        ) : (
+          "test"
+        )}
+        {children}
       </div>
     </>
   );

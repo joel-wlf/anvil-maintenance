@@ -10,7 +10,42 @@ function Admin() {
       navigate("/login");
     }
   }, []);
-  return <>Admin</>;
+  return (
+    <>
+      Admin <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      Admin
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      Admin
+    </>
+  );
 }
 
 export default Admin;
