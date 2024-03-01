@@ -125,14 +125,14 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
               <Button
                 variant='ghost'
                 className='p-[5px] h-[48px] m-0 fadein'
-                onClick={() => setMenuOpen(false)}
+                onClick={logout}
               >
                 <LogOut color='#adadad' />
               </Button>
               <Button
                 variant='ghost'
                 className='p-[5px] h-[48px] m-0 fadein'
-                onClick={logout}
+                onClick={() => setMenuOpen(false)}
               >
                 <X color='#adadad' />
               </Button>
