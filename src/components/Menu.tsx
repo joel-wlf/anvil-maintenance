@@ -9,13 +9,16 @@ import {
   CheckCircle,
   FileBadge,
   ShieldHalf,
+  MenuIcon,
+  X,
 } from "lucide-react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import MenuItem from "./MenuItem";
+import MobileMenuItem from "./MobileMenuItem";
 
 interface MenuProps {
   children: React.ReactNode;
@@ -28,10 +31,24 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
 
   const navigate = useNavigate();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function toggleMenu() {
+    setMenuOpen((prevState) => !prevState);
+  }
+
   function logout() {
     pb.authStore.clear();
     navigate("/login");
   }
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("overflow-y-hidden");
+    } else {
+      document.body.classList.remove("overflow-y-hidden");
+    }
+  }, [menuOpen]);
 
   return (
     <>
@@ -80,13 +97,92 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
           />
           {pb.authStore.model?.role == "admin" && (
             <MenuItem
-              icon={<ShieldHalf className='mr-2' size='1.3em' />}
+              icon={<ShieldHalf className='mr-3' size='1.3em' />}
               title='Admin'
               to='/admin'
             />
           )}
         </div>
         <div className='w-4/5 h-full'>{children}</div>
+      </div>
+      <div className='md:hidden before:block before:h-[10vh]'>
+        {!menuOpen ? (
+          <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
+            <Anvil className='fadein mr-2' size='1.7em' />
+            <p className='fadein text-white mr-auto font-semibold'>
+              {pb.authStore.model?.name}
+            </p>
+            <Button
+              variant='ghost'
+              className='p-[5px] m-0 fadedown'
+              onClick={toggleMenu}
+            >
+              <MenuIcon color='#adadad' />
+            </Button>
+          </nav>
+        ) : (
+          <>
+            <div className='fixed h-[110vh] w-lvw -top-[10vh] backdrop-blur-sm saturate-150'></div>
+            <nav className='flex items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50'>
+              <Anvil className='fadedown mr-2 delay-500' size='1.7em' />
+              <p className='fadedown mr-auto delay-100 font-semibold'>Anvil</p>
+              <Button
+                variant='ghost'
+                className='p-[5px] h-[48px] m-0 fadein'
+                onClick={logout}
+              >
+                <LogOut color='#adadad' />
+              </Button>
+              <Button
+                variant='ghost'
+                className='p-[5px] h-[48px] m-0 fadein'
+                onClick={() => setMenuOpen(false)}
+              >
+                <X color='#adadad' />
+              </Button>
+            </nav>
+            <div className='fixed top-[10vh] w-lvw h-[90vh] px-5 text-[#adadad]'>
+              <MobileMenuItem
+                title='Dashboard'
+                icon={<LayoutDashboard />}
+                to='/dashboard'
+                child={1}
+                setMenuOpen={setMenuOpen}
+              />
+              <MobileMenuItem
+                title='Tasks'
+                icon={<CheckCircle />}
+                to='/tasks'
+                child={2}
+                setMenuOpen={setMenuOpen}
+              />
+              <MobileMenuItem
+                title='Facility'
+                icon={<LandPlot />}
+                to='/facility'
+                child={3}
+                setMenuOpen={setMenuOpen}
+              />
+              <MobileMenuItem
+                title='Documentation'
+                icon={<FileBadge />}
+                to='/documentation'
+                child={4}
+                setMenuOpen={setMenuOpen}
+              />
+              {pb.authStore.model?.role == "admin" && (
+                <MobileMenuItem
+                  title='Admin'
+                  icon={<ShieldHalf />}
+                  to='/admin'
+                  child={5}
+                  setMenuOpen={setMenuOpen}
+                />
+              )}
+            </div>
+          </>
+        )}
+        {children}
       </div>
     </>
   );
