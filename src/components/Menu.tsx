@@ -12,7 +12,7 @@ import {
   MenuIcon,
   X,
 } from "lucide-react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -40,6 +40,14 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
     pb.authStore.clear();
     navigate("/login");
   }
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("overflow-y-hidden");
+    } else {
+      document.body.classList.remove("overflow-y-hidden");
+    }
+  }, [menuOpen]);
 
   return (
     <>
