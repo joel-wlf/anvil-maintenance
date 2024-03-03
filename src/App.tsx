@@ -8,6 +8,7 @@ import Admin from "./components/pages/Admin";
 import Documentation from "./components/pages/Documentation";
 import Facility from "./components/pages/Facility";
 import Tasks from "./components/pages/Tasks";
+import Settings from "@/components/pages/Settings";
 
 function App() {
   return (
@@ -46,6 +47,14 @@ function App() {
               element={
                 <Menu>
                   <Documentation />
+                </Menu>
+              }
+            />
+            <Route
+              path='/settings'
+              element={
+                <Menu>
+                  <Settings />
                 </Menu>
               }
             />
