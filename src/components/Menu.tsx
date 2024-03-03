@@ -107,7 +107,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             />
           )}
         </div>
-        <div className='w-4/5 h-full'>{children}</div>
+        <div className='w-4/5 h-full p-5'>{children}</div>
       </div>
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
@@ -193,7 +193,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             </div>
           </>
         )}
-        {children}
+        <div className='m-3'>{children}</div>
       </div>
     </>
   );
