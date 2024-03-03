@@ -65,7 +65,11 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             </code>
           </Card>
           <div className='flex w-full gap-2'>
-            <Button className='w-full' variant='outline'>
+            <Button
+              className='w-full'
+              variant='outline'
+              onClick={() => navigate("/settings")}
+            >
               <Settings className='mr-2' size='1.3em' />
               Settings
             </Button>
@@ -170,12 +174,19 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
                 child={4}
                 setMenuOpen={setMenuOpen}
               />
+              <MobileMenuItem
+                title='Settings'
+                icon={<Settings />}
+                to='/settings'
+                child={5}
+                setMenuOpen={setMenuOpen}
+              />
               {pb.authStore.model?.role == "admin" && (
                 <MobileMenuItem
                   title='Admin'
                   icon={<ShieldHalf />}
                   to='/admin'
-                  child={5}
+                  child={6}
                   setMenuOpen={setMenuOpen}
                 />
               )}
