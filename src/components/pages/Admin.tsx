@@ -25,12 +25,14 @@ function Admin() {
 
   return (
     <div>
-      <p className='text-2xl md:text-3xl font-semibold px-3 py-2'>Admin</p>
+      <p className='text-2xl md:text-3xl font-semibold px-3 py-2 text-'>
+        Admin
+      </p>
       <Button>
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
-      {JSON.stringify(users)}
+      {/* {JSON.stringify(users)} */}
     </div>
   );
 }
