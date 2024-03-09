@@ -21,6 +21,7 @@ function Admin() {
       navigate("/login");
     }
     fetchUsers();
+    console.log(users)
   }, []);
 
   return (
@@ -32,7 +33,6 @@ function Admin() {
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
-      {/* {JSON.stringify(users)} */}
     </div>
   );
 }
