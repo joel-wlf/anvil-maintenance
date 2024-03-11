@@ -65,7 +65,11 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             </code>
           </Card>
           <div className='flex w-full gap-2'>
-            <Button className='w-full' variant='outline'>
+            <Button
+              className='w-full'
+              variant='outline'
+              onClick={() => navigate("/settings")}
+            >
               <Settings className='mr-2' size='1.3em' />
               Settings
             </Button>
@@ -103,7 +107,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             />
           )}
         </div>
-        <div className='w-4/5 h-full'>{children}</div>
+        <div className='w-4/5 h-full p-5'>{children}</div>
       </div>
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
@@ -122,7 +126,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
           </nav>
         ) : (
           <>
-            <div className='fixed h-[110vh] w-lvw -top-[10vh] backdrop-blur-sm saturate-150'></div>
+            <div className='fixed h-[110vh] w-lvw -top-[10vh] backdrop-blur-sm bg-[#000000AA]'></div>
             <nav className='flex items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50'>
               <Anvil className='fadedown mr-2 delay-500' size='1.7em' />
               <p className='fadedown mr-auto delay-100 font-semibold'>Anvil</p>
@@ -170,19 +174,26 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
                 child={4}
                 setMenuOpen={setMenuOpen}
               />
+              <MobileMenuItem
+                title='Settings'
+                icon={<Settings />}
+                to='/settings'
+                child={5}
+                setMenuOpen={setMenuOpen}
+              />
               {pb.authStore.model?.role == "admin" && (
                 <MobileMenuItem
                   title='Admin'
                   icon={<ShieldHalf />}
                   to='/admin'
-                  child={5}
+                  child={6}
                   setMenuOpen={setMenuOpen}
                 />
               )}
             </div>
           </>
         )}
-        {children}
+        <div className='m-3'>{children}</div>
       </div>
     </>
   );
