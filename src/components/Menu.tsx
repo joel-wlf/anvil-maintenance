@@ -126,7 +126,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
           </nav>
         ) : (
           <>
-            <div className='fixed h-[110vh] w-lvw -top-[10vh] backdrop-blur-sm saturate-150'></div>
+            <div className='fixed h-[110vh] w-lvw -top-[10vh] backdrop-blur-sm bg-[#000000AA]'></div>
             <nav className='flex items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50'>
               <Anvil className='fadedown mr-2 delay-500' size='1.7em' />
               <p className='fadedown mr-auto delay-100 font-semibold'>Anvil</p>
