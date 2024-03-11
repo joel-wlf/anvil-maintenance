@@ -36,7 +36,11 @@ function Admin() {
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
-      <CreateUserDrawer open={createUserOpen} setOpen={setCreateUserOpen} />
+      <CreateUserDrawer
+        open={createUserOpen}
+        setOpen={setCreateUserOpen}
+        setUsers={setUsers}
+      />
     </div>
   );
 }

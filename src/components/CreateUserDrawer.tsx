@@ -16,15 +16,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChangeEvent, FunctionComponent, useState } from "react";
+import { pb } from "@/lib/pocketbase";
 
 interface CreateUserDrawerProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  setUsers: (users: any) => void;
 }
 
 const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   open,
   setOpen,
+  setUsers,
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -38,6 +41,15 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
+  }
+
+  async function handleSubmit() {
+    try {
+      const record = await pb.collection("users").create(formData);
+      setUsers(record);
+    } catch (err) {
+      alert(err);
+    }
   }
 
   return (
@@ -97,7 +109,7 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
               onChange={handleChange}
             />
           </div>
-          <Button>Create User</Button>
+          <Button onClick={handleSubmit}>Create User</Button>
         </div>
       </DrawerContent>
     </Drawer>
