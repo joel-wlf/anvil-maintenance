@@ -37,6 +37,8 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
     passwordConfirm: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -45,10 +47,14 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
 
   async function handleSubmit() {
     try {
+      setLoading(true);
       const record = await pb.collection("users").create(formData);
       setUsers(record);
+      setLoading(false);
+      setOpen(false)
     } catch (err) {
       alert(err);
+      setLoading(false);
     }
   }
 
@@ -109,7 +115,9 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
               onChange={handleChange}
             />
           </div>
-          <Button onClick={handleSubmit}>Create User</Button>
+          <Button onClick={handleSubmit} disabled={loading}>
+            {loading ? "Loading..." : "Create User"}
+          </Button>
         </div>
       </DrawerContent>
     </Drawer>
