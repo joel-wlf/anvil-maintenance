@@ -29,7 +29,7 @@ function Admin() {
 
   return (
     <div>
-      <p className='text-2xl md:text-3xl font-semibold px-3 py-2 text-'>
+      <p className='text-2xl md:text-3xl font-semibold py-2 text-'>
         Admin
       </p>
       <Button onClick={() => setCreateUserOpen(true)}>
