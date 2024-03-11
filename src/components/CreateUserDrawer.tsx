@@ -38,7 +38,6 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
-    console.log(formData);
   }
 
   return (
@@ -66,7 +65,14 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
             placeholder='Email'
             onChange={handleChange}
           />
-          <Select>
+          <Select
+            onValueChange={(e) =>
+              setFormData((prevState) => {
+                return { ...prevState, role: e };
+              })
+            }
+            value={formData.role}
+          >
             <SelectTrigger>
               <SelectValue placeholder='Select role' />
             </SelectTrigger>
