@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Admin() {
   const navigate = useNavigate();
 
-  const [users, setUsers] = useState<any | null>(null);
+  const [users, setUsers] = useState<any | null>();
 
   const [createUserOpen, setCreateUserOpen] = useState(false);
 
@@ -24,18 +24,23 @@ function Admin() {
       navigate("/login");
     }
     fetchUsers();
-    console.log(users);
   }, []);
+
+  useEffect(() => {
+    fetchUsers()
+  }, [users])
 
   return (
     <div>
-      <p className='text-2xl md:text-3xl font-semibold py-2 text-'>
-        Admin
-      </p>
+      <p className='text-2xl md:text-3xl font-semibold py-2 text-'>Admin</p>
       <Button onClick={() => setCreateUserOpen(true)}>
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
+      {users &&
+        users.map((user: any) => {
+          return <p>{user.name}</p>;
+        })}
       <CreateUserDrawer
         open={createUserOpen}
         setOpen={setCreateUserOpen}
