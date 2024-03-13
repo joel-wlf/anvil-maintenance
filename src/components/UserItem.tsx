@@ -1,22 +1,33 @@
-import { FunctionComponent } from "react";
-import { Card } from "@/components/ui/card";
-import { User, ShieldHalf, Mail } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { pb } from "@/lib/pocketbase";
+import { Mail, ShieldHalf, User } from "lucide-react";
+import { FunctionComponent, useState } from "react";
 
 interface UserItemProps {
-  id: number;
+  fetchUsers: () => void;
+  id: string;
   name: string;
   role: string;
   email: string;
 }
 
 const UserItem: FunctionComponent<UserItemProps> = ({
-//   id,
+  fetchUsers,
+  id,
   name,
   role,
   email,
 }) => {
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  async function deleteUser(id: string) {
+    setDeleteLoading(true);
+    await pb.collection("users").delete(id);
+    fetchUsers();
+    setDeleteLoading(false);
+  }
   return (
     <Card className='p-3'>
       <div className='flex gap-2'>
@@ -33,10 +44,15 @@ const UserItem: FunctionComponent<UserItemProps> = ({
       </div>
       <Separator className='my-2' />
       <div className='flex gap-2'>
-        <Button variant='destructive' className='w-full'>
-          Delete
-        </Button>{" "}
-        <Button variant='outline' className='w-full'>
+        <Button
+          variant='destructive'
+          disabled={deleteLoading}
+          className='w-full'
+          onClick={() => deleteUser(id)}
+        >
+          {deleteLoading ? "Loading..." : "Delete"}
+        </Button>
+        <Button disabled={deleteLoading} variant='outline' className='w-full'>
           Edit
         </Button>
       </div>

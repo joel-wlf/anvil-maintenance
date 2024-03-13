@@ -28,7 +28,6 @@ interface CreateUserDrawerProps {
 const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   open,
   setOpen,
-  setUsers,
   fetchUsers,
 }) => {
   const [formData, setFormData] = useState({

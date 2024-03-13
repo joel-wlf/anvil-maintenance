@@ -34,18 +34,21 @@ function Admin() {
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
-      {users &&
-        users.map((user: any) => {
-          return (
-            <UserItem
-              key={user.id}
-              id={user.id}
-              name={user.name}
-              role={user.role}
-              email={user.email}
-            />
-          );
-        })}
+      <div className='flex flex-col gap-2 my-3'>
+        {users &&
+          users.map((user: any) => {
+            return (
+              <UserItem
+                fetchUsers={fetchUsers}
+                key={user.id}
+                id={user.id}
+                name={user.name}
+                role={user.role}
+                email={user.email}
+              />
+            );
+          })}
+      </div>
       <CreateUserDrawer
         open={createUserOpen}
         setOpen={setCreateUserOpen}
