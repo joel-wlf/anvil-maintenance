@@ -47,7 +47,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
 
   async function resetPassword() {
     setPasswordResetLoading(true);
-    await pb.collection("users").update(id, passwordFormData)
+    await pb.collection("users").update(id, passwordFormData);
     setPasswordOpen(false);
     setPasswordResetLoading(false);
   }
@@ -60,8 +60,8 @@ const UserItem: FunctionComponent<UserItemProps> = ({
 
   return (
     <Card className='p-3'>
-      <div className='flex gap-2'>
-        {role == "admin" ? <ShieldHalf /> : <User />}
+      <div className='flex items-center font-medium gap-2'>
+        {role == "admin" ? <ShieldHalf size={36} /> : <User size={36} />}
         {name}
       </div>
       <Separator className='my-2' />
@@ -70,9 +70,9 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           <Mail size='1.3em' />
           {email}
         </div>
-        <Button variant='link' onClick={() => setPasswordOpen(true)}>
+        {/* <Button variant='link' onClick={() => setPasswordOpen(true)}>
           Reset Password
-        </Button>
+        </Button> */}
       </div>
       <Separator className='my-2' />
       <div className='flex gap-2'>
