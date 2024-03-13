@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { pb } from "@/lib/pocketbase";
-import { Mail, ShieldHalf, User } from "lucide-react";
+import { Mail, ShieldHalf, User, Clock } from "lucide-react";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 
 interface UserItemProps {
@@ -19,6 +19,7 @@ interface UserItemProps {
   name: string;
   role: string;
   email: string;
+  created: string;
 }
 
 const UserItem: FunctionComponent<UserItemProps> = ({
@@ -27,6 +28,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   name,
   role,
   email,
+  created,
 }) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -65,10 +67,15 @@ const UserItem: FunctionComponent<UserItemProps> = ({
         {name}
       </div>
       <Separator className='my-2' />
-      <div className='flex justify-between w-full text-[#adadad]'>
+      <div className='flex flex-col justify-between w-full text-[#adadad]'>
         <div className='flex items-center justify-start w-auto gap-2'>
           <Mail size='1.3em' />
           {email}
+        </div>
+        <Separator className='my-2' />
+        <div className='flex items-center justify-start w-auto gap-2'>
+          <Clock size='1.3em' />
+          {created.split(" ")[0]}
         </div>
         {/* <Button variant='link' onClick={() => setPasswordOpen(true)}>
           Reset Password

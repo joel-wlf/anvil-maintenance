@@ -46,6 +46,7 @@ function Admin() {
                   name={user.name}
                   role={user.role}
                   email={user.email}
+                  created={user.created}
                 />
               );
             }
