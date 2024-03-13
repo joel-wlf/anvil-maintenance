@@ -26,7 +26,6 @@ const UserItem: FunctionComponent<UserItemProps> = ({
     setDeleteLoading(true);
     await pb.collection("users").delete(id);
     fetchUsers();
-    setDeleteLoading(false);
   }
   return (
     <Card className='p-3'>
@@ -50,7 +49,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           className='w-full'
           onClick={() => deleteUser(id)}
         >
-          {deleteLoading ? "Loading..." : "Delete"}
+          {deleteLoading ? "Deleting..." : "Delete"}
         </Button>
         <Button disabled={deleteLoading} variant='outline' className='w-full'>
           Edit
