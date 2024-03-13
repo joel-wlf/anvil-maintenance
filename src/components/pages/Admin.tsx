@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Admin() {
   const navigate = useNavigate();
 
-  const [users, setUsers] = useState<any | null>();
+  const [users, setUsers] = useState<any | null>([]);
 
   const [createUserOpen, setCreateUserOpen] = useState(false);
 
@@ -26,10 +26,6 @@ function Admin() {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    fetchUsers()
-  }, [users])
-
   return (
     <div>
       <p className='text-2xl md:text-3xl font-semibold py-2 text-'>Admin</p>
@@ -45,6 +41,7 @@ function Admin() {
         open={createUserOpen}
         setOpen={setCreateUserOpen}
         setUsers={setUsers}
+        fetchUsers={fetchUsers}
       />
     </div>
   );

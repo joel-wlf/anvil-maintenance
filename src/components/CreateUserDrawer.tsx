@@ -22,12 +22,14 @@ interface CreateUserDrawerProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   setUsers: (users: any) => void;
+  fetchUsers: () => void;
 }
 
 const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   open,
   setOpen,
   setUsers,
+  fetchUsers,
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -49,9 +51,12 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
     try {
       setLoading(true);
       const record = await pb.collection("users").create(formData);
-      setUsers(record);
+      setUsers((prevData: any) => {
+        return [...prevData, record];
+      });
+      fetchUsers();
       setLoading(false);
-      setOpen(false)
+      setOpen(false);
     } catch (err) {
       alert(err);
       setLoading(false);
