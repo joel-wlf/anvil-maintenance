@@ -4,6 +4,7 @@ import { pb } from "@/lib/pocketbase";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserItem from "@/components/UserItem";
 
 function Admin() {
   const navigate = useNavigate();
@@ -35,7 +36,15 @@ function Admin() {
       </Button>
       {users &&
         users.map((user: any) => {
-          return <p>{user.name}</p>;
+          return (
+            <UserItem
+              key={user.id}
+              id={user.id}
+              name={user.name}
+              role={user.role}
+              email={user.email}
+            />
+          );
         })}
       <CreateUserDrawer
         open={createUserOpen}
