@@ -1,9 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { pb } from "@/lib/pocketbase";
 import { Mail, ShieldHalf, User } from "lucide-react";
-import { FunctionComponent, useState } from "react";
+import { ChangeEvent, FunctionComponent, useState } from "react";
 
 interface UserItemProps {
   fetchUsers: () => void;
@@ -22,11 +30,34 @@ const UserItem: FunctionComponent<UserItemProps> = ({
 }) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  const [passwordResetLoading, setPasswordResetLoading] = useState(false);
+
+  const [passwordOpen, setPasswordOpen] = useState(false);
+
+  const [passwordFormData, setPasswordFormData] = useState({
+    password: "",
+    passwordConfirm: "",
+  });
+
   async function deleteUser(id: string) {
     setDeleteLoading(true);
     await pb.collection("users").delete(id);
     fetchUsers();
   }
+
+  async function resetPassword() {
+    setPasswordResetLoading(true);
+    await pb.collection("users").update(id, passwordFormData)
+    setPasswordOpen(false);
+    setPasswordResetLoading(false);
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setPasswordFormData((prevData) => {
+      return { ...prevData, [e.target.name]: e.target.value };
+    });
+  }
+
   return (
     <Card className='p-3'>
       <div className='flex gap-2'>
@@ -39,7 +70,9 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           <Mail size='1.3em' />
           {email}
         </div>
-        <Button variant='link'>Reset Password</Button>
+        <Button variant='link' onClick={() => setPasswordOpen(true)}>
+          Reset Password
+        </Button>
       </div>
       <Separator className='my-2' />
       <div className='flex gap-2'>
@@ -55,6 +88,33 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           Edit
         </Button>
       </div>
+      <Drawer open={passwordOpen} onOpenChange={setPasswordOpen}>
+        <DrawerContent>
+          <DrawerHeader className='text-left'>
+            <DrawerTitle>Reset Password</DrawerTitle>
+            <DrawerDescription>Reset password of {email}</DrawerDescription>
+          </DrawerHeader>
+          <div className='flex flex-col gap-2 px-4 pb-5'>
+            <Input
+              type='password'
+              placeholder='New Password'
+              name='password'
+              value={passwordFormData.password}
+              onChange={handleChange}
+            />
+            <Input
+              type='password'
+              placeholder='Confirm New Password'
+              name='passwordConfirm'
+              value={passwordFormData.passwordConfirm}
+              onChange={handleChange}
+            />
+            <Button disabled={passwordResetLoading} onClick={resetPassword}>
+              {passwordResetLoading ? "Loading..." : "Submit"}
+            </Button>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </Card>
   );
 };
