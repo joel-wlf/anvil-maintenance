@@ -50,10 +50,7 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      const record = await pb.collection("users").create(formData);
-      setUsers((prevData: any) => {
-        return [...prevData, record];
-      });
+      await pb.collection("users").create(formData);
       fetchUsers();
       setLoading(false);
       setOpen(false);
