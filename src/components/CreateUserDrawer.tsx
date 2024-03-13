@@ -5,7 +5,6 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import {
@@ -61,7 +60,6 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild></DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Create User</DrawerTitle>
