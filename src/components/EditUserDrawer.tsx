@@ -17,23 +17,29 @@ import {
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
 
-interface CreateUserDrawerProps {
+interface EditUserDrawerProps {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
   open: boolean;
   setOpen: (open: boolean) => void;
   fetchUsers: () => void;
 }
 
-const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
+const EditUserDrawer: FunctionComponent<EditUserDrawerProps> = ({
+  id,
+  email,
+  name,
+  role,
   open,
   setOpen,
   fetchUsers,
 }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    role: "",
-    password: "",
-    passwordConfirm: "",
+    name: name,
+    email: email,
+    role: role,
   });
 
   const [loading, setLoading] = useState(false);
@@ -47,7 +53,7 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      await pb.collection("users").create(formData);
+      await pb.collection("users").update(id, formData);
       fetchUsers();
       setLoading(false);
       setOpen(false);
@@ -61,10 +67,8 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent>
         <DrawerHeader className='text-left'>
-          <DrawerTitle>Create User</DrawerTitle>
-          <DrawerDescription>
-            Create a new user for your organisation.
-          </DrawerDescription>
+          <DrawerTitle>Edit User</DrawerTitle>
+          <DrawerDescription>Edit user {email}.</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
@@ -97,24 +101,8 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
               <SelectItem value='admin'>Admin</SelectItem>
             </SelectContent>
           </Select>
-          <div className='flex items-center justify-between gap-2'>
-            <Input
-              type='password'
-              name='password'
-              value={formData.password}
-              placeholder='Password (min. 8)'
-              onChange={handleChange}
-            />
-            <Input
-              type='password'
-              name='passwordConfirm'
-              value={formData.passwordConfirm}
-              placeholder='Confirm Password'
-              onChange={handleChange}
-            />
-          </div>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Loading..." : "Create User"}
+            {loading ? "Loading..." : "Edit User"}
           </Button>
         </div>
       </DrawerContent>
@@ -122,4 +110,4 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   );
 };
 
-export default CreateUserDrawer;
+export default EditUserDrawer;

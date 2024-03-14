@@ -55,7 +55,6 @@ function Admin() {
       <CreateUserDrawer
         open={createUserOpen}
         setOpen={setCreateUserOpen}
-        setUsers={setUsers}
         fetchUsers={fetchUsers}
       />
     </div>

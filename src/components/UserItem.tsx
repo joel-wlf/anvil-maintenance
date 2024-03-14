@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { pb } from "@/lib/pocketbase";
 import { Clock, Mail, ShieldHalf, User } from "lucide-react";
 import { FunctionComponent, useState } from "react";
+import EditUserDrawer from "./EditUserDrawer";
 
 interface UserItemProps {
   fetchUsers: () => void;
@@ -23,6 +24,8 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   created,
 }) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const [editUserOpen, setEditUserOpen] = useState(false);
 
   async function deleteUser(id: string) {
     setDeleteLoading(true);
@@ -58,10 +61,24 @@ const UserItem: FunctionComponent<UserItemProps> = ({
         >
           {deleteLoading ? "Deleting..." : "Delete"}
         </Button>
-        <Button disabled={deleteLoading} variant='outline' className='w-full'>
+        <Button
+          disabled={deleteLoading}
+          variant='outline'
+          className='w-full'
+          onClick={() => setEditUserOpen(true)}
+        >
           Edit
         </Button>
       </div>
+      <EditUserDrawer
+        id={id}
+        email={email}
+        name={name}
+        role={role}
+        open={editUserOpen}
+        setOpen={setEditUserOpen}
+        fetchUsers={fetchUsers}
+      />
     </Card>
   );
 };
