@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserItem from "@/components/UserItem";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Admin() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ function Admin() {
         Create User
       </Button>
       <div className='flex flex-col gap-2 my-3'>
-        {users &&
+        {users[0] ? (
           users.map((user: any) => {
             if (user.id != pb.authStore.model?.id) {
               return (
@@ -50,7 +51,35 @@ function Admin() {
                 />
               );
             }
-          })}
+          })
+        ) : (
+          <>
+            <div className='flex flex-col m-3 gap-4'>
+              <div className='flex items-center gap-2'>
+                <Skeleton className='h-10 w-10 rounded-full' />
+                <Skeleton className='h-4 w-[150px]' />
+              </div>
+              <Skeleton className='h-4 w-[250px]' />
+              <Skeleton className='h-4 w-[150px]' />
+              <div className='flex gap-2 w-full'>
+                <Skeleton className='h-10 rounded-lg w-full' />
+                <Skeleton className='h-10 rounded-lg w-full' />
+              </div>
+            </div>
+            <div className='flex flex-col m-3 gap-4'>
+              <div className='flex items-center gap-2'>
+                <Skeleton className='h-10 w-10 rounded-full' />
+                <Skeleton className='h-4 w-[150px]' />
+              </div>
+              <Skeleton className='h-4 w-[250px]' />
+              <Skeleton className='h-4 w-[150px]' />
+              <div className='flex gap-2 w-full'>
+                <Skeleton className='h-10 rounded-lg w-full' />
+                <Skeleton className='h-10 rounded-lg w-full' />
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <CreateUserDrawer
         open={createUserOpen}
