@@ -15,7 +15,6 @@ interface DeviceItemProps {
 }
 
 const DeviceItem: FunctionComponent<DeviceItemProps> = ({
-  id,
   name,
   description,
   functional,
