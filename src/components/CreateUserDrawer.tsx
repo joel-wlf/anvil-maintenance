@@ -39,7 +39,7 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
 
   const [loading, setLoading] = useState(false);
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData((prevState) => {
@@ -50,20 +50,22 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw "Please enter a name"
-      if (formData.email == "") throw "Please enter an email address"
-      if (formData.role == "") throw "Please select a role"
-      if (formData.password == "") throw "Please enter a password"
-      if (formData.passwordConfirm == "") throw "Please confirm your password"
-      if (formData.password != formData.passwordConfirm) throw "The passwords don't match"
+      if (formData.name == "") throw new Error ("Please enter a name.");
+      if (formData.email == "") throw new Error ("Please enter an email address.");
+      if (formData.role == "") throw new Error ("Please select a role.");
+      if (formData.password == "") throw new Error ("Please enter a password.");
+      if (formData.passwordConfirm == "") throw new Error ("Please confirm your password.");
+      if (formData.password != formData.passwordConfirm)
+        throw new Error ("The passwords don't match.");
       await pb.collection("users").create(formData);
       fetchUsers();
       setLoading(false);
       setOpen(false);
-      toast({title: "Successfully created user"})
+      toast({ title: "Successfully created user." });
     } catch (err: any) {
       setLoading(false);
-      toast({title: err, variant: "destructive"});
+      console.log(err);
+      toast({ title: err.message, variant: "destructive" });
     }
   }
 
