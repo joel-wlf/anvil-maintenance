@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { LogIn } from "lucide-react";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 interface LoginFormProps {
   setStep: (step: number) => void;
