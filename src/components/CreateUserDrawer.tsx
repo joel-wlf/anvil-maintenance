@@ -64,7 +64,6 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
       toast({ title: "Successfully created user." });
     } catch (err: any) {
       setLoading(false);
-      console.log(err);
       toast({ title: err.message, variant: "destructive" });
     }
   }

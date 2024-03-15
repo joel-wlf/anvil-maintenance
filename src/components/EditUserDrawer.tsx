@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
+import { useToast } from "@/components/ui/use-toast";
 
 interface EditUserDrawerProps {
   id: string;
@@ -44,6 +45,8 @@ const EditUserDrawer: FunctionComponent<EditUserDrawerProps> = ({
 
   const [loading, setLoading] = useState(false);
 
+  const {toast} = useToast();
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -53,15 +56,16 @@ const EditUserDrawer: FunctionComponent<EditUserDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw "Please enter a name"
-      if (formData.email == "") throw "Please enter an email address"
-      if (formData.role == "") throw "Please select a role"
+      if (formData.name == "") throw new Error ("Please enter a name.")
+      if (formData.email == "") throw new Error ("Please enter an email address.")
+      if (formData.role == "") throw new Error ("Please select a role.")
       await pb.collection("users").update(id, formData);
       fetchUsers();
       setLoading(false);
       setOpen(false);
-    } catch (err) {
-      alert(err);
+      toast({ title: "Successfully updated user." });
+    } catch (err: any) {
+      toast({ title: err.message, variant: "destructive" });
       setLoading(false);
     }
   }
