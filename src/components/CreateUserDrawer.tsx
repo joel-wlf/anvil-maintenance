@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
+import { useToast } from "@/components/ui/use-toast";
 
 interface CreateUserDrawerProps {
   open: boolean;
@@ -38,6 +39,8 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
 
   const [loading, setLoading] = useState(false);
 
+  const { toast } = useToast()
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
@@ -57,9 +60,10 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
       fetchUsers();
       setLoading(false);
       setOpen(false);
-    } catch (err) {
-      alert(err);
+      toast({title: "Successfully created user"})
+    } catch (err: any) {
       setLoading(false);
+      toast({title: err, variant: "destructive"});
     }
   }
 
