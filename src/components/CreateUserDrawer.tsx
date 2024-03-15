@@ -47,6 +47,12 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
+      if (formData.name == "") throw "Please enter a name"
+      if (formData.email == "") throw "Please enter an email address"
+      if (formData.role == "") throw "Please select a role"
+      if (formData.password == "") throw "Please enter a password"
+      if (formData.passwordConfirm == "") throw "Please confirm your password"
+      if (formData.password != formData.passwordConfirm) throw "The passwords don't match"
       await pb.collection("users").create(formData);
       fetchUsers();
       setLoading(false);

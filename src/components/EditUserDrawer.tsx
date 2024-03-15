@@ -53,6 +53,9 @@ const EditUserDrawer: FunctionComponent<EditUserDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
+      if (formData.name == "") throw "Please enter a name"
+      if (formData.email == "") throw "Please enter an email address"
+      if (formData.role == "") throw "Please select a role"
       await pb.collection("users").update(id, formData);
       fetchUsers();
       setLoading(false);
