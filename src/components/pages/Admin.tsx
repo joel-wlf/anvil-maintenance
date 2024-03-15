@@ -31,7 +31,7 @@ function Admin() {
   return (
     <div>
       <p className='text-2xl md:text-3xl font-semibold py-2 text-'>Admin</p>
-      <Button onClick={() => setCreateUserOpen(true)}>
+      <Button variant="outline" className="w-full" onClick={() => setCreateUserOpen(true)}>
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
