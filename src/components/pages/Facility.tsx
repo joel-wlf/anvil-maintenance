@@ -16,7 +16,6 @@ function Facility() {
       .collection("devices")
       .getFullList({ requestKey: null, expand: "location" });
     setDevices(request);
-    console.log(request);
   }
 
   useEffect(() => {
