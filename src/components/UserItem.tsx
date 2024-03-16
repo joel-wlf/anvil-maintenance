@@ -4,7 +4,9 @@ import { Separator } from "@/components/ui/separator";
 import { pb } from "@/lib/pocketbase";
 import { Clock, Mail, ShieldHalf, User } from "lucide-react";
 import { FunctionComponent, useState } from "react";
-import EditUserDrawer from "./EditUserDrawer";
+import { useMediaQuery } from "react-responsive";
+import EditUserDrawer from "@/components/EditUserDrawer";
+import EditUserDialog from "@/components/EditUserDialog";
 
 interface UserItemProps {
   fetchUsers: () => void;
@@ -23,6 +25,10 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   email,
   created,
 }) => {
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 768px)",
+  });
+
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const [editUserOpen, setEditUserOpen] = useState(false);
@@ -70,15 +76,27 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           Edit
         </Button>
       </div>
-      <EditUserDrawer
-        id={id}
-        email={email}
-        name={name}
-        role={role}
-        open={editUserOpen}
-        setOpen={setEditUserOpen}
-        fetchUsers={fetchUsers}
-      />
+      {isDesktop ? (
+        <EditUserDialog
+          id={id}
+          email={email}
+          name={name}
+          role={role}
+          open={editUserOpen}
+          setOpen={setEditUserOpen}
+          fetchUsers={fetchUsers}
+        />
+      ) : (
+        <EditUserDrawer
+          id={id}
+          email={email}
+          name={name}
+          role={role}
+          open={editUserOpen}
+          setOpen={setEditUserOpen}
+          fetchUsers={fetchUsers}
+        />
+      )}
     </Card>
   );
 };

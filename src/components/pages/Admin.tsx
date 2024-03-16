@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
 import CreateUserDrawer from "@/components/CreateUserDrawer";
+import UserItem from "@/components/UserItem";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { pb } from "@/lib/pocketbase";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import UserItem from "@/components/UserItem";
-import { Skeleton } from "@/components/ui/skeleton";
-import CreateUserDialog from "../CreateUserDialog";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
+import CreateUserDialog from "@/components/CreateUserDialog";
 
 function Admin() {
   const navigate = useNavigate();
