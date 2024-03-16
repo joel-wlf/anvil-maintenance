@@ -34,7 +34,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   }
 
   return (
-    <Card className='p-3'>
+    <Card className='grid-item p-3'>
       <div className='flex items-center font-medium gap-2'>
         {role == "admin" ? <ShieldHalf size={36} /> : <User size={36} />}
         {name}

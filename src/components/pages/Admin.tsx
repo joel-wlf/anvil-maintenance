@@ -31,11 +31,15 @@ function Admin() {
   return (
     <div>
       <p className='text-2xl md:text-3xl font-semibold py-2 text-'>Admin</p>
-      <Button variant="outline" className="w-full" onClick={() => setCreateUserOpen(true)}>
+      <Button
+        variant='outline'
+        className='w-full'
+        onClick={() => setCreateUserOpen(true)}
+      >
         <Plus className='mr-2' size='1.3em' />
         Create User
       </Button>
-      <div className='flex flex-col gap-2 my-3'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full gap-2 my-3'>
         {users[0] ? (
           users.map((user: any) => {
             if (user.id != pb.authStore.model?.id) {
