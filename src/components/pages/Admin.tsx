@@ -6,9 +6,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserItem from "@/components/UserItem";
 import { Skeleton } from "@/components/ui/skeleton";
+import CreateUserDialog from "../CreateUserDialog";
+import { useMediaQuery } from "react-responsive";
 
 function Admin() {
   const navigate = useNavigate();
+
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 768px)",
+  });
 
   const [users, setUsers] = useState<any | null>([]);
 
@@ -88,11 +94,19 @@ function Admin() {
           </>
         )}
       </div>
-      <CreateUserDrawer
-        open={createUserOpen}
-        setOpen={setCreateUserOpen}
-        fetchUsers={fetchUsers}
-      />
+      {isDesktop ? (
+        <CreateUserDialog
+          open={createUserOpen}
+          setOpen={setCreateUserOpen}
+          fetchUsers={fetchUsers}
+        />
+        ) : (
+        <CreateUserDrawer
+          open={createUserOpen}
+          setOpen={setCreateUserOpen}
+          fetchUsers={fetchUsers}
+        />
+      )}
     </div>
   );
 }
