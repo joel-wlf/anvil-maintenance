@@ -1,9 +1,15 @@
-import { FunctionComponent, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { MapPin, Activity, Clock, ChevronRight, Locate } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import clsx from "clsx";
+import {
+  Activity,
+  ChevronDown,
+  ChevronRight,
+  Clock,
+  Locate,
+  MapPin,
+} from "lucide-react";
+import { FunctionComponent, useState } from "react";
 
 interface DeviceItemProps {
   id: string;
@@ -32,11 +38,19 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
         <p className='text-[#adadad] max-w-[80%]'>
           <span className='font-medium text-white'>{name}</span> - {description}
         </p>
-        <ChevronRight
-          className={clsx("transition-all mx-2", { "rotate-90": !collapsed })}
-          color='#adadad'
-          size={18}
-        />
+        {collapsed ? (
+          <ChevronRight
+            className='transition-all mx-2'
+            color='#adadad'
+            size={18}
+          />
+        ) : (
+          <ChevronDown
+            className='transition-all mx-2'
+            color='#adadad'
+            size={18}
+          />
+        )}
       </div>
       <Separator className='my-1 mt-2' />
       <div className='flex text-[#adadad] items-center justify-start w-auto gap-2'>
