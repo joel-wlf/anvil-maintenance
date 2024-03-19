@@ -59,7 +59,7 @@ function Facility() {
       <div className='flex h-full '>
         <div className='w-full h-full'>
           <p className='text-2xl md:text-3xl font-semibold pt-2'>Devices</p>
-          <div className='flex flex-col gap-2 my-3'>
+          <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-2 my-3'>
             {devices[0] &&
               devices.map((device: any) => {
                 return (
