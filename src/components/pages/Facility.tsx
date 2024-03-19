@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DeviceItem from "@/components/DeviceItem";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Facility() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Facility() {
             Add Device
           </Button>
           <div className='flex flex-col gap-2 my-2'>
-            {devices[0] &&
+            {devices[0] ? (
               devices.map((device: any) => {
                 return (
                   <DeviceItem
@@ -51,12 +52,33 @@ function Facility() {
                     created={device.created}
                   />
                 );
-              })}
+              })
+            ) : (
+              <>
+                <div className='flex flex-col m-3 gap-4'>
+                  <Skeleton className='h-4 w-[150px]' />
+                  <div className='flex items-center gap-2 w-full'>
+                    <Skeleton className='h-6 w-[25px]' />
+                    <Skeleton className='h-4 w-[200px]' />
+                  </div>
+                  <Skeleton className='h-4 w-[150px]' />
+                  <div className='flex items-center gap-2 w-full'>
+                    <Skeleton className='h-6 w-[25px]' />
+                    <Skeleton className='h-4 w-[200px]' />
+                  </div>
+                  <Skeleton className='h-4 w-[150px]' />
+                  <div className='flex items-center gap-2 w-full'>
+                    <Skeleton className='h-6 w-[25px]' />
+                    <Skeleton className='h-4 w-[200px]' />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </TabsContent>
         <TabsContent value='locations'>Locations</TabsContent>
       </Tabs>
-      <div className='flex h-full '>
+      <div className='hidden md:flex h-full '>
         <div className='w-full h-full'>
           <p className='text-2xl md:text-3xl font-semibold pt-2'>Devices</p>
           <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-2 my-3'>
@@ -65,7 +87,7 @@ function Facility() {
               Add Device
             </Button>
             <div className='hidden xl:block grid-item'></div>
-            {devices[0] &&
+            {devices[0] ? (
               devices.map((device: any) => {
                 return (
                   <DeviceItem
@@ -78,7 +100,28 @@ function Facility() {
                     created={device.created}
                   />
                 );
-              })}
+              })
+            ) : (
+              <>
+                <div className='flex flex-col m-3 gap-4'>
+                  <Skeleton className='h-4 w-[150px]' />
+                  <div className='flex items-center gap-2 w-full'>
+                    <Skeleton className='h-6 w-[25px]' />
+                    <Skeleton className='h-4 w-[200px]' />
+                  </div>
+                  <Skeleton className='h-4 w-[150px]' />
+                  <div className='flex items-center gap-2 w-full'>
+                    <Skeleton className='h-6 w-[25px]' />
+                    <Skeleton className='h-4 w-[200px]' />
+                  </div>
+                  <Skeleton className='h-4 w-[150px]' />
+                  <div className='flex items-center gap-2 w-full'>
+                    <Skeleton className='h-6 w-[25px]' />
+                    <Skeleton className='h-4 w-[200px]' />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <Separator className='mx-5' orientation='vertical' />
