@@ -60,6 +60,11 @@ function Facility() {
         <div className='w-full h-full'>
           <p className='text-2xl md:text-3xl font-semibold pt-2'>Devices</p>
           <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-2 my-3'>
+            <Button variant='outline' className='w-full'>
+              <Plus className='mr-2' size='1.3em' />
+              Add Device
+            </Button>
+            <div className='hidden xl:block grid-item'></div>
             {devices[0] &&
               devices.map((device: any) => {
                 return (
