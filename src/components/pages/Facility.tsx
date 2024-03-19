@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DeviceItem from "@/components/DeviceItem";
+import { Separator } from "@/components/ui/separator";
 
 function Facility() {
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ function Facility() {
     fetchDevices();
   }, []);
   return (
-    <div>
-      <Tabs defaultValue='devices' className='w-full'>
+    <div className='h-full w-full'>
+      <Tabs defaultValue='devices' className='md:hidden w-full'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='devices'>Devices</TabsTrigger>
           <TabsTrigger value='locations'>Locations</TabsTrigger>
@@ -55,6 +56,31 @@ function Facility() {
         </TabsContent>
         <TabsContent value='locations'>Locations</TabsContent>
       </Tabs>
+      <div className='flex h-full '>
+        <div className='w-full h-full'>
+          <p className='text-2xl md:text-3xl font-semibold pt-2'>Devices</p>
+          <div className='flex flex-col gap-2 my-3'>
+            {devices[0] &&
+              devices.map((device: any) => {
+                return (
+                  <DeviceItem
+                    key={device.id}
+                    id={device.id}
+                    name={device.name}
+                    description={device.description}
+                    functional={device.functional}
+                    location={device.expand.location}
+                    created={device.created}
+                  />
+                );
+              })}
+          </div>
+        </div>
+        <Separator className='mx-5' orientation='vertical' />
+        <div className='w-full h-full'>
+          <p className='text-2xl md:text-3xl font-semibold pt-2'>Locations</p>
+        </div>
+      </div>
     </div>
   );
 }
