@@ -50,6 +50,7 @@ function Facility() {
                     functional={device.functional}
                     location={device.expand.location}
                     created={device.created}
+                    fetchDevices={fetchDevices}
                   />
                 );
               })
@@ -98,6 +99,7 @@ function Facility() {
                     functional={device.functional}
                     location={device.expand.location}
                     created={device.created}
+                    fetchDevices={fetchDevices}
                   />
                 );
               })

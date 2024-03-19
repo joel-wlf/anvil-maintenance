@@ -10,6 +10,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { FunctionComponent, useState } from "react";
+import { pb } from "@/lib/pocketbase";
 
 interface DeviceItemProps {
   id: string;
@@ -18,16 +19,27 @@ interface DeviceItemProps {
   functional: boolean;
   location: any;
   created: string;
+  fetchDevices: () => void;
 }
 
 const DeviceItem: FunctionComponent<DeviceItemProps> = ({
+  id,
   name,
   description,
   functional,
   location,
   created,
+  fetchDevices,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  async function deleteDevice(id: string) {
+    setDeleteLoading(true);
+    await pb.collection("devices").delete(id);
+    fetchDevices();
+  }
 
   return (
     <Card className='p-3'>
@@ -81,10 +93,19 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
             Create Task with Device
           </Button>
           <div className='flex gap-2'>
-            <Button variant='destructive' className='w-full'>
-              {collapsed ? "Deleting..." : "Delete"}
+            <Button
+              variant='destructive'
+              disabled={deleteLoading}
+              className='w-full'
+              onClick={() => deleteDevice(id)}
+            >
+              {deleteLoading ? "Deleting..." : "Delete"}
             </Button>
-            <Button variant='outline' className='w-full'>
+            <Button
+              variant='outline'
+              disabled={deleteLoading}
+              className='w-full'
+            >
               Edit
             </Button>
           </div>
