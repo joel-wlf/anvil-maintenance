@@ -32,7 +32,7 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
   return (
     <Card className='p-3'>
       <div
-        className='flex items-center justify-between w-full'
+        className='flex items-center justify-between w-full cursor-pointer'
         onClick={() => setCollapsed((prevState) => !prevState)}
       >
         <p className='text-[#adadad] max-w-[80%]'>
