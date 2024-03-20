@@ -1,0 +1,121 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ChangeEvent, FunctionComponent, useState } from "react";
+import { pb } from "@/lib/pocketbase";
+import { useToast } from "@/components/ui/use-toast";
+
+interface EditUserDialogProps {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  fetchUsers: () => void;
+}
+
+const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
+  id,
+  email,
+  name,
+  role,
+  open,
+  setOpen,
+  fetchUsers,
+}) => {
+  const [formData, setFormData] = useState({
+    name: name,
+    email: email,
+    role: role,
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const { toast } = useToast();
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setFormData((prevState) => {
+      return { ...prevState, [e.target.name]: e.target.value };
+    });
+  }
+
+  async function handleSubmit() {
+    try {
+      setLoading(true);
+      if (formData.name == "") throw new Error("Please enter a name.");
+      if (formData.email == "")
+        throw new Error("Please enter an email address.");
+      if (formData.role == "") throw new Error("Please select a role.");
+      await pb.collection("users").update(id, formData);
+      fetchUsers();
+      setLoading(false);
+      setOpen(false);
+      toast({ title: "Successfully updated user." });
+    } catch (err: any) {
+      toast({ title: err.message, variant: "destructive" });
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader className='text-left'>
+          <DialogTitle>Edit User</DialogTitle>
+          <DialogDescription>Edit user {email}.</DialogDescription>
+        </DialogHeader>
+        <div className='flex flex-col gap-2 px-4 pb-5'>
+          <Input
+            type='text'
+            name='name'
+            value={formData.name}
+            placeholder='Name'
+            onChange={handleChange}
+          />
+          <Input
+            type='email'
+            name='email'
+            value={formData.email}
+            placeholder='Email'
+            onChange={handleChange}
+          />
+          <Select
+            onValueChange={(e) =>
+              setFormData((prevState) => {
+                return { ...prevState, role: e };
+              })
+            }
+            value={formData.role}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder='Select role' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='user'>User</SelectItem>
+              <SelectItem value='admin'>Admin</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button onClick={handleSubmit} disabled={loading}>
+            {loading ? "Loading..." : "Edit User"}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default EditUserDialog;
