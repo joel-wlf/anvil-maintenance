@@ -8,9 +8,16 @@ import DeviceItem from "@/components/DeviceItem";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useMediaQuery } from "react-responsive";
+import CreateUserDialog from "@/components/CreateUserDialog";
+import AddDeviceDrawer from "@/components/AddDeviceDrawer";
 
 function Facility() {
   const navigate = useNavigate();
+
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 768px)",
+  });
 
   const [devices, setDevices] = useState<any | null>([]);
 
@@ -142,6 +149,19 @@ function Facility() {
           <p className='text-2xl md:text-3xl font-semibold pt-2'>Locations</p>
         </div>
       </div>
+      {isDesktop ? (
+        <CreateUserDialog
+          open={addDeviceOpen}
+          setOpen={setAddDeviceOpen}
+          fetchUsers={fetchDevices}
+        />
+      ) : (
+        <AddDeviceDrawer
+          open={addDeviceOpen}
+          setOpen={setAddDeviceOpen}
+          fetchDevices={fetchDevices}
+        />
+      )}
     </div>
   );
 }
