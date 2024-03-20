@@ -7,11 +7,14 @@ import { useNavigate } from "react-router-dom";
 import DeviceItem from "@/components/DeviceItem";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function Facility() {
   const navigate = useNavigate();
 
   const [devices, setDevices] = useState<any | null>([]);
+
+  const [addDeviceOpen, setAddDeviceOpen] = useState(false);
 
   async function fetchDevices() {
     const request = await pb
@@ -34,7 +37,11 @@ function Facility() {
           <TabsTrigger value='locations'>Locations</TabsTrigger>
         </TabsList>
         <TabsContent value='devices'>
-          <Button variant='outline' className='w-full'>
+          <Button
+            variant='outline'
+            className='w-full'
+            onClick={() => setAddDeviceOpen(true)}
+          >
             <Plus className='mr-2' size='1.3em' />
             Add Device
           </Button>
@@ -79,11 +86,15 @@ function Facility() {
         </TabsContent>
         <TabsContent value='locations'>Locations</TabsContent>
       </Tabs>
-      <div className='hidden md:flex h-full '>
-        <div className='w-full h-full'>
+      <div className='hidden md:flex h-full'>
+        <ScrollArea className='w-full h-full'>
           <p className='text-2xl md:text-3xl font-semibold pt-2'>Devices</p>
           <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-2 my-3'>
-            <Button variant='outline' className='w-full'>
+            <Button
+              variant='outline'
+              className='w-full'
+              onClick={() => setAddDeviceOpen(true)}
+            >
               <Plus className='mr-2' size='1.3em' />
               Add Device
             </Button>
@@ -125,7 +136,7 @@ function Facility() {
               </>
             )}
           </div>
-        </div>
+        </ScrollArea>
         <Separator className='mx-5' orientation='vertical' />
         <div className='w-full h-full'>
           <p className='text-2xl md:text-3xl font-semibold pt-2'>Locations</p>
