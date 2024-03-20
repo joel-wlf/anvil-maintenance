@@ -9,8 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMediaQuery } from "react-responsive";
-import CreateUserDialog from "@/components/CreateUserDialog";
 import AddDeviceDrawer from "@/components/AddDeviceDrawer";
+import AddDeviceDialog from "@/components/AddDeviceDialog";
 
 function Facility() {
   const navigate = useNavigate();
@@ -150,10 +150,10 @@ function Facility() {
         </div>
       </div>
       {isDesktop ? (
-        <CreateUserDialog
+        <AddDeviceDialog
           open={addDeviceOpen}
           setOpen={setAddDeviceOpen}
-          fetchUsers={fetchDevices}
+          fetchDevices={fetchDevices}
         />
       ) : (
         <AddDeviceDrawer

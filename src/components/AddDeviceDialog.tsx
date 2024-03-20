@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -20,13 +20,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
-interface AddDeviceDrawerProps {
+interface AddDeviceDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   fetchDevices: () => void;
 }
 
-const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
+const AddDeviceDialog: FunctionComponent<AddDeviceDialogProps> = ({
   open,
   setOpen,
   fetchDevices,
@@ -56,7 +56,8 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
       if (formData.name == "") throw new Error("Please enter a name.");
       if (formData.description == "")
         throw new Error("Please enter a description.");
-      if (formData.location == "") throw new Error("Please select a location.");
+      if (formData.location == "")
+        throw new Error("Please select a location.");
       await pb.collection("devices").create(formData);
       fetchDevices();
       setLoading(false);
@@ -79,12 +80,12 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
   }, []);
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent>
-        <DrawerHeader className='text-left'>
-          <DrawerTitle>Add Device</DrawerTitle>
-          <DrawerDescription>Add a device to your facility.</DrawerDescription>
-        </DrawerHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader className='text-left'>
+          <DialogTitle>Add Device</DialogTitle>
+          <DialogDescription>Add a device to your facility.</DialogDescription>
+        </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
             type='text'
@@ -134,9 +135,9 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
             {loading ? "Loading..." : "Add Device"}
           </Button>
         </div>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default AddDeviceDrawer;
+export default AddDeviceDialog;
