@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
+import { useMediaQuery } from "react-responsive";
+import EditDeviceDialog from "./EditDeviceDialog";
 
 interface DeviceItemProps {
   id: string;
@@ -34,6 +36,12 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
   const [collapsed, setCollapsed] = useState(true);
 
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const [editDeviceOpen, setEditDeviceOpen] = useState(false);
+
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 768px)",
+  });
 
   async function deleteDevice(id: string) {
     setDeleteLoading(true);
@@ -105,11 +113,28 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
               variant='outline'
               disabled={deleteLoading}
               className='w-full'
+              onClick={() => setEditDeviceOpen(true)}
             >
               Edit
             </Button>
           </div>
         </>
+      )}
+      {isDesktop ? (
+        <EditDeviceDialog
+          key={id}
+          id={id}
+          name={name}
+          description={description}
+          location={location.id}
+          functional={functional}
+          open={editDeviceOpen}
+          setOpen={setEditDeviceOpen}
+          fetchDevices={fetchDevices}
+        />
+      ) : (
+        // <EditUserDrawer />
+        "s"
       )}
     </Card>
   );
