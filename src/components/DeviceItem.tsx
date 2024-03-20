@@ -12,7 +12,8 @@ import {
 import { FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
 import { useMediaQuery } from "react-responsive";
-import EditDeviceDialog from "./EditDeviceDialog";
+import EditDeviceDrawer from "@/components/EditDeviceDrawer";
+import EditDeviceDialog from "@/components/EditDeviceDialog";
 
 interface DeviceItemProps {
   id: string;
@@ -133,8 +134,17 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
           fetchDevices={fetchDevices}
         />
       ) : (
-        // <EditUserDrawer />
-        "s"
+        <EditDeviceDrawer
+          key={id}
+          id={id}
+          name={name}
+          description={description}
+          location={location.id}
+          functional={functional}
+          open={editDeviceOpen}
+          setOpen={setEditDeviceOpen}
+          fetchDevices={fetchDevices}
+        />
       )}
     </Card>
   );
