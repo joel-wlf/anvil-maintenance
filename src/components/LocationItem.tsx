@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { pb } from "@/lib/pocketbase";
-import { Clock, Locate } from "lucide-react";
+import { Clock } from "lucide-react";
 import { FunctionComponent, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
