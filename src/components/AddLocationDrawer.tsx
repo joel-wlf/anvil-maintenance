@@ -59,7 +59,7 @@ const AddLocationDrawer: FunctionComponent<AddLocationDrawerProps> = ({
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Add Location</DrawerTitle>
-          <DrawerDescription>Add a location to your facility.</DrawerDescription>
+          <DrawerDescription>Add a location to your facility</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

@@ -76,7 +76,7 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
         <DialogHeader className='text-left'>
           <DialogTitle>Create User</DialogTitle>
           <DialogDescription>
-            Create a new user for your organisation.
+            Create a new user for your organisation
           </DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>

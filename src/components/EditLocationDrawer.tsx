@@ -53,7 +53,7 @@ const EditLocationDrawer: FunctionComponent<EditLocationDrawerProps> = ({
       fetchLocations();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully created location." });
+      toast({ title: "Successfully updated location." });
     } catch (err: any) {
       setLoading(false);
       toast({ title: err.message, variant: "destructive" });
@@ -65,7 +65,7 @@ const EditLocationDrawer: FunctionComponent<EditLocationDrawerProps> = ({
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Edit Location</DrawerTitle>
-          <DrawerDescription>Edit the location {name}.</DrawerDescription>
+          <DrawerDescription>Edit location "{name}"</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

@@ -74,7 +74,7 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
         <DrawerHeader className='text-left'>
           <DrawerTitle>Create User</DrawerTitle>
           <DrawerDescription>
-            Create a new user for your organisation.
+            Create a new user for your organisation
           </DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>

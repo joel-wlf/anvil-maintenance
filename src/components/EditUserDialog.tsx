@@ -76,7 +76,7 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>Edit User</DialogTitle>
-          <DialogDescription>Edit user {email}.</DialogDescription>
+          <DialogDescription>Edit user {email}</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

@@ -84,7 +84,7 @@ const AddDeviceDialog: FunctionComponent<AddDeviceDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>Add Device</DialogTitle>
-          <DialogDescription>Add a device to your facility.</DialogDescription>
+          <DialogDescription>Add a device to your facility</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

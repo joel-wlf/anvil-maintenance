@@ -59,7 +59,7 @@ const AddLocationDialog: FunctionComponent<AddLocationDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>Add Location</DialogTitle>
-          <DialogDescription>Add a location to your facility.</DialogDescription>
+          <DialogDescription>Add a location to your facility</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

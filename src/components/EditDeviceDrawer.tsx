@@ -93,7 +93,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Edit Device</DrawerTitle>
-          <DrawerDescription>Edit a device to your facility.</DrawerDescription>
+          <DrawerDescription>Edit device "{name}"</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

@@ -12,9 +12,9 @@ import { pb } from "@/lib/pocketbase";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 
 interface EditLocationDialogProps {
-  id: string
-  name: string
-  description: string
+  id: string;
+  name: string;
+  description: string;
   open: boolean;
   setOpen: (open: boolean) => void;
   fetchLocations: () => void;
@@ -53,7 +53,7 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
       fetchLocations();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully created location." });
+      toast({ title: "Successfully updated location." });
     } catch (err: any) {
       setLoading(false);
       toast({ title: err.message, variant: "destructive" });
@@ -65,7 +65,7 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>Edit Location</DialogTitle>
-          <DialogDescription>Edit the location {name}.</DialogDescription>
+          <DialogDescription>Edit location "{name}"</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
