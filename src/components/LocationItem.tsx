@@ -1,3 +1,5 @@
+import EditLocationDialog from "@/components/EditLocationDialog";
+import EditLocationDrawer from "@/components/EditLocationDrawer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -68,31 +70,27 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
           Edit
         </Button>
       </div>
-      {/* {isDesktop ? (
-        <EditDeviceDialog
+      {isDesktop ? (
+        <EditLocationDialog
           key={id}
           id={id}
           name={name}
           description={description}
-          location={location.id}
-          functional={functional}
-          open={editDeviceOpen}
-          setOpen={setEditDeviceOpen}
+          open={editLocationOpen}
+          setOpen={setEditLocationOpen}
           fetchLocations={fetchLocations}
         />
       ) : (
-        <EditDeviceDrawer
+        <EditLocationDrawer
           key={id}
           id={id}
           name={name}
           description={description}
-          location={location.id}
-          functional={functional}
-          open={editDeviceOpen}
-          setOpen={setEditDeviceOpen}
+          open={editLocationOpen}
+          setOpen={setEditLocationOpen}
           fetchLocations={fetchLocations}
         />
-      )} */}
+      )}
     </Card>
   );
 };
