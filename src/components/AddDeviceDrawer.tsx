@@ -83,7 +83,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Add Device</DrawerTitle>
-          <DrawerDescription>Add a device to your facility.</DrawerDescription>
+          <DrawerDescription>Add a device to your facility</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
@@ -113,7 +113,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
             </SelectTrigger>
             <SelectContent>
               {locations.map((location: any) => (
-                <SelectItem value={location.id}>{location.name}</SelectItem>
+                <SelectItem key={location.id} value={location.id}>{location.name}</SelectItem>
               ))}
             </SelectContent>
           </Select>

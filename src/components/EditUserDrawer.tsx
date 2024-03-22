@@ -75,7 +75,7 @@ const EditUserDrawer: FunctionComponent<EditUserDrawerProps> = ({
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Edit User</DrawerTitle>
-          <DrawerDescription>Edit user {email}.</DrawerDescription>
+          <DrawerDescription>Edit user {email}</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

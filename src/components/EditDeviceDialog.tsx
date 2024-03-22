@@ -93,7 +93,7 @@ const AddDeviceDialog: FunctionComponent<AddDeviceDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>Edit Device</DialogTitle>
-          <DialogDescription>Edit a device to your facility.</DialogDescription>
+          <DialogDescription>Edit device "{name}"</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
@@ -123,7 +123,7 @@ const AddDeviceDialog: FunctionComponent<AddDeviceDialogProps> = ({
             </SelectTrigger>
             <SelectContent>
               {locations.map((location: any) => (
-                <SelectItem value={location.id}>{location.name}</SelectItem>
+                <SelectItem key={location.id} value={location.id}>{location.name}</SelectItem>
               ))}
             </SelectContent>
           </Select>
