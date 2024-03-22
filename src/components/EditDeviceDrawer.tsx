@@ -123,7 +123,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
             </SelectTrigger>
             <SelectContent>
               {locations.map((location: any) => (
-                <SelectItem value={location.id}>{location.name}</SelectItem>
+                <SelectItem key={location.id} value={location.id}>{location.name}</SelectItem>
               ))}
             </SelectContent>
           </Select>
