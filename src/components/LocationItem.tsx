@@ -41,7 +41,8 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
     <Card className='p-3'>
       <div className='flex items-center justify-between w-full'>
         <p className='text-[#adadad] max-w-[80%]'>
-          <span className='font-medium text-white'>{name}</span> - {description}
+          <span className='font-medium text-white'>{name}</span>
+          {description && ` - ${description}`}
         </p>
       </div>
       <Separator className='my-1 mt-2' />

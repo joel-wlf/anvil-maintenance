@@ -57,7 +57,8 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
         onClick={() => setCollapsed((prevState) => !prevState)}
       >
         <p className='text-[#adadad] max-w-[80%]'>
-          <span className='font-medium text-white'>{name}</span> - {description}
+          <span className='font-medium text-white'>{name}</span>
+          {description && ` - ${description}`}
         </p>
         {collapsed ? (
           <ChevronRight

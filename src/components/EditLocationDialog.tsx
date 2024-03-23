@@ -47,8 +47,6 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
     try {
       setLoading(true);
       if (formData.name == "") throw new Error("Please enter a name.");
-      if (formData.description == "")
-        throw new Error("Please enter a description.");
       await pb.collection("locations").update(id, formData);
       fetchLocations();
       setLoading(false);
@@ -79,7 +77,7 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
             type='description'
             name='description'
             value={formData.description}
-            placeholder='Description'
+            placeholder='Description (optional)'
             onChange={handleChange}
           />
           <Button onClick={handleSubmit} disabled={loading}>
