@@ -1,5 +1,8 @@
 import Auth from "@/components/pages/Auth";
+import CreateTask from "@/components/pages/CreateTask";
 import Dashboard from "@/components/pages/Dashboard";
+import Settings from "@/components/pages/Settings";
+import ViewTask from "@/components/pages/ViewTask";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -8,8 +11,6 @@ import Admin from "./components/pages/Admin";
 import Documentation from "./components/pages/Documentation";
 import Facility from "./components/pages/Facility";
 import Tasks from "./components/pages/Tasks";
-import Settings from "@/components/pages/Settings";
-import ViewTask from "@/components/pages/ViewTask"
 
 function App() {
   return (
@@ -36,10 +37,21 @@ function App() {
                   </Menu>
                 }
               />
-              <Route path="/tasks/:taskId" element={
-              <Menu>
-                <ViewTask />
-              </Menu>}
+              <Route
+                path='/tasks/createTask'
+                element={
+                  <Menu>
+                    <CreateTask />
+                  </Menu>
+                }
+              />
+              <Route
+                path='/tasks/:taskId'
+                element={
+                  <Menu>
+                    <ViewTask />
+                  </Menu>
+                }
               />
             </Route>
             <Route
