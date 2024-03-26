@@ -1,6 +1,10 @@
+import EditDeviceDialog from "@/components/EditDeviceDialog";
+import EditDeviceDrawer from "@/components/EditDeviceDrawer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
+import { pb } from "@/lib/pocketbase";
 import {
   Activity,
   ChevronDown,
@@ -10,10 +14,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { FunctionComponent, useState } from "react";
-import { pb } from "@/lib/pocketbase";
 import { useMediaQuery } from "react-responsive";
-import EditDeviceDrawer from "@/components/EditDeviceDrawer";
-import EditDeviceDialog from "@/components/EditDeviceDialog";
 
 interface DeviceItemProps {
   id: string;
@@ -34,6 +35,8 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
   created,
   fetchDevices,
 }) => {
+const {toast} = useToast()
+
   const [collapsed, setCollapsed] = useState(true);
 
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -45,9 +48,18 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
   });
 
   async function deleteDevice(id: string) {
-    setDeleteLoading(true);
-    await pb.collection("devices").delete(id);
-    fetchDevices();
+    try {
+      setDeleteLoading(true);
+      await pb.collection("devices").delete(id);
+      fetchDevices();
+    } catch (err: any) {
+      setDeleteLoading(false);
+      toast({
+        description:
+          "Failed to delete device. Make sure it isn't used in other tasks.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
@@ -57,7 +69,8 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
         onClick={() => setCollapsed((prevState) => !prevState)}
       >
         <p className='text-[#adadad] max-w-[80%]'>
-          <span className='font-medium text-white'>{name}</span> - {description}
+          <span className='font-medium text-white'>{name}</span>
+          {description && ` - ${description}`}
         </p>
         {collapsed ? (
           <ChevronRight

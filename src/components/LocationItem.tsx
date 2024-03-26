@@ -3,6 +3,7 @@ import EditLocationDrawer from "@/components/EditLocationDrawer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 import { pb } from "@/lib/pocketbase";
 import { Clock } from "lucide-react";
 import { FunctionComponent, useState } from "react";
@@ -23,6 +24,8 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
   created,
   fetchLocations,
 }) => {
+  const { toast } = useToast();
+
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const [editLocationOpen, setEditLocationOpen] = useState(false);
@@ -32,16 +35,25 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
   });
 
   async function deleteLocation(id: string) {
-    setDeleteLoading(true);
-    await pb.collection("locations").delete(id);
-    fetchLocations();
+    try {
+      setDeleteLoading(true);
+      await pb.collection("locations").delete(id);
+      fetchLocations();
+    } catch (err: any) {
+      setDeleteLoading(false);
+      toast({
+        description: "Failed to delete location. Make sure it isn't used in other devices or tasks.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
     <Card className='p-3'>
       <div className='flex items-center justify-between w-full'>
         <p className='text-[#adadad] max-w-[80%]'>
-          <span className='font-medium text-white'>{name}</span> - {description}
+          <span className='font-medium text-white'>{name}</span>
+          {description && ` - ${description}`}
         </p>
       </div>
       <Separator className='my-1 mt-2' />

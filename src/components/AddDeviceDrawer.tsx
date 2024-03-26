@@ -54,8 +54,6 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
     try {
       setLoading(true);
       if (formData.name == "") throw new Error("Please enter a name.");
-      if (formData.description == "")
-        throw new Error("Please enter a description.");
       if (formData.location == "") throw new Error("Please select a location.");
       await pb.collection("devices").create(formData);
       fetchDevices();
@@ -97,7 +95,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
             type='description'
             name='description'
             value={formData.description}
-            placeholder='Description'
+            placeholder='Description (optional)'
             onChange={handleChange}
           />
           <Select
