@@ -9,6 +9,7 @@ import Documentation from "./components/pages/Documentation";
 import Facility from "./components/pages/Facility";
 import Tasks from "./components/pages/Tasks";
 import Settings from "@/components/pages/Settings";
+import ViewTask from "@/components/pages/ViewTask"
 
 function App() {
   return (
@@ -26,14 +27,21 @@ function App() {
                 </Menu>
               }
             />
-            <Route
-              path='/tasks'
-              element={
-                <Menu>
-                  <Tasks />
-                </Menu>
-              }
-            />
+            <Route path='/tasks'>
+              <Route
+                index
+                element={
+                  <Menu>
+                    <Tasks />
+                  </Menu>
+                }
+              />
+              <Route path="/tasks/:taskId" element={
+              <Menu>
+                <ViewTask />
+              </Menu>}
+              />
+            </Route>
             <Route
               path='/facility'
               element={
