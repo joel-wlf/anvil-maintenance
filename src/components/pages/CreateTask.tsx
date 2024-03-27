@@ -29,23 +29,25 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
-interface FormData {
+interface User {
+  collectionId: string;
+  collectionName: string;
+  created: string;
+  email: string;
+  emailVisibility: boolean;
+  id: string;
+  name: string;
+  role: string;
+  updated: string;
+  username: string;
+  verified: boolean;
+}
+
+interface Task {
   title: string;
   status: string;
   due: string;
-  assignees: {
-    collectionId: string;
-    collectionName: string;
-    created: string;
-    email: string;
-    emailVisibility: boolean;
-    id: string;
-    name: string;
-    role: string;
-    updated: string;
-    username: string;
-    verified: boolean;
-  }[];
+  assignees: User[];
 }
 
 function CreateTask() {
@@ -55,7 +57,7 @@ function CreateTask() {
 
   const [users, setUsers] = useState<any | null>([]);
 
-  const [assignSelect, setAssignSelect] = useState({});
+  const [assignSelect, setAssignSelect] = useState("");
 
   const [assignOpen, setAssignOpen] = useState(false);
 
@@ -75,7 +77,7 @@ function CreateTask() {
     setUsers(request);
   }
 
-  const [task, setTask] = useState<FormData>({
+  const [task, setTask] = useState<Task>({
     title: "",
     status: "",
     due: "",
@@ -83,14 +85,12 @@ function CreateTask() {
   });
 
   function assignUser() {
-    if (assignSelect) {
-      setTask((prevState: any) => {
-        return {
-          ...prevState,
-          assignees: [...prevState.assignees, assignSelect],
-        };
-      });
-    }
+    setTask((prevState: any) => {
+      return {
+        ...prevState,
+        assignees: [...prevState.assignees, assignSelect],
+      };
+    });
     setAssignOpen(false);
   }
 
@@ -205,17 +205,15 @@ function CreateTask() {
       </Select>
       <div className='flex gap-2 flex-wrap'>
         {task.assignees.map((assignee: any) => (
-          <Badge variant='outline' key={assignee.id} className='py-1 px-2'>
-            {assignee.name}
+          <Badge variant='outline' key={assignee} className='py-1 px-2'>
+            {assignee}
           </Badge>
         ))}
         <Popover open={assignOpen} onOpenChange={setAssignOpen}>
           <PopoverTrigger>
             {users.some(
               (user: any) =>
-                !task.assignees.some(
-                  (assignee: any) => assignee.id === user.id
-                )
+                !task.assignees.some((assignee: any) => assignee.id === user.id)
             ) ? (
               <Badge variant='outline' className='cursor-pointer py-1 px-2'>
                 <Plus size='1em' className='mr-1' />
@@ -224,7 +222,7 @@ function CreateTask() {
             ) : null}
           </PopoverTrigger>
           <PopoverContent className='flex flex-col gap-2'>
-            <Select onValueChange={(e) => setAssignSelect(e)}>
+            <Select onValueChange={(e: any) => setAssignSelect(e.id)}>
               <SelectTrigger className='w-full'>
                 <SelectValue placeholder='Select User' />
               </SelectTrigger>
@@ -249,7 +247,11 @@ function CreateTask() {
           </PopoverContent>
         </Popover>
       </div>
-      <Button variant='outline' className='w-full'>
+      <Button
+        variant='outline'
+        className='w-full'
+        onClick={() => pb.collection("tasks").create(task)}
+      >
         Create Task
       </Button>
     </div>
