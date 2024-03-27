@@ -11,6 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { pb } from "@/lib/pocketbase";
 import {
   AlertTriangle,
+  CalendarIcon,
   CheckCircle2,
   Clock,
   Construction,
@@ -24,11 +25,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 interface FormData {
   title: string;
   status: string;
-  priority: string;
+  due: string;
   assignees: {
     collectionId: string;
     collectionName: string;
@@ -55,6 +59,8 @@ function CreateTask() {
 
   const [assignOpen, setAssignOpen] = useState(false);
 
+  const [due, setDue] = useState<Date>();
+
   async function fetchDevices() {
     const request = await pb
       .collection("devices")
@@ -69,16 +75,16 @@ function CreateTask() {
     setUsers(request);
   }
 
-  const [formData, setFormData] = useState<FormData>({
+  const [task, setTask] = useState<FormData>({
     title: "",
     status: "",
-    priority: "",
+    due: "",
     assignees: [],
   });
 
   function assignUser() {
     if (assignSelect) {
-      setFormData((prevState: any) => {
+      setTask((prevState: any) => {
         return {
           ...prevState,
           assignees: [...prevState.assignees, assignSelect],
@@ -89,10 +95,20 @@ function CreateTask() {
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setFormData((prevState) => {
+    setTask((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
+    console.log(task);
   }
+
+  useEffect(() => {
+    if (due) {
+      setTask((prevState: any) => {
+        return { ...prevState, due: format(due, "yyyy-MM-dd") };
+      });
+      console.log(task);
+    }
+  }, [due]);
 
   useEffect(() => {
     if (!pb.authStore.isValid) {
@@ -107,13 +123,13 @@ function CreateTask() {
       <BigInput
         onChange={handleChange}
         name='title'
-        value={formData.title}
+        value={task.title}
         placeholder='Task Title...'
         className='p-0'
       />
       <ToggleGroup
         onValueChange={(e) =>
-          setFormData((prevState) => {
+          setTask((prevState) => {
             return { ...prevState, status: e };
           })
         }
@@ -128,7 +144,7 @@ function CreateTask() {
           pending
         </ToggleGroupItem>
         <ToggleGroupItem
-          value='work'
+          value='progress'
           className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-amber-800'
         >
           <Construction />
@@ -142,10 +158,32 @@ function CreateTask() {
           done
         </ToggleGroupItem>
       </ToggleGroup>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant='outline'
+            className={cn(
+              "w-full justify-start text-left font-normal",
+              !due && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className='mr-2 h-4 w-4' />
+            {due ? format(due, "yyyy-MM-dd") : <span>Due</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className='w-auto p-0' align='start'>
+          <Calendar
+            mode='single'
+            selected={due}
+            onSelect={setDue}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
       <Select
         onValueChange={(e) =>
-          setFormData((prevState) => {
-            return { ...prevState, priority: e };
+          setTask((prevState) => {
+            return { ...prevState, device: e };
           })
         }
       >
@@ -166,7 +204,7 @@ function CreateTask() {
         </SelectContent>
       </Select>
       <div className='flex gap-2 flex-wrap'>
-        {formData.assignees.map((assignee: any) => (
+        {task.assignees.map((assignee: any) => (
           <Badge variant='outline' key={assignee.id} className='py-1 px-2'>
             {assignee.name}
           </Badge>
@@ -175,7 +213,7 @@ function CreateTask() {
           <PopoverTrigger>
             {users.some(
               (user: any) =>
-                !formData.assignees.some(
+                !task.assignees.some(
                   (assignee: any) => assignee.id === user.id
                 )
             ) ? (
@@ -194,7 +232,7 @@ function CreateTask() {
                 {users
                   .filter(
                     (user: any) =>
-                      !formData.assignees.some(
+                      !task.assignees.some(
                         (assignee: any) => assignee.id === user.id
                       )
                   )
