@@ -63,6 +63,13 @@ function CreateTask() {
 
   const [due, setDue] = useState<Date>();
 
+  const [task, setTask] = useState<Task>({
+    title: "",
+    status: "pending",
+    due: "",
+    assignees: [],
+  });
+
   async function fetchDevices() {
     const request = await pb
       .collection("devices")
@@ -77,13 +84,6 @@ function CreateTask() {
     setUsers(request);
   }
 
-  const [task, setTask] = useState<Task>({
-    title: "",
-    status: "",
-    due: "",
-    assignees: [],
-  });
-
   function assignUser() {
     setTask((prevState: any) => {
       return {
@@ -95,10 +95,9 @@ function CreateTask() {
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setTask((prevState) => {
+    setTask((prevState) => {                                            
       return { ...prevState, [e.target.name]: e.target.value };
     });
-    console.log(task);
   }
 
   useEffect(() => {
@@ -106,7 +105,6 @@ function CreateTask() {
       setTask((prevState: any) => {
         return { ...prevState, due: format(due, "yyyy-MM-dd") };
       });
-      console.log(task);
     }
   }, [due]);
 
@@ -134,6 +132,7 @@ function CreateTask() {
           })
         }
         type='single'
+        value={task.status}
         defaultValue='pending'
       >
         <ToggleGroupItem
@@ -204,16 +203,21 @@ function CreateTask() {
         </SelectContent>
       </Select>
       <div className='flex gap-2 flex-wrap'>
-        {task.assignees.map((assignee: any) => (
-          <Badge variant='outline' key={assignee} className='py-1 px-2'>
-            {assignee}
-          </Badge>
-        ))}
+        {task.assignees.map((assignee: any) => {
+          // Find the user object where user.id is equal to assignee
+          const userObj = users.find((user: any) => user.id === assignee);
+
+          return (
+            <Badge variant='outline' key={assignee} className='py-1 px-2'>
+              {userObj.name}
+            </Badge>
+          );
+        })}
         <Popover open={assignOpen} onOpenChange={setAssignOpen}>
           <PopoverTrigger>
             {users.some(
               (user: any) =>
-                !task.assignees.some((assignee: any) => assignee.id === user.id)
+                !task.assignees.some((assignee: any) => assignee === user.id)
             ) ? (
               <Badge variant='outline' className='cursor-pointer py-1 px-2'>
                 <Plus size='1em' className='mr-1' />
@@ -231,7 +235,7 @@ function CreateTask() {
                   .filter(
                     (user: any) =>
                       !task.assignees.some(
-                        (assignee: any) => assignee.id === user.id
+                        (assignee: any) => assignee === user.id
                       )
                   )
                   .map((user: any) => (
