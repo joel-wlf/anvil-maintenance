@@ -16,6 +16,7 @@ import {
   Clock,
   Construction,
   Plus,
+  Trash2,
 } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,25 +30,25 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
-interface User {
-  collectionId: string;
-  collectionName: string;
-  created: string;
-  email: string;
-  emailVisibility: boolean;
-  id: string;
-  name: string;
-  role: string;
-  updated: string;
-  username: string;
-  verified: boolean;
-}
+// interface User {
+//   collectionId: string;
+//   collectionName: string;
+//   created: string;
+//   email: string;
+//   emailVisibility: boolean;
+//   id: string;
+//   name: string;
+//   role: string;
+//   updated: string;
+//   username: string;
+//   verified: boolean;
+// }
 
 interface Task {
   title: string;
   status: string;
   due: string;
-  assignees: User[];
+  assignees: string[];
 }
 
 function CreateTask() {
@@ -94,8 +95,21 @@ function CreateTask() {
     setAssignOpen(false);
   }
 
+  function removeAssignee(idToRemove: string) {
+    setTask((prevState: any) => {
+      const updatedAssignees = prevState.assignees.filter(
+        (id: string) => id !== idToRemove
+      );
+
+      return {
+        ...prevState,
+        assignees: updatedAssignees,
+      };
+    });
+  }
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setTask((prevState) => {                                            
+    setTask((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
   }
@@ -204,11 +218,16 @@ function CreateTask() {
       </Select>
       <div className='flex gap-2 flex-wrap'>
         {task.assignees.map((assignee: any) => {
-          // Find the user object where user.id is equal to assignee
           const userObj = users.find((user: any) => user.id === assignee);
 
           return (
-            <Badge variant='outline' key={assignee} className='py-1 px-2'>
+            <Badge
+              variant='outline'
+              key={assignee}
+              className='py-1 px-2'
+              onClick={() => removeAssignee(assignee)}
+            >
+              <Trash2 size='1em' className='mr-1' />
               {userObj.name}
             </Badge>
           );
