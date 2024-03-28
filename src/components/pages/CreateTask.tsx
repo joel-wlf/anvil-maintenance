@@ -3,14 +3,15 @@ import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { pb } from "@/lib/pocketbase";
 import {
-  AlertTriangle,
   CalendarIcon,
   CheckCircle2,
   Clock,
@@ -204,16 +205,28 @@ function CreateTask() {
           <SelectValue placeholder='Select Device' />
         </SelectTrigger>
         <SelectContent>
-          {devices.map((device: any) => (
-            <SelectItem key={device.id} value={device.id}>
-              <div className='flex'>
-                {!device.functional && (
-                  <AlertTriangle size='1.3em' className='mr-2' />
-                )}
-                {device.name}
-              </div>
-            </SelectItem>
-          ))}
+          <SelectGroup>
+            <SelectLabel>Currently Functional</SelectLabel>
+            {devices.map(
+              (device: any) =>
+                device.functional && (
+                  <SelectItem key={device.id} value={device.id}>
+                    <div className='flex'>{device.name}</div>
+                  </SelectItem>
+                )
+            )}
+          </SelectGroup>
+          <SelectGroup>
+            <SelectLabel>Not Functional</SelectLabel>
+            {devices.map(
+              (device: any) =>
+                !device.functional && (
+                  <SelectItem key={device.id} value={device.id}>
+                    <div className='flex'>{device.name}</div>
+                  </SelectItem>
+                )
+            )}
+          </SelectGroup>
         </SelectContent>
       </Select>
       <div className='flex gap-2 flex-wrap'>
