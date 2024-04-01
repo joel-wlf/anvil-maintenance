@@ -190,7 +190,7 @@ function CreateTask() {
             mode='single'
             selected={due}
             onSelect={setDue}
-            initialFocus
+            className='rounded-md border'
           />
         </PopoverContent>
       </Popover>
