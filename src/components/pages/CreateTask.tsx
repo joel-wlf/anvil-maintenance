@@ -1,4 +1,5 @@
 import { BigInput } from "@/components/ui/big-input";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -12,6 +13,7 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { pb } from "@/lib/pocketbase";
 import {
+  ArrowUp,
   CalendarIcon,
   CheckCircle2,
   Clock,
@@ -74,6 +76,10 @@ function CreateTask() {
     assignees: [],
   });
 
+  const [subtasks, setSubtasks] = useState([{ name: "test1" }]);
+
+  const [subtaskInput, setSubtaskInput] = useState("");
+
   async function fetchDevices() {
     const request = await pb
       .collection("devices")
@@ -109,6 +115,13 @@ function CreateTask() {
         assignees: updatedAssignees,
       };
     });
+  }
+
+  function addSubtask() {
+    setSubtasks((prevState) => {
+      return [...prevState, { name: subtaskInput }];
+    });
+    setSubtaskInput("");
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -287,8 +300,20 @@ function CreateTask() {
       </div>
       <Separator />
       <div>
-        <Subtask name='test' disabled />
-        <Subtask name='test' disabled />
+        {subtasks.map((subtask) => {
+          return <Subtask key={subtask.name} name={subtask.name} disabled />;
+        })}
+        <div className='flex gap-2 mt-2'>
+          <Input
+            placeholder='Add Subtask...'
+            name='subtask'
+            value={subtaskInput}
+            onChange={(e: any) => setSubtaskInput(e.target.value)}
+          />
+          <Button className='p-2' onClick={addSubtask}>
+            <ArrowUp size='1.3em' />
+          </Button>
+        </div>
       </div>
       <Separator />
       <Button

@@ -20,7 +20,7 @@ const Subtask: FunctionComponent<SubtaskProps> = ({ name, disabled }) => {
       <Trash2
         size='1.1em'
         color='#adadad'
-        className='ml-auto mr-2'
+        className='ml-auto'
         onClick={() => alert("delete subtask")}
       />
     </div>
