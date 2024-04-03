@@ -30,6 +30,8 @@ import {
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import Subtask from "@/components/Subtask";
 
 // interface User {
 //   collectionId: string;
@@ -283,6 +285,12 @@ function CreateTask() {
           </PopoverContent>
         </Popover>
       </div>
+      <Separator />
+      <div>
+        <Subtask name='test' disabled />
+        <Subtask name='test' disabled />
+      </div>
+      <Separator />
       <Button
         variant='outline'
         className='w-full'
