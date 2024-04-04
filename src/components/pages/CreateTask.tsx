@@ -90,6 +90,7 @@ function CreateTask() {
       .getFullList({ requestKey: null });
     setDevices(request);
   }
+  console.log(task);
 
   async function fetchUsers() {
     const request = await pb
@@ -313,7 +314,16 @@ function CreateTask() {
       <Separator />
       <div>
         {subtasks.map((subtask: any) => {
-          return <Subtask key={subtask.id} name={subtask.name} disabled />;
+          return (
+            <Subtask
+              key={subtask.id}
+              id={subtask.id}
+              name={subtask.name}
+              disabled
+              setTask={setTask}
+              setSubtasks={setSubtasks}
+            />
+          );
         })}
         <div className='flex gap-2 mt-2'>
           <Input
