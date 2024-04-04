@@ -54,6 +54,7 @@ interface Task {
   status: string;
   due: string;
   assignees: string[];
+  subtasks: string[];
 }
 
 function CreateTask() {
@@ -62,6 +63,10 @@ function CreateTask() {
   const [devices, setDevices] = useState<any | null>([]);
 
   const [users, setUsers] = useState<any | null>([]);
+
+  const [subtasks, setSubtasks] = useState<any | null>([]);
+
+  const [subTasksLoading, setSubtasksLoading] = useState(false);
 
   const [assignSelect, setAssignSelect] = useState("");
 
@@ -74,9 +79,8 @@ function CreateTask() {
     status: "pending",
     due: "",
     assignees: [],
+    subtasks: [],
   });
-
-  const [subtasks, setSubtasks] = useState([{ name: "test1" }]);
 
   const [subtaskInput, setSubtaskInput] = useState("");
 
@@ -117,11 +121,19 @@ function CreateTask() {
     });
   }
 
-  function addSubtask() {
-    setSubtasks((prevState) => {
-      return [...prevState, { name: subtaskInput }];
-    });
+  async function addSubtask() {
     setSubtaskInput("");
+    setSubtasksLoading(true);
+    const request = await pb
+      .collection("subtasks")
+      .create({ name: subtaskInput });
+    setTask((prevState) => {
+      return { ...prevState, subtasks: [...prevState.subtasks, request.id] };
+    });
+    setSubtasks((prevState: any) => {
+      return [...prevState, request];
+    });
+    setSubtasksLoading(false);
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -300,8 +312,8 @@ function CreateTask() {
       </div>
       <Separator />
       <div>
-        {subtasks.map((subtask) => {
-          return <Subtask key={subtask.name} name={subtask.name} disabled />;
+        {subtasks.map((subtask: any) => {
+          return <Subtask key={subtask.id} name={subtask.name} disabled />;
         })}
         <div className='flex gap-2 mt-2'>
           <Input
@@ -310,7 +322,11 @@ function CreateTask() {
             value={subtaskInput}
             onChange={(e: any) => setSubtaskInput(e.target.value)}
           />
-          <Button className='p-2' onClick={addSubtask}>
+          <Button
+            className='p-2'
+            onClick={addSubtask}
+            disabled={!subtaskInput || subTasksLoading}
+          >
             <ArrowUp size='1.3em' />
           </Button>
         </div>
