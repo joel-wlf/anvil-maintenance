@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 // interface User {
 //   collectionId: string;
@@ -54,6 +55,7 @@ interface Task {
   title: string;
   status: string;
   due: string;
+  device: string;
   assignees: string[];
   subtasks: string[];
   notes: string;
@@ -62,6 +64,8 @@ interface Task {
 function CreateTask() {
   const navigate = useNavigate();
 
+  const { toast } = useToast();
+
   const [devices, setDevices] = useState<any | null>([]);
 
   const [users, setUsers] = useState<any | null>([]);
@@ -69,6 +73,8 @@ function CreateTask() {
   const [subtasks, setSubtasks] = useState<any | null>([]);
 
   const [subTasksLoading, setSubtasksLoading] = useState(false);
+
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const [assignSelect, setAssignSelect] = useState("");
 
@@ -80,12 +86,12 @@ function CreateTask() {
     title: "",
     status: "pending",
     due: "",
+    device: "",
     assignees: [],
     subtasks: [],
     notes: "",
   });
 
-  console.log(task);
   const [subtaskInput, setSubtaskInput] = useState("");
 
   async function fetchDevices() {
@@ -163,6 +169,23 @@ function CreateTask() {
     fetchDevices();
     fetchUsers();
   }, []);
+
+  async function submit() {
+    try {
+      setSubmitLoading(true);
+      if (task.title == "") throw new Error("Please enter a title.");
+      if (task.status == "") throw new Error("Please select a status.");
+      if (task.due == "") throw new Error("Please select a due date.");
+      if (task.device == "") throw new Error("Please select a due date.");
+      await pb.collection("tasks").create(task);
+      toast({ title: "Successfully created task." });
+      setSubmitLoading(false);
+      navigate("/tasks");
+    } catch (err: any) {
+      setSubmitLoading(false);
+      toast({ title: err.message, variant: "destructive" });
+    }
+  }
 
   return (
     <div className='flex flex-col gap-4 py-5 px-3'>
@@ -330,7 +353,7 @@ function CreateTask() {
             />
           );
         })}
-        <div className='flex gap-2 mt-2'>
+        <div className='flex gap-2 my-2'>
           <Input
             placeholder='Add Subtask...'
             name='subtask'
@@ -354,11 +377,8 @@ function CreateTask() {
         value={task.notes}
         onChange={handleChange}
       />
-      <Button
-        className='w-full'
-        onClick={() => pb.collection("tasks").create(task)}
-      >
-        Create Task
+      <Button className='w-full' onClick={submit} disabled={submitLoading}>
+        {submitLoading ? "Loading..." : "Create Task"}
       </Button>
     </div>
   );
