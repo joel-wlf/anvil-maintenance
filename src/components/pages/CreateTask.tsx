@@ -1,6 +1,14 @@
+import Subtask from "@/components/Subtask";
+import { Badge } from "@/components/ui/badge";
 import { BigInput } from "@/components/ui/big-input";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -10,8 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { pb } from "@/lib/pocketbase";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 import {
   ArrowUp,
   CalendarIcon,
@@ -23,17 +35,6 @@ import {
 } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
-import Subtask from "@/components/Subtask";
 
 // interface User {
 //   collectionId: string;
@@ -55,6 +56,7 @@ interface Task {
   due: string;
   assignees: string[];
   subtasks: string[];
+  notes: string;
 }
 
 function CreateTask() {
@@ -80,8 +82,10 @@ function CreateTask() {
     due: "",
     assignees: [],
     subtasks: [],
+    notes: "",
   });
 
+  console.log(task);
   const [subtaskInput, setSubtaskInput] = useState("");
 
   async function fetchDevices() {
@@ -90,7 +94,6 @@ function CreateTask() {
       .getFullList({ requestKey: null });
     setDevices(request);
   }
-  console.log(task);
 
   async function fetchUsers() {
     const request = await pb
@@ -137,7 +140,9 @@ function CreateTask() {
     setSubtasksLoading(false);
   }
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     setTask((prevState) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
@@ -160,7 +165,7 @@ function CreateTask() {
   }, []);
 
   return (
-    <div className='flex flex-col gap-5 py-5 px-3'>
+    <div className='flex flex-col gap-4 py-5 px-3'>
       <BigInput
         onChange={handleChange}
         name='title'
@@ -342,8 +347,14 @@ function CreateTask() {
         </div>
       </div>
       <Separator />
+      <Textarea
+        className='resize-none'
+        placeholder='Notes...'
+        name='notes'
+        value={task.notes}
+        onChange={handleChange}
+      />
       <Button
-        variant='outline'
         className='w-full'
         onClick={() => pb.collection("tasks").create(task)}
       >
