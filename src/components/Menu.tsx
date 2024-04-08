@@ -11,14 +11,16 @@ import {
   ShieldHalf,
   MenuIcon,
   X,
+  ArrowLeft,
 } from "lucide-react";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
-import { Separator } from "./ui/separator";
-import MenuItem from "./MenuItem";
-import MobileMenuItem from "./MobileMenuItem";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import MenuItem from "@/components/MenuItem";
+import { MenuModeContext } from "@/App";
+import MobileMenuItem from "@/components/MobileMenuItem";
 
 interface MenuProps {
   children: React.ReactNode;
@@ -31,10 +33,19 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
 
   const navigate = useNavigate();
 
+  const menuMode = useContext(MenuModeContext).mode;
+
+  const setMenuMode = useContext(MenuModeContext).setMode;
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   function toggleMenu() {
     setMenuOpen((prevState) => !prevState);
+  }
+
+  function navigateTo(route: string) {
+    setMenuMode("normal")
+    navigate(route)
   }
 
   function logout() {
@@ -68,7 +79,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             <Button
               className='w-full'
               variant='outline'
-              onClick={() => navigate("/settings")}
+              onClick={() => navigateTo("/settings")}
             >
               <Settings className='mr-2' size='1.3em' />
               Settings
@@ -112,10 +123,25 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
           <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
-            <Anvil className='fadein mr-2' size='1.7em' />
-            <p className='fadein text-white mr-auto font-semibold'>
-              {pb.authStore.model?.name}
-            </p>
+            {menuMode == "normal" ? (
+              <>
+                <Anvil className='fadein mr-2' size='1.7em' />
+                <p className='fadein text-white mr-auto font-semibold'>
+                  {pb.authStore.model?.name}
+                </p>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant='ghost'
+                  className='p-1 m-0 fadedown mr-auto'
+                  onClick={() => navigateTo("/tasks")}
+                >
+                  <ArrowLeft color='#adadad' />
+                </Button>
+              </>
+            )}
+
             <Button
               variant='ghost'
               className='p-[5px] m-0 fadedown'
