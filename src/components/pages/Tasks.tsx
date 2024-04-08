@@ -15,10 +15,15 @@ function Tasks() {
   return (
     <div>
       <p className='text-2xl md:text-3xl font-semibold md:pt-2'>Tasks</p>
-      <Button variant='outline' onClick={() => navigate("/tasks/createTask")}>
+      <Button
+        variant='outline'
+        className='my-3 w-full'
+        onClick={() => navigate("/tasks/createTask")}
+      >
         <Plus className='mr-2' size='1.3em' />
         Create Task
       </Button>
+      
     </div>
   );
 }

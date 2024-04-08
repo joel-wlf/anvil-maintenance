@@ -1,26 +1,25 @@
-import { pb } from "@/lib/pocketbase";
-import {
-  Anvil,
-  Compass,
-  LogOut,
-  Settings,
-  LayoutDashboard,
-  LandPlot,
-  CheckCircle,
-  FileBadge,
-  ShieldHalf,
-  MenuIcon,
-  X,
-  ArrowLeft,
-} from "lucide-react";
-import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import MenuItem from "@/components/MenuItem";
+import MobileMenuItem from "@/components/MobileMenuItem";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import MenuItem from "@/components/MenuItem";
-import { MenuModeContext } from "@/App";
-import MobileMenuItem from "@/components/MobileMenuItem";
+import { pb } from "@/lib/pocketbase";
+import {
+  Anvil,
+  ArrowLeft,
+  CheckCircle,
+  Compass,
+  FileBadge,
+  LandPlot,
+  LayoutDashboard,
+  LogOut,
+  MenuIcon,
+  Settings,
+  ShieldHalf,
+  X,
+} from "lucide-react";
+import { FunctionComponent, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface MenuProps {
   children: React.ReactNode;
@@ -33,9 +32,9 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const menuMode = useContext(MenuModeContext).mode;
+  const location = useLocation();
 
-  const setMenuMode = useContext(MenuModeContext).setMode;
+  const { pathname } = location;
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -43,10 +42,6 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
     setMenuOpen((prevState) => !prevState);
   }
 
-  function navigateTo(route: string) {
-    setMenuMode("normal")
-    navigate(route)
-  }
 
   function logout() {
     pb.authStore.clear();
@@ -79,7 +74,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             <Button
               className='w-full'
               variant='outline'
-              onClick={() => navigateTo("/settings")}
+              onClick={() => navigate("/settings")}
             >
               <Settings className='mr-2' size='1.3em' />
               Settings
@@ -123,7 +118,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
           <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
-            {menuMode == "normal" ? (
+            {pathname != "/tasks/createTask" ? (
               <>
                 <Anvil className='fadein mr-2' size='1.7em' />
                 <p className='fadein text-white mr-auto font-semibold'>
@@ -135,7 +130,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
                 <Button
                   variant='ghost'
                   className='p-1 m-0 fadedown mr-auto'
-                  onClick={() => navigateTo("/tasks")}
+                  onClick={() => navigate("/tasks")}
                 >
                   <ArrowLeft color='#adadad' />
                 </Button>
