@@ -3,11 +3,38 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { differenceInDays } from "date-fns"
 
 function Tasks() {
   const navigate = useNavigate();
 
   const [tasks, setTasks] = useState<any | null>([]);
+
+  const currentDate = new Date()
+
+  const dueTasks = tasks.filter((task: any) => {
+    if (differenceInDays(task.due, currentDate) <= 7 && differenceInDays(task.due, currentDate) >= 0) {
+      return task;
+    }
+  })
+
+  const assignedTasks = tasks.filter((task: any) => {
+    if (task.assignees.includes(pb.authStore.model?.id)) {
+      return task;
+    }
+  })
+
+  const allTasks = tasks.filter((task: any) => {
+    if (task.status != "done") {
+      return task;
+    }
+  })
+
+  const doneTasks = tasks.filter((task: any) => {
+    if (task.status == "done") {
+      return task;
+    }
+  })
 
   async function fetchTasks() {
     const request = await pb.collection("tasks").getFullList({
@@ -34,7 +61,7 @@ function Tasks() {
         <Plus className='mr-2' size='1.3em' />
         Create Task
       </Button>
-      {JSON.stringify(tasks)}
+      {JSON.stringify(dueTasks)}
     </div>
   );
 }
