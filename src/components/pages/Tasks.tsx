@@ -8,6 +8,7 @@ import TaskViewCard from "@/components/TaskViewCard";
 import { RecordModel } from "pocketbase";
 
 export interface Task {
+  id: string;
   title: string;
   status: "pending" | "progress" | "done";
   created_by: string;
@@ -55,6 +56,7 @@ function Tasks() {
     const request = await pb.collection("tasks").getFullList({
       sort: "-created",
       requestKey: null,
+      expand: "device,device.location",
     });
     setTasks(request);
   }
@@ -76,7 +78,11 @@ function Tasks() {
         <Plus className='mr-2' size='1.3em' />
         Create Task
       </Button>
-      {dueTasks?.length != 0 && <TaskViewCard type='due' data={dueTasks} />}
+      {dueTasks?.length != 0 ? (
+        <TaskViewCard type='due' data={dueTasks} />
+      ) : (
+        <TaskViewCard type='due' noData />
+      )}
     </div>
   );
 }

@@ -8,12 +8,14 @@ import TaskRow from "@/components/TaskRow";
 interface TaskViewCardProps {
   type: "due" | "assigned" | "all" | "done";
   collapsed?: boolean;
+  noData?: boolean;
   data?: any[];
 }
 
 const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
   type,
   collapsed,
+  noData,
   data,
 }) => {
   const title = () => {
@@ -40,18 +42,27 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
     }
   };
 
+  const tasks = () => {
+    if (noData) {
+      return "No Tasks here";
+    }
+    if (data) {
+      return data.map((task: Task) => {
+        return <TaskRow key={task.id} data={task} />;
+      });
+    }
+    if (!data) {
+      return <TaskRow loading />
+    }
+  };
+
   return (
     <Card className='p-3'>
       <div className='flex items-center gap-3 w-full text-lg font-semibold'>
         {icon()}
         {title()}
       </div>
-      <Separator className='my-2' />
-      {data
-        ? data.map((task: Task) => {
-            return <TaskRow data={task} loading={false} />;
-          })
-        : "Loading"}
+      {tasks()}
     </Card>
   );
 };
