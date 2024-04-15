@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, MapPin, User } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { FunctionComponent } from "react";
 

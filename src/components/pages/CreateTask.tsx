@@ -171,7 +171,7 @@ function CreateTask() {
       if (task.title == "") throw new Error("Please enter a title.");
       if (task.status == "") throw new Error("Please select a status.");
       if (task.due == "") throw new Error("Please select a due date.");
-      if (task.device == "") throw new Error("Please select a due date.");
+      if (task.device == "") throw new Error("Please select a device date.");
       await pb.collection("tasks").create(task);
       toast({ title: "Successfully created task." });
       setSubmitLoading(false);
