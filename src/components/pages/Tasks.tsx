@@ -90,14 +90,14 @@ function Tasks() {
           <TaskViewCard type='assigned' noData />
         )}
         {allTasks?.length != 0 ? (
-          <TaskViewCard type='all' data={allTasks} />
+          <TaskViewCard type='all' data={allTasks} collapsible />
         ) : (
-          <TaskViewCard type='all' noData />
+          <TaskViewCard type='all' noData collapsible />
         )}
         {doneTasks?.length != 0 ? (
-          <TaskViewCard type='done' data={doneTasks} />
+          <TaskViewCard type='done' data={doneTasks} collapsible />
         ) : (
-          <TaskViewCard type='done' noData />
+          <TaskViewCard type='done' noData collapsible />
         )}
       </div>
     </div>

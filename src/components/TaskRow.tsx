@@ -2,6 +2,7 @@ import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { FunctionComponent } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 interface TaskRowProps {
   data?: any;
@@ -9,11 +10,14 @@ interface TaskRowProps {
 }
 
 const TaskRow: FunctionComponent<TaskRowProps> = ({ data, loading }) => {
+
+  const navigate = useNavigate()
+
   if (!loading) {
     return (
       <>
         <Separator className='my-2' />
-        <div className='flex'>
+        <div className='flex' onClick={() => navigate(`/tasks/${data.id}`)}>
           <div className='w-5/6'>
             <div className='text-lg overflow-scroll'>
               {data.title}

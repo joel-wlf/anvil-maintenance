@@ -1,22 +1,32 @@
-import { Card } from "@/components/ui/card";
-import { CheckCircle2, Clock, Layers, User } from "lucide-react";
-import { FunctionComponent } from "react";
-import { Task } from "@/components/pages/Tasks";
 import TaskRow from "@/components/TaskRow";
+import { Task } from "@/components/pages/Tasks";
+import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  Clock,
+  Layers,
+  User,
+} from "lucide-react";
+import { FunctionComponent, useState } from "react";
 
 interface TaskViewCardProps {
   type: "due" | "assigned" | "all" | "done";
-  collapsed?: boolean;
+  collapsible?: boolean;
   noData?: boolean;
   data?: any[];
 }
 
 const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
   type,
+  collapsible,
   noData,
   data,
 }) => {
+  const [collapsed, setCollapsed] = useState(collapsible);
+
   const title = () => {
     if (type == "due") {
       return "Due Tasks";
@@ -64,11 +74,25 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
 
   return (
     <Card className='p-3'>
-      <div className='flex items-center gap-3 w-full text-lg font-semibold'>
-        {icon()}
-        {title()}
+      <div
+        className='flex items-center gap-3 w-full text-lg font-semibold'
+        onClick={() => setCollapsed((prevState) => !prevState)}
+      >
+        <div className='flex gap-2 w-5/6'>
+          {icon()}
+          {title()}
+        </div>
+        {collapsible && (
+          <div className='flex items-center justify-center w-1/6'>
+            {collapsed ? (
+              <ChevronRight size={18} color='#adadad' />
+            ) : (
+              <ChevronDown size={18} color='#adadad' />
+            )}
+          </div>
+        )}
       </div>
-      {tasks()}
+      {!collapsed && tasks()}
     </Card>
   );
 };
