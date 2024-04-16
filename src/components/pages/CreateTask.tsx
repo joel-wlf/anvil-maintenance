@@ -1,3 +1,4 @@
+import { MenuModeContext } from "@/App";
 import Subtask from "@/components/Subtask";
 import { Badge } from "@/components/ui/badge";
 import { BigInput } from "@/components/ui/big-input";
@@ -21,6 +22,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useToast } from "@/components/ui/use-toast";
 import { pb } from "@/lib/pocketbase";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -33,9 +35,8 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
 
 // interface User {
 //   collectionId: string;
@@ -65,6 +66,8 @@ function CreateTask() {
   const navigate = useNavigate();
 
   const { toast } = useToast();
+
+  const setMenuMode = useContext(MenuModeContext).setMode;
 
   const [devices, setDevices] = useState<any | null>([]);
 
@@ -162,21 +165,13 @@ function CreateTask() {
     }
   }, [due]);
 
-  useEffect(() => {
-    if (!pb.authStore.isValid) {
-      navigate("/login");
-    }
-    fetchDevices();
-    fetchUsers();
-  }, []);
-
   async function submit() {
     try {
       setSubmitLoading(true);
       if (task.title == "") throw new Error("Please enter a title.");
       if (task.status == "") throw new Error("Please select a status.");
       if (task.due == "") throw new Error("Please select a due date.");
-      if (task.device == "") throw new Error("Please select a due date.");
+      if (task.device == "") throw new Error("Please select a device date.");
       await pb.collection("tasks").create(task);
       toast({ title: "Successfully created task." });
       setSubmitLoading(false);
@@ -186,6 +181,15 @@ function CreateTask() {
       toast({ title: err.message, variant: "destructive" });
     }
   }
+
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      navigate("/login");
+    }
+    setMenuMode("task");
+    fetchDevices();
+    fetchUsers();
+  }, []);
 
   return (
     <div className='flex flex-col gap-4 py-5 px-3'>

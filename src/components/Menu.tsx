@@ -1,24 +1,25 @@
+import MenuItem from "@/components/MenuItem";
+import MobileMenuItem from "@/components/MobileMenuItem";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { pb } from "@/lib/pocketbase";
 import {
   Anvil,
-  Compass,
-  LogOut,
-  Settings,
-  LayoutDashboard,
-  LandPlot,
+  ArrowLeft,
   CheckCircle,
+  Compass,
   FileBadge,
-  ShieldHalf,
+  LandPlot,
+  LayoutDashboard,
+  LogOut,
   MenuIcon,
+  Settings,
+  ShieldHalf,
   X,
 } from "lucide-react";
 import { FunctionComponent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
-import { Separator } from "./ui/separator";
-import MenuItem from "./MenuItem";
-import MobileMenuItem from "./MobileMenuItem";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface MenuProps {
   children: React.ReactNode;
@@ -31,11 +32,16 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  const { pathname } = location;
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   function toggleMenu() {
     setMenuOpen((prevState) => !prevState);
   }
+
 
   function logout() {
     pb.authStore.clear();
@@ -112,10 +118,25 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
           <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
-            <Anvil className='fadein mr-2' size='1.7em' />
-            <p className='fadein text-white mr-auto font-semibold'>
-              {pb.authStore.model?.name}
-            </p>
+            {pathname != "/tasks/createTask" ? (
+              <>
+                <Anvil className='fadein mr-2' size='1.7em' />
+                <p className='fadein text-white mr-auto font-semibold'>
+                  {pb.authStore.model?.name}
+                </p>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant='ghost'
+                  className='p-1 m-0 fadedown mr-auto'
+                  onClick={() => navigate("/tasks")}
+                >
+                  <ArrowLeft color='#adadad' />
+                </Button>
+              </>
+            )}
+
             <Button
               variant='ghost'
               className='p-[5px] m-0 fadedown'
