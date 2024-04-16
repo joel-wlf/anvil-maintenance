@@ -1,6 +1,7 @@
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { FunctionComponent } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TaskRowProps {
   data?: any;
@@ -29,6 +30,21 @@ const TaskRow: FunctionComponent<TaskRowProps> = ({ data, loading }) => {
           <div className='flex items-center justify-center w-1/6'>
             <ArrowRight size='1.3em' color='#adadad' />
           </div>
+        </div>
+      </>
+    );
+  } else if (loading) {
+    return (
+      <>
+        <Separator className='my-2' />
+        <div className='flex flex-col gap-1'>
+          <Skeleton className='h-4 w-52' />
+          <Skeleton className='h-4 w-64' />
+        </div>
+        <Separator className='my-2' />
+        <div className='flex flex-col gap-1'>
+          <Skeleton className='h-4 w-52' />
+          <Skeleton className='h-4 w-64' />
         </div>
       </>
     );

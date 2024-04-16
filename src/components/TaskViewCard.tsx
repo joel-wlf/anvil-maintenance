@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, Clock, Layers, User } from "lucide-react";
 import { FunctionComponent } from "react";
 import { Task } from "@/components/pages/Tasks";
 import TaskRow from "@/components/TaskRow";
+import { Separator } from "@/components/ui/separator";
 
 interface TaskViewCardProps {
   type: "due" | "assigned" | "all" | "done";
@@ -14,7 +14,6 @@ interface TaskViewCardProps {
 
 const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
   type,
-  collapsed,
   noData,
   data,
 }) => {
@@ -44,7 +43,14 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
 
   const tasks = () => {
     if (noData) {
-      return "No Tasks here";
+      return (
+        <>
+          <Separator className='my-2' />
+          <div className='text-center text-[#adadad]'>
+            No tasks are in this category.
+          </div>
+        </>
+      );
     }
     if (data) {
       return data.map((task: Task) => {
@@ -52,7 +58,7 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
       });
     }
     if (!data) {
-      return <TaskRow loading />
+      return <TaskRow loading />;
     }
   };
 

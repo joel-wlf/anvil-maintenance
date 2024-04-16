@@ -54,7 +54,7 @@ function Tasks() {
 
   async function fetchTasks() {
     const request = await pb.collection("tasks").getFullList({
-      sort: "-created",
+      sort: "due",
       requestKey: null,
       expand: "device,device.location",
     });
@@ -88,6 +88,16 @@ function Tasks() {
           <TaskViewCard type='assigned' data={assignedTasks} />
         ) : (
           <TaskViewCard type='assigned' noData />
+        )}
+        {allTasks?.length != 0 ? (
+          <TaskViewCard type='all' data={allTasks} />
+        ) : (
+          <TaskViewCard type='all' noData />
+        )}
+        {doneTasks?.length != 0 ? (
+          <TaskViewCard type='done' data={doneTasks} />
+        ) : (
+          <TaskViewCard type='done' noData />
         )}
       </div>
     </div>
