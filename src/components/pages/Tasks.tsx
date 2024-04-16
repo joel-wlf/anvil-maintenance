@@ -78,11 +78,18 @@ function Tasks() {
         <Plus className='mr-2' size='1.3em' />
         Create Task
       </Button>
-      {dueTasks?.length != 0 ? (
-        <TaskViewCard type='due' data={dueTasks} />
-      ) : (
-        <TaskViewCard type='due' noData />
-      )}
+      <div className='flex flex-col gap-3'>
+        {dueTasks?.length != 0 ? (
+          <TaskViewCard type='due' data={dueTasks} />
+        ) : (
+          <TaskViewCard type='due' noData />
+        )}
+        {assignedTasks?.length != 0 ? (
+          <TaskViewCard type='assigned' data={assignedTasks} />
+        ) : (
+          <TaskViewCard type='assigned' noData />
+        )}
+      </div>
     </div>
   );
 }
