@@ -36,6 +36,7 @@ function App() {
         <MenuModeContext.Provider value={value}>
           <Routes>
             <Route path='/'>
+              <Route index element={<Auth />} />
               <Route path='/login' element={<Auth />} />
               <Route
                 path='/dashboard'
