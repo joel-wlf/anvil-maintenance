@@ -35,7 +35,6 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { RecordModel } from "pocketbase";
 import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -117,8 +116,10 @@ function CreateTask() {
   async function fetchTask() {
     const request = await pb
       .collection("tasks")
-      .getOne(taskId!, { requestKey: null });
+      .getOne(taskId!, { expand: "subtasks", requestKey: null });
     setTask(request);
+    setDue(request.due);
+    setSubtasks(request.expand?.subtasks);
   }
 
   function assignUser() {
@@ -271,6 +272,7 @@ function CreateTask() {
             return { ...prevState, device: e };
           })
         }
+        value={task.device}
       >
         <SelectTrigger className='w-full'>
           <SelectValue placeholder='Select Device' />
@@ -356,7 +358,7 @@ function CreateTask() {
       </div>
       <Separator />
       <div>
-        {subtasks.map((subtask: any) => {
+        {/* {subtasks.map((subtask: any) => {
           return (
             <Subtask
               key={subtask.id}
@@ -367,7 +369,7 @@ function CreateTask() {
               setSubtasks={setSubtasks}
             />
           );
-        })}
+        })} */}
         <div className='flex gap-2 my-2'>
           <Input
             placeholder='Add Subtask...'
