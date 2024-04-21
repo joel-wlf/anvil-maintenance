@@ -7,6 +7,7 @@ interface SubtaskProps {
   id: string;
   name: string;
   disabled?: boolean;
+  deleteDisabled?: boolean;
   setSubtasks: (subtasks: any | null) => void;
   setTask: (subtasks: any | null) => void;
 }
@@ -15,8 +16,9 @@ const Subtask: FunctionComponent<SubtaskProps> = ({
   id,
   name,
   disabled,
+  deleteDisabled,
   setSubtasks,
-  setTask
+  setTask,
 }) => {
   async function deleteSubtask() {
     setSubtasks((prevState: any) => {
@@ -37,19 +39,21 @@ const Subtask: FunctionComponent<SubtaskProps> = ({
 
   return (
     <div className='flex items-center gap-2 w-full p-2'>
-      <Checkbox id='subtask' disabled={disabled} />
+      <Checkbox id='subtask' disabled={disabled}/>
       <label
         htmlFor='subtask'
         className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
       >
         {name}
       </label>
+      {!deleteDisabled &&
       <Trash2
         size='1.1em'
         color='#adadad'
         className='ml-auto'
         onClick={deleteSubtask}
       />
+}
     </div>
   );
 };

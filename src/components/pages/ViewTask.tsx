@@ -1,8 +1,143 @@
-import { useParams } from "react-router-dom";
+import { MenuModeContext } from "@/App";
+import AssignSelect from "@/components/AssignSelect";
+import DeviceSelect from "@/components/DeviceSelect";
+import DueSelect from "@/components/DueSelect";
+import StatusToggle from "@/components/StatusToggle";
+import SubtaskView from "@/components/SubtaskView";
+import { Subtask, Task } from "@/components/pages/CreateTask";
+import { BigInput } from "@/components/ui/big-input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { pb } from "@/lib/pocketbase";
+import { format } from "date-fns";
+import { RecordModel } from "pocketbase";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ViewTask() {
+  const navigate = useNavigate();
+
+  const { toast } = useToast();
+
   const { taskId } = useParams();
-  return <>{taskId}</>;
+
+  const setMenuMode = useContext(MenuModeContext).setMode;
+
+  const [disabled, setDisabled] = useState(false);
+
+  const [due, setDue] = useState<Date>();
+
+  const [subtasks, setSubtasks] = useState<Subtask[] | RecordModel[] | null>(
+    []
+  );
+
+  const [task, setTask] = useState<Task | RecordModel>({
+    created_by: pb.authStore.model?.id,
+    title: "",
+    status: "pending",
+    due: "",
+    device: "",
+    assignees: [],
+    subtasks: [],
+    notes: "",
+  });
+
+
+  async function fetchTask() {
+    const request = await pb
+      .collection("tasks")
+      .getOne(taskId!, { expand: "subtasks", requestKey: null });
+    setTask(request);
+    setDue(request.due);
+    setSubtasks(request.expand?.subtasks);
+  }
+
+  function handleChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setTask((prevState: any) => {
+      return { ...prevState, [e.target.name]: e.target.value };
+    });
+  }
+
+  async function submit() {
+    try {
+      setDisabled(true);
+      if (task.title == "") throw new Error("Please enter a title.");
+      if (task.status == "") throw new Error("Please select a status.");
+      if (task.due == "") throw new Error("Please select a due date.");
+      if (task.device == "") throw new Error("Please select a device date.");
+      await pb.collection("tasks").create(task);
+      toast({ title: "Successfully created task." });
+      setDisabled(false);
+      navigate("/tasks");
+    } catch (err: any) {
+      setDisabled(false);
+      toast({ title: err.message, variant: "destructive" });
+    }
+  }
+
+  useEffect(() => {
+    if (due) {
+      setTask((prevState: any) => {
+        return { ...prevState, due: format(due, "yyyy-MM-dd") };
+      });
+    }
+  }, [due]);
+
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      navigate("/login");
+    }
+    setMenuMode("task");
+    fetchTask();
+  }, []);
+
+  return (
+      <div className='flex flex-col gap-4 py-5 px-3'>
+        <BigInput
+          onChange={handleChange}
+          name='title'
+          value={task.title}
+          placeholder='Task Title...'
+          disabled={disabled}
+          className='p-0'
+        />
+        <StatusToggle
+          setTask={setTask}
+          value={task.status}
+          defaultValue='pending'
+          disabled={disabled}
+        />
+        <DueSelect due={due} setDue={setDue} disabled={disabled} />
+        <DeviceSelect setTask={setTask} disabled={disabled} />
+        <Separator />
+        <AssignSelect task={task} setTask={setTask} disabled={disabled} />
+        <Separator />
+        <SubtaskView
+          task={task}
+          setTask={setTask}
+          subtasks={subtasks}
+          setSubtasks={setSubtasks}
+          disabled={disabled}
+          changeDisabled={disabled}
+        />
+        <Separator />
+        <Textarea
+          className='resize-none'
+          placeholder='Notes...'
+          name='notes'
+          value={task.notes}
+          onChange={handleChange}
+          disabled={disabled}
+        />
+        <Button className='w-full' onClick={submit} disabled={disabled}>
+          {disabled ? "Loading..." : "Create Task"}
+        </Button>
+      </div>
+  );
 }
 
 export default ViewTask;
