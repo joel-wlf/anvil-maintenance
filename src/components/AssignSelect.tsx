@@ -19,13 +19,15 @@ import { RecordModel } from "pocketbase";
 import { FunctionComponent, useEffect, useState } from "react";
 
 interface AssignSelectProps {
-  task: Task;
-  setTask: (cb: (value: Task) => Task) => void;
+  task: Task | RecordModel;
+  setTask: (cb: (value: Task | RecordModel) => Task) => void;
+  disabled?: boolean;
 }
 
 const AssignSelect: FunctionComponent<AssignSelectProps> = ({
   task,
   setTask,
+  disabled,
 }) => {
   const [users, setUsers] = useState<User[] | RecordModel[] | null>([]);
 
@@ -41,16 +43,18 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
   }
 
   function removeAssignee(idToRemove: string) {
-    setTask((prevState: any) => {
-      const updatedAssignees = prevState.assignees.filter(
-        (id: string) => id !== idToRemove
-      );
+    if (!disabled) {
+      setTask((prevState: any) => {
+        const updatedAssignees = prevState.assignees.filter(
+          (id: string) => id !== idToRemove
+        );
 
-      return {
-        ...prevState,
-        assignees: updatedAssignees,
-      };
-    });
+        return {
+          ...prevState,
+          assignees: updatedAssignees,
+        };
+      });
+    }
   }
 
   function assignUser() {
@@ -69,58 +73,61 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
 
   return (
     <div className='flex gap-2 flex-wrap'>
-      {task.assignees.map((assignee: any) => {
-        const userObj = users!.find((user: any) => user.id === assignee);
+      {users &&
+        task.assignees.map((assignee: any) => {
+          const userObj = users.find((user: any) => user.id === assignee);
 
-        return (
-          <Badge
-            variant='outline'
-            key={assignee}
-            className='py-1 px-2'
-            onClick={() => removeAssignee(assignee)}
-          >
-            <Trash2 size='1em' className='mr-1' />
-            {userObj!.name}
-          </Badge>
-        );
-      })}
-      <Popover open={assignOpen} onOpenChange={setAssignOpen}>
-        <PopoverTrigger>
-          {users!.some(
-            (user: any) =>
-              !task.assignees.some((assignee: any) => assignee === user.id)
-          ) ? (
-            <Badge variant='outline' className='cursor-pointer py-1 px-2'>
-              <Plus size='1em' className='mr-1' />
-              Assign User
+          return (
+            <Badge
+              variant='outline'
+              key={assignee}
+              className='py-1 px-2'
+              onClick={() => removeAssignee(assignee)}
+            >
+              {!disabled && <Trash2 size='1em' className='mr-1' />}
+              {userObj?.name}
             </Badge>
-          ) : null}
-        </PopoverTrigger>
-        <PopoverContent className='flex flex-col gap-2'>
-          <Select onValueChange={(e: any) => setAssignSelect(e.id)}>
-            <SelectTrigger className='w-full'>
-              <SelectValue placeholder='Select User' />
-            </SelectTrigger>
-            <SelectContent>
-              {users!
-                .filter(
-                  (user: any) =>
-                    !task.assignees.some(
-                      (assignee: any) => assignee === user.id
-                    )
-                )
-                .map((user: any) => (
-                  <SelectItem key={user.id} value={user}>
-                    {user.name}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-          <Button className='w-full' onClick={assignUser}>
-            Assign
-          </Button>
-        </PopoverContent>
-      </Popover>
+          );
+        })}
+      {!disabled && (
+        <Popover open={assignOpen} onOpenChange={setAssignOpen}>
+          <PopoverTrigger>
+            {users!.some(
+              (user: any) =>
+                !task.assignees.some((assignee: any) => assignee === user.id)
+            ) ? (
+              <Badge variant='outline' className='cursor-pointer py-1 px-2'>
+                <Plus size='1em' className='mr-1' />
+                Assign User
+              </Badge>
+            ) : null}
+          </PopoverTrigger>
+          <PopoverContent className='flex flex-col gap-2'>
+            <Select onValueChange={(e: any) => setAssignSelect(e.id)}>
+              <SelectTrigger className='w-full'>
+                <SelectValue placeholder='Select User' />
+              </SelectTrigger>
+              <SelectContent>
+                {users!
+                  .filter(
+                    (user: any) =>
+                      !task.assignees.some(
+                        (assignee: any) => assignee === user.id
+                      )
+                  )
+                  .map((user: any) => (
+                    <SelectItem key={user.id} value={user}>
+                      {user.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+            <Button className='w-full' onClick={assignUser}>
+              Assign
+            </Button>
+          </PopoverContent>
+        </Popover>
+      )}
     </div>
   );
 };

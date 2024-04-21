@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { pb } from "@/lib/pocketbase";
 import { format } from "date-fns";
+import { RecordModel } from "pocketbase";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -51,7 +52,7 @@ export interface Task {
   notes: string;
 }
 
-export interface iSubtask {
+export interface Subtask {
   collectionId?: string;
   collectionName?: string;
   created?: Date;
@@ -71,6 +72,10 @@ function CreateTask() {
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [due, setDue] = useState<Date>();
+
+  const [subtasks, setSubtasks] = useState<Subtask[] | RecordModel[] | null>(
+    []
+  );
 
   const [task, setTask] = useState<Task>({
     created_by: pb.authStore.model?.id,
@@ -143,7 +148,12 @@ function CreateTask() {
       <Separator />
       <AssignSelect task={task} setTask={setTask} />
       <Separator />
-      <SubtaskView task={task} setTask={setTask} />
+      <SubtaskView
+        task={task}
+        setTask={setTask}
+        subtasks={subtasks}
+        setSubtasks={setSubtasks}
+      />
       <Separator />
       <Textarea
         className='resize-none'

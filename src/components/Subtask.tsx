@@ -7,6 +7,7 @@ interface SubtaskProps {
   id: string;
   name: string;
   disabled?: boolean;
+  deleteDisabled?: boolean;
   setSubtasks: (subtasks: any | null) => void;
   setTask: (subtasks: any | null) => void;
 }
@@ -15,8 +16,9 @@ const Subtask: FunctionComponent<SubtaskProps> = ({
   id,
   name,
   disabled,
+  deleteDisabled,
   setSubtasks,
-  setTask
+  setTask,
 }) => {
   async function deleteSubtask() {
     setSubtasks((prevState: any) => {
@@ -44,12 +46,14 @@ const Subtask: FunctionComponent<SubtaskProps> = ({
       >
         {name}
       </label>
+      {!deleteDisabled &&
       <Trash2
         size='1.1em'
         color='#adadad'
         className='ml-auto'
         onClick={deleteSubtask}
       />
+}
     </div>
   );
 };

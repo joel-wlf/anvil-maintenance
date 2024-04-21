@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -13,14 +13,20 @@ import { FunctionComponent } from "react";
 interface DueSelectProps {
   due: Date | undefined;
   setDue: (value: Date | undefined) => void;
+  disabled?: boolean;
 }
 
-const DueSelect: FunctionComponent<DueSelectProps> = ({due, setDue}) => {
+const DueSelect: FunctionComponent<DueSelectProps> = ({
+  due,
+  setDue,
+  disabled,
+}) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant='outline'
+          disabled={disabled || false}
           className={cn(
             "w-full justify-start text-left font-normal",
             !due && "text-muted-foreground"

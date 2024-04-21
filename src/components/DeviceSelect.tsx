@@ -13,10 +13,14 @@ import { Device, Task } from "@/components/pages/CreateTask";
 import { RecordModel } from "pocketbase";
 
 interface DeviceSelectProps {
-  setTask: (cb: (value: Task) => Task) => void;
+  setTask: (cb: (value: Task | RecordModel) => Task) => void;
+  disabled?: boolean;
 }
 
-const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({ setTask }) => {
+const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({
+  setTask,
+  disabled,
+}) => {
   const [devices, setDevices] = useState<Device[] | RecordModel[] | null>([]);
 
   async function fetchDevices() {
@@ -33,10 +37,11 @@ const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({ setTask }) => {
   return (
     <Select
       onValueChange={(e) =>
-        setTask((prevState: Task) => {
+        setTask((prevState: any) => {
           return { ...prevState, device: e };
         })
       }
+      disabled={disabled}
     >
       <SelectTrigger className='w-full'>
         <SelectValue placeholder='Select Device' />

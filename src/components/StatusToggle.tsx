@@ -4,25 +4,28 @@ import { FunctionComponent } from "react";
 
 interface StatusToggleProps {
   setTask: (e: any) => void;
-   value: string;
+  value: string;
   defaultValue: string;
+  disabled?: boolean;
 }
 
 const StatusToggle: FunctionComponent<StatusToggleProps> = ({
   setTask,
   value,
   defaultValue,
+  disabled
 }) => {
   return (
     <ToggleGroup
       onValueChange={(e) =>
-          setTask((prevState: any) => {
-            return { ...prevState, status: e };
-          })
-        }
+        setTask((prevState: any) => {
+          return { ...prevState, status: e };
+        })
+      }
       type='single'
       value={value}
       defaultValue={defaultValue}
+      disabled={disabled || false}
     >
       <ToggleGroupItem
         value='pending'
