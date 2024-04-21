@@ -39,7 +39,7 @@ const Subtask: FunctionComponent<SubtaskProps> = ({
 
   return (
     <div className='flex items-center gap-2 w-full p-2'>
-      <Checkbox id='subtask' disabled={disabled} />
+      <Checkbox id='subtask' disabled={disabled}/>
       <label
         htmlFor='subtask'
         className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'

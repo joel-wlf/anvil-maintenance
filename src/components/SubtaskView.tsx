@@ -13,6 +13,7 @@ interface SubtaskViewProps {
   subtasks: any;
   setSubtasks: any;
   disabled?: boolean;
+  changeDisabled?: boolean
 }
 
 const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
@@ -20,6 +21,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
   subtasks,
   setSubtasks,
   disabled,
+  changeDisabled
 }) => {
   const [subTasksLoading, setSubtasksLoading] = useState(false);
 
@@ -49,7 +51,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
               key={subtask.id}
               id={subtask.id}
               name={subtask.name}
-              disabled
+              disabled={changeDisabled}
               setTask={setTask}
               setSubtasks={setSubtasks}
               deleteDisabled={disabled}
