@@ -76,7 +76,11 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
     <Card className='p-3'>
       <div
         className='flex items-center gap-3 w-full text-lg font-semibold'
-        onClick={() => setCollapsed((prevState) => !prevState)}
+        onClick={() => {
+          if (collapsible) {
+            setCollapsed((prevState) => !prevState);
+          }
+        }}
       >
         <div className='flex gap-2 w-5/6'>
           {icon()}
