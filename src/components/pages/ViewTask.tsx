@@ -68,7 +68,7 @@ function ViewTask() {
     try {
       await pb.collection("tasks").delete(taskId!);
       toast({ title: "Successfully deleted task." });
-      navigate("/tasks")
+      navigate("/tasks");
     } catch (err: any) {
       toast({ title: err.message, variant: "destructive" });
     }
@@ -114,7 +114,7 @@ function ViewTask() {
         value={task.title}
         placeholder='Task Title...'
         disabled={disabled}
-        className='p-0'
+        className='p-0 disabled:opacity-100'
       />
       {mode == "view" && (
         <div className='flex items-center w-full gap-2'>
@@ -157,7 +157,7 @@ function ViewTask() {
       />
       <Separator />
       <Textarea
-        className='resize-none'
+        className='resize-none disabled:opacity-100'
         placeholder='Notes...'
         name='notes'
         value={task.notes}
