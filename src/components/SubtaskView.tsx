@@ -51,6 +51,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
               key={subtask.id}
               id={subtask.id}
               name={subtask.name}
+              done={subtask.done}
               disabled={changeDisabled}
               setTask={setTask}
               setSubtasks={setSubtasks}
