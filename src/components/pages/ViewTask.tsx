@@ -53,9 +53,9 @@ function ViewTask() {
       .getOne(taskId!, { expand: "subtasks", requestKey: null });
     setTask(request);
     setDue(request.due);
-    setSubtasks(request.expand?.subtasks);
+    setSubtasks(request.expand?.subtasks || []);
   }
-
+  
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -145,7 +145,12 @@ function ViewTask() {
       <DueSelect due={due} setDue={setDue} disabled={disabled} />
       <DeviceSelect setTask={setTask} disabled={disabled} />
       <Separator />
-      <AssignSelect task={task} setTask={setTask} disabled={disabled} />
+      <AssignSelect
+        task={task}
+        setTask={setTask}
+        disabled={disabled}
+        mode={mode}
+      />
       <Separator />
       <SubtaskView
         task={task}
@@ -153,6 +158,7 @@ function ViewTask() {
         subtasks={subtasks}
         setSubtasks={setSubtasks}
         disabled={disabled}
+        mode={mode}
         changeDisabled={disabled}
       />
       <Separator />

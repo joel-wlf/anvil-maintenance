@@ -14,7 +14,7 @@ interface SubtaskViewProps {
   setSubtasks: any;
   disabled?: boolean;
   changeDisabled?: boolean;
-  mode?: string
+  mode?: string;
 }
 
 const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
@@ -23,7 +23,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
   setSubtasks,
   disabled,
   changeDisabled,
-  mode
+  mode,
 }) => {
   const [subTasksLoading, setSubtasksLoading] = useState(false);
 
@@ -44,13 +44,19 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
     setSubtasksLoading(false);
   }
 
-  return (
-    <div>
-      {mode == "view" && !subtasks && (
+  function noItems() {
+    if (mode == "view" && subtasks.length == 0) {
+      return (
         <div className='flex items-center justify-center text-[#adadad] w-full'>
           No Subtasks.
         </div>
-      )}
+      );
+    }
+  }
+
+  return (
+    <div>
+      {noItems()}
       {subtasks &&
         subtasks!.map((subtask: any) => {
           return (
