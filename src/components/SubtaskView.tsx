@@ -1,11 +1,11 @@
 import Subtask from "@/components/Subtask";
+import { Task } from "@/components/pages/CreateTask";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowUp } from "lucide-react";
-import { FunctionComponent, useState } from "react";
-import { Task } from "@/components/pages/CreateTask";
-import { RecordModel } from "pocketbase";
 import { pb } from "@/lib/pocketbase";
+import { ArrowUp } from "lucide-react";
+import { RecordModel } from "pocketbase";
+import { FunctionComponent, useState } from "react";
 
 interface SubtaskViewProps {
   task: Task | RecordModel;
@@ -13,7 +13,8 @@ interface SubtaskViewProps {
   subtasks: any;
   setSubtasks: any;
   disabled?: boolean;
-  changeDisabled?: boolean
+  changeDisabled?: boolean;
+  mode?: string
 }
 
 const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
@@ -21,7 +22,8 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
   subtasks,
   setSubtasks,
   disabled,
-  changeDisabled
+  changeDisabled,
+  mode
 }) => {
   const [subTasksLoading, setSubtasksLoading] = useState(false);
 
@@ -44,6 +46,11 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
 
   return (
     <div>
+      {mode == "view" && !subtasks && (
+        <div className='flex items-center justify-center text-[#adadad] w-full'>
+          No Subtasks.
+        </div>
+      )}
       {subtasks &&
         subtasks!.map((subtask: any) => {
           return (

@@ -1,7 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Trash2 } from "lucide-react";
-import { ChangeEvent, FormEvent, FunctionComponent } from "react";
 import { pb } from "@/lib/pocketbase";
+import { Trash2 } from "lucide-react";
+import { FunctionComponent } from "react";
 
 interface SubtaskProps {
   id: string;
