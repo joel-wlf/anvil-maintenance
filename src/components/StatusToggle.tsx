@@ -29,21 +29,21 @@ const StatusToggle: FunctionComponent<StatusToggleProps> = ({
     >
       <ToggleGroupItem
         value='pending'
-        className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-zinc-800'
+        className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-zinc-800 disabled:opacity-100'
       >
         <Clock />
         pending
       </ToggleGroupItem>
       <ToggleGroupItem
         value='progress'
-        className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-amber-800'
+        className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-amber-800 disabled:opacity-100'
       >
         <Construction />
         in progress
       </ToggleGroupItem>
       <ToggleGroupItem
         value='done'
-        className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-emerald-800'
+        className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-emerald-800 disabled:opacity-100'
       >
         <CheckCircle2 />
         done

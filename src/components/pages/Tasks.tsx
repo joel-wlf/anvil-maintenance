@@ -27,8 +27,7 @@ function Tasks() {
 
   const dueTasks = tasks?.filter((task: any) => {
     if (
-      differenceInDays(task.due, currentDate) <= 7 &&
-      differenceInDays(task.due, currentDate) >= 0
+      differenceInDays(task.due, currentDate) <= 7 
     ) {
       return task;
     }

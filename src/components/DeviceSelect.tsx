@@ -43,7 +43,7 @@ const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({
       }
       disabled={disabled}
     >
-      <SelectTrigger className='w-full'>
+      <SelectTrigger className='w-full disabled:opacity-100'>
         <SelectValue placeholder='Select Device' />
       </SelectTrigger>
       <SelectContent>

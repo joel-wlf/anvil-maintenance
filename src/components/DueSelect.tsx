@@ -28,7 +28,7 @@ const DueSelect: FunctionComponent<DueSelectProps> = ({
           variant='outline'
           disabled={disabled || false}
           className={cn(
-            "w-full justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal disabled:opacity-100",
             !due && "text-muted-foreground"
           )}
         >
