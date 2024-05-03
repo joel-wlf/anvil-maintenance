@@ -50,6 +50,7 @@ export interface Task {
   assignees: string[];
   subtasks: string[];
   notes: string;
+  expand?: any;
 }
 
 export interface Subtask {
