@@ -20,8 +20,6 @@ function Workflow() {
 
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(1);
-
   const [loading, setLoading] = useState(false);
 
   const [subtasks, setSubtasks] = useState<any | null>(
@@ -79,7 +77,6 @@ function Workflow() {
   return (
     <div className='h-[80vh] w-full'>
       <p className='text-2xl md:text-3xl font-semibold md:pt-2'>{task.title}</p>
-      {step == 1 && (
         <div className='flex gap-2 w-5/6 h-auto'>
           <Card className='flex flex-col p-3 w-3/5 h-full'>
             <p className='flex'>
@@ -100,8 +97,6 @@ function Workflow() {
             {status()}
           </Card>
         </div>
-      )}
-      {step == 2 && (
         <div>
           {subtasks &&
             subtasks!.map((subtask: any) => {
@@ -118,20 +113,6 @@ function Workflow() {
               );
             })}
         </div>
-      )}
-      <div className='flex w-full justify-between pt-3'>
-        <Button
-          disabled={step == 1}
-          variant='ghost'
-          onClick={() => setStep((prevState) => (prevState -= 1))}
-        >
-          Back
-        </Button>
-        <Button onClick={() => setStep((prevState) => (prevState += 1))}>
-          Next Step
-          <ArrowRight size='1.3em' className='ml-1' />
-        </Button>
-      </div>
     </div>
   );
 }
