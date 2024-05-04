@@ -1,19 +1,23 @@
+import Subtask from "@/components/Subtask";
 import { Task } from "@/components/pages/CreateTask";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { pb } from "@/lib/pocketbase";
 import {
-  ArrowRight,
-  CheckCircle2,
-  Clock,
-  Construction,
-  MapPin,
-  Plug,
-} from "lucide-react";
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
+import { pb } from "@/lib/pocketbase";
+import { CheckCircle2, Clock, Construction, MapPin, Plug } from "lucide-react";
 import { RecordModel } from "pocketbase";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Subtask from "@/components/Subtask";
+import SignaturePad from "react-signature-canvas";
 
 function Workflow() {
   const { taskId } = useParams();
@@ -22,9 +26,11 @@ function Workflow() {
 
   const [loading, setLoading] = useState(false);
 
-  const [subtasks, setSubtasks] = useState<any | null>(
-    []
-  );
+  const [imageURL, setImageURL] = useState(null);
+
+  const sigCanvas = useRef<any>({});
+
+  const [subtasks, setSubtasks] = useState<any | null>([]);
 
   const [task, setTask] = useState<Task | RecordModel>({
     created_by: "",
@@ -66,6 +72,14 @@ function Workflow() {
     }
   };
 
+  function saveSig() {
+    setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+  }
+
+  async function generatePdf() {
+    saveSig()
+  }
+
   useEffect(() => {
     if (!pb.authStore.isValid) {
       navigate("/login");
@@ -77,42 +91,64 @@ function Workflow() {
   return (
     <div className='h-[80vh] w-full'>
       <p className='text-2xl md:text-3xl font-semibold md:pt-2'>{task.title}</p>
-        <div className='flex gap-2 w-5/6 h-auto'>
-          <Card className='flex flex-col p-3 w-3/5 h-full'>
-            <p className='flex'>
-              <Plug className='mr-1' size='1.3em' />
-              {task.expand?.device.name}
-            </p>
-            <p className='flex'>
-              <MapPin className='mr-1' size='1.3em' />
-              {task.expand?.device.expand.location.name}
-            </p>
-            <p className='flex'>
-              <Clock className='mr-1' size='1.3em' />
-              {task.due.split(" ")[0]}
-            </p>
-          </Card>
-          <Card className='flex flex-col gap-2 items-center justify-center w-2/5 h-1/1'>
-            {icon()}
-            {status()}
-          </Card>
-        </div>
-        <div>
-          {subtasks &&
-            subtasks!.map((subtask: any) => {
-              return (
-                <Subtask
-                  key={subtask.id}
-                  id={subtask.id}
-                  name={subtask.name}
-                  done={subtask.done}
-                  setTask={setTask}
-                  setSubtasks={setSubtasks}
-                  deleteDisabled
-                />
-              );
-            })}
-        </div>
+      <div className='flex gap-2 w-5/6 h-auto'>
+        <Card className='flex flex-col p-3 w-3/5 h-full'>
+          <p className='flex'>
+            <Plug className='mr-1' size='1.3em' />
+            {task.expand?.device.name}
+          </p>
+          <p className='flex'>
+            <MapPin className='mr-1' size='1.3em' />
+            {task.expand?.device.expand.location.name}
+          </p>
+          <p className='flex'>
+            <Clock className='mr-1' size='1.3em' />
+            {task.due.split(" ")[0]}
+          </p>
+        </Card>
+        <Card className='flex flex-col gap-2 items-center justify-center w-2/5 h-1/1'>
+          {icon()}
+          {status()}
+        </Card>
+      </div>
+      <div>
+        {subtasks &&
+          subtasks!.map((subtask: any) => {
+            return (
+              <Subtask
+                key={subtask.id}
+                id={subtask.id}
+                name={subtask.name}
+                done={subtask.done}
+                setTask={setTask}
+                setSubtasks={setSubtasks}
+                deleteDisabled
+              />
+            );
+          })}
+      </div>
+      <img src={imageURL!} />
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Document and Save</Button>
+        </DialogTrigger>
+        <DialogContent className="w-[95%] rounded-lg">
+            <DialogHeader className="items-start">
+              <DialogTitle>Sign here</DialogTitle>
+              <DialogDescription>Sign the document to confirm your work.</DialogDescription>
+            </DialogHeader>
+            <SignaturePad
+              ref={sigCanvas}
+              penColor='white'
+              canvasProps={{
+                className: "border-[1px] border-[#333] rounded-lg w-full h-[20vh]",
+              }}
+            />
+          <DialogFooter>
+            <Button className="w-full" onClick={generatePdf}>Generate Report + Mark as Done</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
