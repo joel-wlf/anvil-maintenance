@@ -103,6 +103,7 @@ function Workflow() {
 
   async function generatePdf() {
     saveSig();
+    console.log(imageURL)
   }
 
   async function reschedule() {
@@ -139,90 +140,104 @@ function Workflow() {
   return (
     <div className='h-[80vh] w-full'>
       <p className='text-2xl md:text-3xl font-semibold md:pt-2'>{task.title}</p>
-      <div className='flex gap-2 w-5/6 h-auto'>
-        <Card className='flex flex-col p-3 w-3/5 h-full'>
-          <p className='flex'>
-            <Plug className='mr-1' size='1.3em' />
-            {task.expand?.device.name}
-          </p>
-          <p className='flex'>
-            <MapPin className='mr-1' size='1.3em' />
-            {task.expand?.device.expand.location.name}
-          </p>
-          <p className='flex'>
-            <Clock className='mr-1' size='1.3em' />
-            {task.due.split(" ")[0]}
-          </p>
+      <div className='flex flex-col w-full gap-5 py-5'>
+        <div className='flex gap-5 w-full h-auto'>
+          <Card className='flex flex-col p-3 w-3/5 h-full'>
+            <p className='flex'>
+              <Plug className='mr-1' size='1.3em' />
+              {task.expand?.device.name}
+            </p>
+            <p className='flex'>
+              <MapPin className='mr-1' size='1.3em' />
+              {task.expand?.device.expand.location.name}
+            </p>
+            <p className='flex'>
+              <Clock className='mr-1' size='1.3em' />
+              {task.due.split(" ")[0]}
+            </p>
+          </Card>
+          <Card className='flex flex-col gap-2 items-center justify-center w-2/5 h-1/1'>
+            {icon()}
+            {status()}
+          </Card>
+        </div>
+        <Card className='p-2'>
+          <p className='font-semibold text-lg px-2'>Subtasks</p>
+          {subtasks &&
+            subtasks!.map((subtask: any) => {
+              return (
+                <Subtask
+                  key={subtask.id}
+                  id={subtask.id}
+                  name={subtask.name}
+                  done={subtask.done}
+                  setTask={setTask}
+                  setSubtasks={setSubtasks}
+                  deleteDisabled
+                />
+              );
+            })}
         </Card>
-        <Card className='flex flex-col gap-2 items-center justify-center w-2/5 h-1/1'>
-          {icon()}
-          {status()}
-        </Card>
-      </div>
-      <Card>
-        {subtasks &&
-          subtasks!.map((subtask: any) => {
-            return (
-              <Subtask
-                key={subtask.id}
-                id={subtask.id}
-                name={subtask.name}
-                done={subtask.done}
-                setTask={setTask}
-                setSubtasks={setSubtasks}
-                deleteDisabled
-              />
-            );
-          })}
-      </Card>
-      <Card>
-        <Input type='number' placeholder='Amount' onChange={handleAmountChange}/>
-        <Select defaultValue='months' value={amountType} onValueChange={(e) => setAmountType(e)}>
-          <SelectTrigger>
-            <SelectValue placeholder='Months' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='days'>Days</SelectItem>
-            <SelectItem value='weeks'>Weeks</SelectItem>
-            <SelectItem value='months'>Months</SelectItem>
-            <SelectItem value='years'>Years</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button onClick={reschedule} disabled={rescheduled || !amount}>
-          Reschedule
-          <Repeat size='1.3em' className='ml-2' />
-        </Button>
-      </Card>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button>
-            Document + Save
-            <FileBadge size='1.3em' className='ml-2' />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className='w-[95%] rounded-lg'>
-          <DialogHeader className='items-start'>
-            <DialogTitle>Sign here</DialogTitle>
-            <DialogDescription>
-              Sign the document to confirm your work.
-            </DialogDescription>
-          </DialogHeader>
-          <SignaturePad
-            ref={sigCanvas}
-            penColor='white'
-            canvasProps={{
-              className:
-                "border-[1px] border-[#333] rounded-lg w-full h-[20vh]",
-            }}
+        <Card className='flex flex-col gap-2 p-2'>
+          <p className='font-semibold text-lg px-2'>Reschedule</p>
+          <div className="flex gap-2">
+          <Input
+            type='number'
+            placeholder='Amount'
+            onChange={handleAmountChange}
           />
-          <DialogFooter>
-            <Button className='w-full' onClick={generatePdf}>
-              Generate Report + Mark as Done
-              <Download size='1.3em' className='ml-2' />
+          <Select
+            defaultValue='months'
+            value={amountType}
+            onValueChange={(e) => setAmountType(e)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder='Months' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='days'>Days</SelectItem>
+              <SelectItem value='weeks'>Weeks</SelectItem>
+              <SelectItem value='months'>Months</SelectItem>
+              <SelectItem value='years'>Years</SelectItem>
+            </SelectContent>
+          </Select>
+          </div>
+          <Button onClick={reschedule} variant="outline" disabled={rescheduled || !amount}>
+            Reschedule Task
+            <Repeat size='1.3em' className='ml-2' />
+          </Button>
+        </Card>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>
+              Document + Save
+              <FileBadge size='1.3em' className='ml-2' />
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </DialogTrigger>
+          <DialogContent className='w-[95%] rounded-lg'>
+            <DialogHeader className='items-start'>
+              <DialogTitle>Sign here</DialogTitle>
+              <DialogDescription>
+                Sign the document to confirm your work.
+              </DialogDescription>
+            </DialogHeader>
+            <SignaturePad
+              ref={sigCanvas}
+              penColor='white'
+              canvasProps={{
+                className:
+                  "border-[1px] border-[#333] rounded-lg w-full h-[20vh]",
+              }}
+            />
+            <DialogFooter>
+              <Button className='w-full' onClick={generatePdf}>
+                Generate Report + Mark as Done
+                <Download size='1.3em' className='ml-2' />
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }
