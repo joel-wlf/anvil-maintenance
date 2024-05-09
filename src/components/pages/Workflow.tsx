@@ -29,6 +29,7 @@ import SignaturePad from "react-signature-canvas";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { addDays } from "date-fns";
 
 function Workflow() {
   const { taskId } = useParams();
@@ -43,7 +44,9 @@ function Workflow() {
 
   const [rescheduled, setRescheduled] = useState(false);
 
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState<any>();
+
+  const [amountType, setAmountType] = useState("months")
 
   const sigCanvas = useRef<any>({});
 
@@ -104,8 +107,14 @@ function Workflow() {
 
   async function reschedule() {
     setRescheduled(true)
+    const newDate = () => {
+        if (amountType == "days") {
+            return addDays(new Date(), 10)
+        }
+    }
+    alert(newDate())
+    const newTask = {...task, id: "", created_by: pb.authStore.model?.id}
     toast({ title: "Successfully rescheduled task." });
-
   }
 
   useEffect(() => {
@@ -156,8 +165,8 @@ function Workflow() {
           })}
       </Card>
       <Card>
-        <Input type='number' placeholder='Amount' onChange={handleChange}/>
-        <Select defaultValue='months'>
+        <Input type='number' placeholder='Amount' onChange={handleChange} value={amount}/>
+        <Select defaultValue='months' value={amountType} onValueChange={(e) => setAmountType(e)}>
           <SelectTrigger>
             <SelectValue placeholder='Months' />
           </SelectTrigger>
