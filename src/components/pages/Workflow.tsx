@@ -29,7 +29,7 @@ import SignaturePad from "react-signature-canvas";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { addDays } from "date-fns";
+import { addDays, addMonths, addWeeks, addYears } from "date-fns";
 
 function Workflow() {
   const { taskId } = useParams();
@@ -72,7 +72,7 @@ function Workflow() {
     setSubtasks(request.expand?.subtasks || []);
   }
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
     setRescheduled(false)
     setAmount(e.target.value)
   }
@@ -107,14 +107,25 @@ function Workflow() {
 
   async function reschedule() {
     setRescheduled(true)
+    const today = new Date()
     const newDate = () => {
         if (amountType == "days") {
-            return addDays(new Date(), 10)
+            return addDays(today, +amount)
+        } else if (amountType == "weeks") {
+          return addWeeks(today, +amount)
+        } else if (amountType == "months") {
+          return addMonths(today, +amount)
+        } else if (amountType == "years") {
+          return addYears(today, +amount)
         }
     }
-    alert(newDate())
-    const newTask = {...task, id: "", created_by: pb.authStore.model?.id}
-    toast({ title: "Successfully rescheduled task." });
+    const newTask = {...task, id: "", created_by: pb.authStore.model?.id, due: newDate()}
+    try {
+      await pb.collection("tasks").create(newTask)
+      toast({ title: "Successfully rescheduled task." });
+    } catch (err: any) {
+      toast({ title: err.message, variant: "destructive" });
+    }
   }
 
   useEffect(() => {
@@ -165,7 +176,7 @@ function Workflow() {
           })}
       </Card>
       <Card>
-        <Input type='number' placeholder='Amount' onChange={handleChange} value={amount}/>
+        <Input type='number' placeholder='Amount' onChange={handleAmountChange}/>
         <Select defaultValue='months' value={amountType} onValueChange={(e) => setAmountType(e)}>
           <SelectTrigger>
             <SelectValue placeholder='Months' />
