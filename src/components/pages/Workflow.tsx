@@ -167,7 +167,6 @@ function Workflow() {
     if (!pb.authStore.isValid) {
       navigate("/login");
     }
-
     fetchTask();
   }, []);
 
@@ -278,12 +277,14 @@ function Workflow() {
             </DialogHeader>
             <SignaturePad
               ref={sigCanvas}
-              penColor='white'
+              penColor='black'
+              backgroundColor="white"
               canvasProps={{
                 className:
                   "border-[1px] border-[#333] rounded-lg w-full h-[20vh]",
               }}
             />
+            <img src={imageURL!} alt="" />
             <DialogFooter>
               <Button className='w-full' onClick={generatePdf}>
                 Generate Report + Mark as Done
