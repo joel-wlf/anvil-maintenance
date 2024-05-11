@@ -42,6 +42,7 @@ export interface Device {
 }
 
 export interface Task {
+  id?: string;
   created_by: string;
   title: string;
   status: string;
@@ -50,6 +51,7 @@ export interface Task {
   assignees: string[];
   subtasks: string[];
   notes: string;
+  expand?: any;
 }
 
 export interface Subtask {

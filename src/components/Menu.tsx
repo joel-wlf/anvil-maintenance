@@ -38,6 +38,8 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
 
   const tasksPattern = /^\/tasks(\/.*)?(?<!\/tasks)$/;
 
+  const workflowPattern = /^\/workflow(\/.*)?(?<!\/workflow)$/;
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   function toggleMenu() {
@@ -119,7 +121,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
       <div className='md:hidden before:block before:h-[10vh]'>
         {!menuOpen ? (
           <nav className='flex color-[#adadad] items-center px-5 py-6 fixed top-0 left-0 h-[10vh] w-full z-50 saturate-150 backdrop-blur-sm border-b-[#333] border-b-[1px]'>
-            {!tasksPattern.test(pathname) ? (
+            {!tasksPattern.test(pathname) && !workflowPattern.test(pathname) ? (
               <>
                 <Anvil className='fadein mr-2' size='1.7em' />
                 <p className='fadein text-white mr-auto font-semibold'>

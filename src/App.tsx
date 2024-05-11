@@ -14,6 +14,7 @@ import Facility from "./components/pages/Facility";
 import Tasks from "./components/pages/Tasks";
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
+import Workflow from "@/components/pages/Workflow";
 
 export interface MenuModeContextType {
   mode: string;
@@ -68,6 +69,16 @@ function App() {
                   element={
                     <Menu>
                       <ViewTask />
+                    </Menu>
+                  }
+                />
+              </Route>
+              <Route path='/workflow'>
+                <Route
+                  path='/workflow/:taskId'
+                  element={
+                    <Menu>
+                      <Workflow />
                     </Menu>
                   }
                 />

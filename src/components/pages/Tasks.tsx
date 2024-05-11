@@ -26,15 +26,18 @@ function Tasks() {
   const currentDate = new Date();
 
   const dueTasks = tasks?.filter((task: any) => {
-    if (
-      differenceInDays(task.due, currentDate) <= 7 
+    if (differenceInDays(task.due, currentDate) <= 7 &&
+    task.status != "done"
     ) {
       return task;
     }
   });
 
   const assignedTasks = tasks?.filter((task: any) => {
-    if (task.assignees.includes(pb.authStore.model?.id)) {
+    if (
+      task.assignees.includes(pb.authStore.model?.id) &&
+      task.status != "done"
+    ) {
       return task;
     }
   });

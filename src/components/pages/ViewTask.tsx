@@ -118,7 +118,7 @@ function ViewTask() {
       />
       {mode == "view" && (
         <div className='flex items-center w-full gap-2'>
-          <Button variant='outline' className='w-full'>
+          <Button variant='outline' className='w-full' onClick={() => navigate(`/workflow/${task.id}`)}>
             <PlayCircle size='1.3em' className='mr-2' />
             Start Workflow
           </Button>
