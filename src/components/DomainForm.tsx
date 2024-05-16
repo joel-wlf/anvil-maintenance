@@ -6,12 +6,14 @@ import { Compass } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
 
 interface DomainFormProps {
   setStep: (step: number) => void
 }
 
 const DomainForm: FunctionComponent<DomainFormProps> = ({ setStep }) => {
+  const { t } = useTranslation(['translations'])
 
   const [formData, setFormData] = useState<{
     url: string;
@@ -26,7 +28,7 @@ const DomainForm: FunctionComponent<DomainFormProps> = ({ setStep }) => {
   function saveUrl() {
     if (!formData.url) {
       toast({
-        description: "Please enter your Domain",
+        description: t("messages.err_enter_domain"),
         variant: "destructive",
       });
       return;
@@ -45,7 +47,7 @@ const DomainForm: FunctionComponent<DomainFormProps> = ({ setStep }) => {
         <Input
           type='url'
           name='url'
-          placeholder='Enter Domain'
+          placeholder={t("auth.enter_domain")}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               saveUrl();
@@ -56,9 +58,9 @@ const DomainForm: FunctionComponent<DomainFormProps> = ({ setStep }) => {
         />
         <div className='flex w-full justify-between pt-3'>
           <Button variant='ghost' disabled={true}>
-            Back
+            {t("back")}
           </Button>
-          <Button onClick={saveUrl}>Submit</Button>
+          <Button onClick={saveUrl}>{t("submit")}</Button>
         </div>
       </Card>
   );

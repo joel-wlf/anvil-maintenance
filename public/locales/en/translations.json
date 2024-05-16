@@ -1,0 +1,22 @@
+{
+    "admin": {
+        "title": "Admin",
+        "create_user": "Create User"
+    },
+    "auth": {
+        "enter_domain": "Enter Domain"
+    },
+    "messages": {
+        "err_enter_domain": "Please enter your domain.",
+        "err_generic": "Something went wrong",
+        "err_check_input": "Please check your input."
+    },
+    "delete": "Delete",
+    "delete_loading": "Deleting...",
+    "edit": "Edit",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "back": "Back",
+    "email": "Email",
+    "password": "Password"
+}

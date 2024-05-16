@@ -7,12 +7,15 @@ import { LogIn } from "lucide-react";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslation } from 'react-i18next';
 
 interface LoginFormProps {
   setStep: (step: number) => void;
 }
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
+  const { t } = useTranslation(['translations'])
+
   const [formData, setFormData] = useState<{
     email: string;
     password: string;
@@ -39,8 +42,8 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
       navigate("/dashboard");
     } catch {
       toast({
-        title: "Something went wrong",
-        description: "Please check your input",
+        title: t("messages.err_generic"),
+        description: t("messages.err_check_input"),
         variant: "destructive",
       });
       setLoading(false);
@@ -60,7 +63,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
       <Input
         type='email'
         name='email'
-        placeholder='Email'
+        placeholder={t("email")}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             login();
@@ -72,7 +75,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
       <Input
         type='password'
         name='password'
-        placeholder='Password'
+        placeholder={t("password")}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             login();
@@ -83,10 +86,10 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
       />
       <div className='flex w-full justify-between pt-3'>
         <Button variant='ghost' onClick={() => setStep(1)} disabled={loading}>
-          Back
+          {t("back")}
         </Button>
         <Button onClick={login} disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
+          {loading ? t("loading") : t("submit")}
         </Button>
       </div>
     </Card>
