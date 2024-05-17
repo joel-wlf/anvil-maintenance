@@ -7,14 +7,14 @@ import { LogIn } from "lucide-react";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 interface LoginFormProps {
   setStep: (step: number) => void;
 }
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
-  const { t } = useTranslation(['translations'])
+  const { t } = useTranslation(["translation"]);
 
   const [formData, setFormData] = useState<{
     email: string;
@@ -33,7 +33,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
 
   async function login() {
     try {
-      let pb = initializePb(localStorage.getItem('backendUrl'))
+      let pb = initializePb(localStorage.getItem("backendUrl"));
       setLoading(true);
       await pb
         .collection("users")

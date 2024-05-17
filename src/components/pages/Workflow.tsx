@@ -37,8 +37,11 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { addDays, addMonths, addWeeks, addYears } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 function Workflow() {
+  const { t } = useTranslation(['translation'])
+
   const { taskId } = useParams();
 
   const { toast } = useToast();
@@ -97,11 +100,11 @@ function Workflow() {
 
   const status = () => {
     if (task.status == "pending") {
-      return "pending";
+      return t("workflow.pending");
     } else if (task.status == "progress") {
-      return "in progress";
+      return t("workflow.progress");
     } else if (task.status == "done") {
-      return "done";
+      return t("workflow.done");
     }
   };
 
@@ -122,7 +125,7 @@ function Workflow() {
         );
       }))
     } else {
-      return <div className='text-center text-[#adadad]'>No subtasks here.</div>
+      return <div className='text-center text-[#adadad]'>{t("messages.no_subtasks")}</div>
     }
   }
 
@@ -157,7 +160,7 @@ function Workflow() {
     };
     try {
       await pb.collection("tasks").create(newTask);
-      toast({ title: "Successfully rescheduled task." });
+      toast({ title: t("messages.success_rescheduled_task") });
     } catch (err: any) {
       toast({ title: err.message, variant: "destructive" });
     }
@@ -217,23 +220,23 @@ function Workflow() {
         </div>
         {loading ? (
           <Card className='flex flex-col gap-1 p-2'>
-            <p className='font-semibold text-lg px-2'>Subtasks</p>
+            <p className='font-semibold text-lg px-2'>{t("workflow.subtasks")}</p>
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
           </Card>
         ) : (
           <Card className='p-2'>
-            <p className='font-semibold text-lg px-2'>Subtasks</p>
+            <p className='font-semibold text-lg px-2'>{t("workflow.subtasks")}</p>
             <Subtasks />
           </Card>
         )}
         <Card className='flex flex-col gap-2 p-2'>
-          <p className='font-semibold text-lg px-2'>Reschedule</p>
+          <p className='font-semibold text-lg px-2'>{t("workflow.reschedule")}</p>
           <div className='flex gap-2'>
             <Input
               type='number'
-              placeholder='Amount'
+              placeholder={t("workflow.amount_placeholder")}
               onChange={handleAmountChange}
             />
             <Select
@@ -242,13 +245,13 @@ function Workflow() {
               onValueChange={(e) => setAmountType(e)}
             >
               <SelectTrigger>
-                <SelectValue placeholder='Months' />
+                <SelectValue placeholder={t("workflow.months")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='days'>Days</SelectItem>
-                <SelectItem value='weeks'>Weeks</SelectItem>
-                <SelectItem value='months'>Months</SelectItem>
-                <SelectItem value='years'>Years</SelectItem>
+                <SelectItem value='days'>{t("workflow.days")}</SelectItem>
+                <SelectItem value='weeks'>{t("workflow.weeks")}</SelectItem>
+                <SelectItem value='months'>{t("workflow.months")}</SelectItem>
+                <SelectItem value='years'>{t("workflow.years")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -257,22 +260,22 @@ function Workflow() {
             variant='outline'
             disabled={rescheduled || !amount || loading}
           >
-            Reschedule Task
+            {t("workflow.reschedule_action")}
             <Repeat size='1.3em' className='ml-2' />
           </Button>
         </Card>
         <Dialog>
           <DialogTrigger asChild>
             <Button disabled={loading}>
-              Document + Save
+              {t("workflow.action")}
               <FileBadge size='1.3em' className='ml-2' />
             </Button>
           </DialogTrigger>
           <DialogContent className='w-[95%] rounded-lg'>
             <DialogHeader className='items-start'>
-              <DialogTitle>Sign here</DialogTitle>
+              <DialogTitle>{t("workflow.sign_here")}</DialogTitle>
               <DialogDescription>
-                Sign the document to confirm your work.
+                {t("workflow.sign_description")}
               </DialogDescription>
             </DialogHeader>
             <SignaturePad
@@ -287,7 +290,7 @@ function Workflow() {
             <img src={imageURL!} alt="" />
             <DialogFooter>
               <Button className='w-full' onClick={generatePdf}>
-                Generate Report + Mark as Done
+                {t("workflow.action2")}
                 <Download size='1.3em' className='ml-2' />
               </Button>
             </DialogFooter>

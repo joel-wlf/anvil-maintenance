@@ -14,6 +14,7 @@ import { format } from "date-fns";
 import { RecordModel } from "pocketbase";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export interface User {
   collectionId: string;
@@ -65,6 +66,8 @@ export interface Subtask {
 }
 
 function CreateTask() {
+  const { t } = useTranslation(["translation"]);
+
   const navigate = useNavigate();
 
   const { toast } = useToast();
@@ -101,12 +104,12 @@ function CreateTask() {
   async function submit() {
     try {
       setSubmitLoading(true);
-      if (task.title == "") throw new Error("Please enter a title.");
-      if (task.status == "") throw new Error("Please select a status.");
-      if (task.due == "") throw new Error("Please select a due date.");
-      if (task.device == "") throw new Error("Please select a device date.");
+      if (task.title == "") throw new Error(t("messages.err_enter_title"));
+      if (task.status == "") throw new Error(t("messages.err_select_status"));
+      if (task.due == "") throw new Error(t("messages.err_select_due"));
+      if (task.device == "") throw new Error(t("messages.err_select_device"));
       await pb.collection("tasks").create(task);
-      toast({ title: "Successfully created task." });
+      toast({ title: t("messages.success_created_task") });
       setSubmitLoading(false);
       navigate("/tasks");
     } catch (err: any) {
@@ -136,7 +139,7 @@ function CreateTask() {
         onChange={handleChange}
         name='title'
         value={task.title}
-        placeholder='Task Title...'
+        placeholder={t("create_task.title_placeholder")}
         className='p-0'
       />
       <StatusToggle
@@ -159,13 +162,13 @@ function CreateTask() {
       <Separator />
       <Textarea
         className='resize-none'
-        placeholder='Notes...'
+        placeholder={t("create_task.notes_placeholder")}
         name='notes'
         value={task.notes}
         onChange={handleChange}
       />
       <Button className='w-full' onClick={submit} disabled={submitLoading}>
-        {submitLoading ? "Loading..." : "Create Task"}
+        {submitLoading ? t("loading") : t("create_task.action")}
       </Button>
     </div>
   );

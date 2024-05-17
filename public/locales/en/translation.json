@@ -1,0 +1,69 @@
+{
+    "admin": {
+        "title": "Admin",
+        "create_user": "Create User"
+    },
+    "auth": {
+        "enter_domain": "Enter Domain"
+    },
+    "messages": {
+        "err_enter_domain": "Please enter your domain.",
+        "err_generic": "Something went wrong",
+        "err_check_input": "Please check your input.",
+        "err_enter_title": "Please enter a title.",
+        "err_select_status": "Please select a status.",
+        "err_select_due": "Please select a due date.",
+        "err_select_device": "Please select a device.",
+        "success_created_task": "Successfully created task.",
+        "success_updated_task": "Sucessfully updated task.",
+        "success_deleted_task": "Successfully deleted task.",
+        "success_rescheduled_task": "Successfully rescheduled task.",
+        "no_subtasks": "No subtasks here."
+    },
+    "create_task": {
+        "title_placeholder": "Task Title...",
+        "notes_placeholder": "Notes...",
+        "action": "Create Task"
+    },
+    "view_task": {
+        "title_placeholder": "Task Title...",
+        "notes_placeholder": "Notes...",
+        "start_workflow": "Start Workflow",
+        "action": "Save Task"
+    },
+    "facility": {
+        "devices": "Devices",
+        "locations": "Locations",
+        "add_device": "Add Device",
+        "add_location": "Add Location"
+    },
+    "tasks": {
+        "title": "Tasks",
+        "create_task": "Create Task"
+    },
+    "workflow": {
+        "pending": "pending",
+        "progress": "in progress",
+        "done": "done",
+        "subtasks": "Subtasks",
+        "reschedule": "Reschedule",
+        "reschedule_action": "Reschedule Task",
+        "amount_placeholder": "Amount",
+        "days": "Days",
+        "weeks": "Weeks",
+        "months": "Months",
+        "years": "Years",
+        "action": "Document + Save",
+        "action2": "Generate Report + Mark as Done",
+        "sign_here": "Sign here",
+        "sign_description": "Sign the document to confirm your work."
+    },
+    "delete": "Delete",
+    "delete_loading": "Deleting...",
+    "edit": "Edit",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "back": "Back",
+    "email": "Email",
+    "password": "Password"
+}

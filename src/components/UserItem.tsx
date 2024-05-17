@@ -9,7 +9,6 @@ import EditUserDrawer from "@/components/EditUserDrawer";
 import EditUserDialog from "@/components/EditUserDialog";
 import { useTranslation } from "react-i18next";
 
-
 interface UserItemProps {
   fetchUsers: () => void;
   id: string;
@@ -27,7 +26,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   email,
   created,
 }) => {
-  const { t } = useTranslation(['translations']);
+  const { t } = useTranslation(["translation"]);
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 768px)",
