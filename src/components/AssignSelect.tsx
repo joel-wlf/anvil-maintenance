@@ -17,6 +17,7 @@ import { pb } from "@/lib/pocketbase";
 import { Plus, Trash2 } from "lucide-react";
 import { RecordModel } from "pocketbase";
 import { FunctionComponent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface AssignSelectProps {
   task: Task | RecordModel;
@@ -31,6 +32,8 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
   disabled,
   mode
 }) => {
+  const { t } = useTranslation(['translation'])
+
   const [users, setUsers] = useState<User[] | RecordModel[] | null>([]);
 
   const [assignSelect, setAssignSelect] = useState("");
@@ -78,7 +81,7 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
       {mode == "view" && 
         task.assignees.length == 0 && (
           <div className='flex items-center justify-center text-[#adadad] w-full'>
-            No Asignees.
+            {t("tasks.no_asignees")}
           </div>
         )}
       {users &&
@@ -105,14 +108,14 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
             ) ? (
               <Badge variant='outline' className='cursor-pointer py-1 px-2'>
                 <Plus size='1em' className='mr-1' />
-                Assign User
+                {t("tasks.assign_user")}
               </Badge>
             ) : null}
           </PopoverTrigger>
           <PopoverContent className='flex flex-col gap-2'>
             <Select onValueChange={(e: any) => setAssignSelect(e.id)}>
               <SelectTrigger className='w-full'>
-                <SelectValue placeholder='Select User' />
+                <SelectValue placeholder={t("tasks.select_user")} />
               </SelectTrigger>
               <SelectContent>
                 {users!
@@ -130,7 +133,7 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
               </SelectContent>
             </Select>
             <Button className='w-full' onClick={assignUser}>
-              Assign
+              {t("tasks.assign")}
             </Button>
           </PopoverContent>
         </Popover>

@@ -1,7 +1,14 @@
 {
     "admin": {
         "title": "Admin",
-        "create_user": "Create User"
+        "create_user": "Create User",
+        "create_user_description": "Create a new user in your organisation",
+        "name_placeholder": "Name",
+        "email_placeholder": "Email",
+        "user": "User",
+        "admin": "Admin",
+        "password_placeholder": "Password (min. 8)",
+        "password_confirm_placeholder": "Confirm Password"
     },
     "auth": {
         "enter_domain": "Enter Domain"
@@ -11,10 +18,20 @@
         "err_generic": "Something went wrong",
         "err_check_input": "Please check your input.",
         "err_enter_title": "Please enter a title.",
+        "err_enter_name": "Please enter a name.",
+        "err_enter_password": "Please enter a password.",
+        "err_confirm_password": "Please confirm your password.",
+        "err_password_match": "The passwords don't match.",
+        "err_enter_email": "Please enter an email address.",
+        "err_select_role": "Please select a role.",
         "err_select_status": "Please select a status.",
         "err_select_due": "Please select a due date.",
         "err_select_device": "Please select a device.",
+        "err_select_location": "Please select a location.",
         "success_created_task": "Successfully created task.",
+        "success_created_device": "Successfully added device.",
+        "success_created_location": "Successfully added location.",
+        "success_created_user": "Successfully created user.",
         "success_updated_task": "Sucessfully updated task.",
         "success_deleted_task": "Successfully deleted task.",
         "success_rescheduled_task": "Successfully rescheduled task.",
@@ -35,11 +52,21 @@
         "devices": "Devices",
         "locations": "Locations",
         "add_device": "Add Device",
-        "add_location": "Add Location"
+        "add_device_description": "Add a device to your facility",
+        "add_location": "Add Location",
+        "add_location_description": "Add a location to your facility",
+        "name_placeholder": "Name",
+        "description_placeholder_optional": "Description (optional)",
+        "location_placeholder": "Select Location",
+        "functional": "Currently Functional"
     },
     "tasks": {
         "title": "Tasks",
-        "create_task": "Create Task"
+        "create_task": "Create Task",
+        "no_assignees": "No Assignees.",
+        "select_user": "Select User",
+        "assign": "Assign",
+        "assign_user": "Assign User"
     },
     "workflow": {
         "pending": "pending",
