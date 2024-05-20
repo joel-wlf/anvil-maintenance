@@ -90,7 +90,7 @@
         "no_assignees": "No Assignees.",
         "no_subtasks": "No Subtasks.",
         "no_tasks": "No Tasks are in this category.",
-        "subtasks_placeholder": "Add Subtask...",
+        "subtask_placeholder": "Add Subtask...",
         "select_user": "Select User",
         "assign": "Assign",
         "assign_user": "Assign User",

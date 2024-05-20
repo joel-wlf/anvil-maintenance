@@ -49,7 +49,7 @@ const StatusToggle: FunctionComponent<StatusToggleProps> = ({
         className='flex flex-col p-2 h-fit w-full gap-1 data-[state=on]:bg-emerald-800 disabled:opacity-100'
       >
         <CheckCircle2 />
-        {t("messages.done")}
+        {t("workflow.done")}
       </ToggleGroupItem>
     </ToggleGroup>
   );
