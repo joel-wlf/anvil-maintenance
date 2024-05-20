@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
 
 interface DueSelectProps {
   due: Date | undefined;
@@ -21,6 +22,8 @@ const DueSelect: FunctionComponent<DueSelectProps> = ({
   setDue,
   disabled,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -33,7 +36,7 @@ const DueSelect: FunctionComponent<DueSelectProps> = ({
           )}
         >
           <CalendarIcon className='mr-2 h-4 w-4' />
-          {due ? format(due, "yyyy-MM-dd") : <span>Due</span>}
+          {due ? format(due, "yyyy-MM-dd") : <span>{t("workflow.due")}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-auto p-0' align='start'>

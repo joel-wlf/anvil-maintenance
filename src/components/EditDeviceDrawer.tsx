@@ -19,9 +19,10 @@ import { pb } from "@/lib/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { useTranslation } from "react-i18next";
 
 interface AddDeviceDrawerProps {
-  id: string
+  id: string;
   name: string;
   description: string;
   location: string;
@@ -41,6 +42,8 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
   setOpen,
   fetchDevices,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   const [formData, setFormData] = useState({
     name: name,
     description: description,
@@ -63,13 +66,14 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw new Error("Please enter a name.");
-      if (formData.location == "") throw new Error("Please select a location.");
+      if (formData.name == "") throw new Error(t("messages.err_enter_name"));
+      if (formData.location == "")
+        throw new Error(t("messages.err_select_location"));
       await pb.collection("devices").update(id, formData);
       fetchDevices();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully updated device." });
+      toast({ title: t("messages.success_updated_device") });
     } catch (err: any) {
       setLoading(false);
       toast({ title: err.message, variant: "destructive" });
@@ -90,22 +94,24 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent>
         <DrawerHeader className='text-left'>
-          <DrawerTitle>Edit Device</DrawerTitle>
-          <DrawerDescription>Edit device "{name}"</DrawerDescription>
+          <DrawerTitle>{t("facility.edit_device")}</DrawerTitle>
+          <DrawerDescription>{`${t(
+            "facility.edit_device_description"
+          )} "${name}"`}</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
             type='text'
             name='name'
             value={formData.name}
-            placeholder='Name'
+            placeholder={t("facility.name_placeholder")}
             onChange={handleChange}
           />
           <Input
             type='description'
             name='description'
             value={formData.description}
-            placeholder='Description (optional)'
+            placeholder={t("facility.description_placeholder_optional")}
             onChange={handleChange}
           />
           <Select
@@ -117,11 +123,13 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
             value={formData.location}
           >
             <SelectTrigger>
-              <SelectValue placeholder='Select Location' />
+              <SelectValue placeholder={t("facility.location_placeholder")} />
             </SelectTrigger>
             <SelectContent>
               {locations.map((location: any) => (
-                <SelectItem key={location.id} value={location.id}>{location.name}</SelectItem>
+                <SelectItem key={location.id} value={location.id}>
+                  {location.name}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -136,10 +144,12 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
                 })
               }
             />
-            <Label htmlFor='functional'>Currently Functional</Label>
+            <Label htmlFor='functional'>
+              {t("facility.currently_functional")}
+            </Label>
           </div>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Loading..." : "Edit Device"}
+            {loading ? t("loading") : t("facility.edit_device")}
           </Button>
         </div>
       </DrawerContent>

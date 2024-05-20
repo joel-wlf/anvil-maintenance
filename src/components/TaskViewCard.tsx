@@ -11,6 +11,7 @@ import {
   User,
 } from "lucide-react";
 import { FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface TaskViewCardProps {
   type: "due" | "assigned" | "all" | "done";
@@ -25,17 +26,19 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
   noData,
   data,
 }) => {
+    const { t } = useTranslation(["translation"]);
+
   const [collapsed, setCollapsed] = useState(collapsible);
 
   const title = () => {
     if (type == "due") {
-      return "Due Tasks";
+      return t("tasks.due_tasks");
     } else if (type == "assigned") {
-      return "Assigned Tasks";
+      return t("tasks.assigned_tasks");
     } else if (type == "all") {
-      return "All Tasks";
+      return t("tasks.all_tasks");
     } else if (type == "done") {
-      return "Done Tasks";
+      return t("tasks.done_tasks");
     }
   };
 
@@ -57,7 +60,7 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
         <>
           <Separator className='my-2' />
           <div className='text-center text-[#adadad]'>
-            No tasks are in this category.
+            {t("tasks.no_tasks")}
           </div>
         </>
       );

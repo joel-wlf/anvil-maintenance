@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { pb } from "@/lib/pocketbase";
 import { ChangeEvent, FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface EditLocationDialogProps {
   id: string;
@@ -28,6 +29,8 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
   setOpen,
   fetchLocations,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   const [formData, setFormData] = useState({
     name: name,
     description: description,
@@ -46,12 +49,12 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw new Error("Please enter a name.");
+      if (formData.name == "") throw new Error(t("messages.err_enter_name"));
       await pb.collection("locations").update(id, formData);
       fetchLocations();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully updated location." });
+      toast({ title: t("messages.success_updated_location") });
     } catch (err: any) {
       setLoading(false);
       toast({ title: err.message, variant: "destructive" });
@@ -62,26 +65,26 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader className='text-left'>
-          <DialogTitle>Edit Location</DialogTitle>
-          <DialogDescription>Edit location "{name}"</DialogDescription>
+          <DialogTitle>{t("facility.edit_location")}</DialogTitle>
+          <DialogDescription>{`${t("facility.edit_location_description")} "${name}"`}</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
             type='text'
             name='name'
             value={formData.name}
-            placeholder='Name'
+            placeholder={t("facility.name_placeholder")}
             onChange={handleChange}
           />
           <Input
             type='description'
             name='description'
             value={formData.description}
-            placeholder='Description (optional)'
+            placeholder={t("facility.description_placeholder_optional")}
             onChange={handleChange}
           />
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Loading..." : "Edit Location"}
+            {loading ? t("loading") : t("facility.edit_location")}
           </Button>
         </div>
       </DialogContent>

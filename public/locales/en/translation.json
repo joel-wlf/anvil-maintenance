@@ -1,10 +1,22 @@
 {
+    "menu": {
+        "settings": "Settings",
+        "log_out": "Log Out",
+        "dashboard": "Dashboard",
+        "tasks": "Tasks",
+        "facility": "Facility",
+        "documentation": "Documentation",
+        "admin": "Admin"
+    },
     "admin": {
         "title": "Admin",
         "create_user": "Create User",
         "create_user_description": "Create a new user in your organisation",
+        "edit_user": "Edit User",
+        "edit_user_description": "Edit user",
         "name_placeholder": "Name",
         "email_placeholder": "Email",
+        "role_placeholder": "Select role",
         "user": "User",
         "admin": "Admin",
         "password_placeholder": "Password (min. 8)",
@@ -28,11 +40,16 @@
         "err_select_due": "Please select a due date.",
         "err_select_device": "Please select a device.",
         "err_select_location": "Please select a location.",
+        "err_device_delete": "Failed to delete device. Make sure it isn't used in other tasks.",
+        "err_location_delete": "Failed to delete location. Make sure it isn't used in other devices or tasks.",
         "success_created_task": "Successfully created task.",
         "success_created_device": "Successfully added device.",
         "success_created_location": "Successfully added location.",
         "success_created_user": "Successfully created user.",
         "success_updated_task": "Sucessfully updated task.",
+        "success_updated_device": "Successfully updated device.",
+        "success_updated_user": "Successfully updated user.",
+        "success_updated_location": "Successfully updated location.",
         "success_deleted_task": "Successfully deleted task.",
         "success_rescheduled_task": "Successfully rescheduled task.",
         "no_subtasks": "No subtasks here."
@@ -55,18 +72,32 @@
         "add_device_description": "Add a device to your facility",
         "add_location": "Add Location",
         "add_location_description": "Add a location to your facility",
+        "edit_device": "Edit Device",
+        "edit_device_description": "Edit device",
+        "edit_location": "Edit Location",
+        "edit_location_description": "Edit location",
         "name_placeholder": "Name",
         "description_placeholder_optional": "Description (optional)",
         "location_placeholder": "Select Location",
-        "functional": "Currently Functional"
+        "currently_functional": "Currently Functional",
+        "functional": "Functional",
+        "not_functional": "Not Functional",
+        "device_link": "Create Task with Device"
     },
     "tasks": {
         "title": "Tasks",
         "create_task": "Create Task",
         "no_assignees": "No Assignees.",
+        "no_subtasks": "No Subtasks.",
+        "no_tasks": "No Tasks are in this category.",
+        "subtasks_placeholder": "Add Subtask...",
         "select_user": "Select User",
         "assign": "Assign",
-        "assign_user": "Assign User"
+        "assign_user": "Assign User",
+        "due_tasks": "Due Tasks",
+        "assigned_tasks": "Assigned Tasks",
+        "all_tasks": "All Tasks",
+        "done_tasks": "Done Tasks"
     },
     "workflow": {
         "pending": "pending",
@@ -83,7 +114,9 @@
         "action": "Document + Save",
         "action2": "Generate Report + Mark as Done",
         "sign_here": "Sign here",
-        "sign_description": "Sign the document to confirm your work."
+        "sign_description": "Sign the document to confirm your work.",
+        "select_device": "Select Device",
+        "due": "Due"
     },
     "delete": "Delete",
     "delete_loading": "Deleting...",

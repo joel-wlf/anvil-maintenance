@@ -6,6 +6,7 @@ import { pb } from "@/lib/pocketbase";
 import { ArrowUp } from "lucide-react";
 import { RecordModel } from "pocketbase";
 import { FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SubtaskViewProps {
   task: Task | RecordModel;
@@ -25,6 +26,8 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
   changeDisabled,
   mode,
 }) => {
+    const { t } = useTranslation(["translation"]);
+
   const [subTasksLoading, setSubtasksLoading] = useState(false);
 
   const [subtaskInput, setSubtaskInput] = useState("");
@@ -48,7 +51,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
     if (mode == "view" && subtasks.length == 0) {
       return (
         <div className='flex items-center justify-center text-[#adadad] w-full'>
-          No Subtasks.
+          {t("tasks.no_subtasks")}
         </div>
       );
     }
@@ -75,7 +78,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
       {!disabled && (
         <div className='flex gap-2 my-2'>
           <Input
-            placeholder='Add Subtask...'
+            placeholder={t("tasks.subtask_placeholder")}
             name='subtask'
             value={subtaskInput}
             onChange={(e: any) => setSubtaskInput(e.target.value)}

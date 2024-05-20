@@ -130,7 +130,7 @@ const AddDeviceDialog: FunctionComponent<AddDeviceDialogProps> = ({
                 })
               }
             />
-            <Label htmlFor='functional'>{t("facility.functional")}</Label>
+            <Label htmlFor='functional'>{t("facility.currently_functional")}</Label>
           </div>
           <Button onClick={handleSubmit} disabled={loading}>
             {loading ? t("loading") : t("facility.add_device")}
