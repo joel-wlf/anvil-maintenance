@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { pb } from "@/lib/pocketbase";
 import { ChangeEvent, FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface AddLocationDrawerProps {
   open: boolean;
@@ -22,6 +23,8 @@ const AddLocationDrawer: FunctionComponent<AddLocationDrawerProps> = ({
   setOpen,
   fetchLocations,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -40,12 +43,12 @@ const AddLocationDrawer: FunctionComponent<AddLocationDrawerProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw new Error("Please enter a name.");
+      if (formData.name == "") throw new Error(t("messages.err_enter_name"));
       await pb.collection("locations").create(formData);
       fetchLocations();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully created location." });
+      toast({ title: t("messages.success_created_location") });
     } catch (err: any) {
       setLoading(false);
       toast({ title: err.message, variant: "destructive" });
@@ -56,26 +59,28 @@ const AddLocationDrawer: FunctionComponent<AddLocationDrawerProps> = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent>
         <DrawerHeader className='text-left'>
-          <DrawerTitle>Add Location</DrawerTitle>
-          <DrawerDescription>Add a location to your facility</DrawerDescription>
+          <DrawerTitle>{t("facility.add_location")}</DrawerTitle>
+          <DrawerDescription>
+            {t("facility.add_location_description")}
+          </DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
             type='text'
             name='name'
             value={formData.name}
-            placeholder='Name'
+            placeholder={t("facility.name_placeholder")}
             onChange={handleChange}
           />
           <Input
             type='description'
             name='description'
             value={formData.description}
-            placeholder='Description (optional)'
+            placeholder={t("facility.description_placeholder_optional")}
             onChange={handleChange}
           />
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Loading..." : "Add Location"}
+            {loading ? t("loading") : t("facility.add_device")}
           </Button>
         </div>
       </DrawerContent>

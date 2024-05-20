@@ -17,6 +17,7 @@ import {
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface EditUserDialogProps {
   id: string;
@@ -37,6 +38,8 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
   setOpen,
   fetchUsers,
 }) => {
+    const { t } = useTranslation(["translation"]);
+
   const [formData, setFormData] = useState({
     name: name,
     email: email,
@@ -56,15 +59,15 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw new Error("Please enter a name.");
+      if (formData.name == "") throw new Error(t("messages.err_enter_name"));
       if (formData.email == "")
-        throw new Error("Please enter an email address.");
-      if (formData.role == "") throw new Error("Please select a role.");
+        throw new Error(t("messages.err_enter_email"));
+      if (formData.role == "") throw new Error(t("messages.err_select_role"));
       await pb.collection("users").update(id, formData);
       fetchUsers();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully updated user." });
+      toast({ title: t("messages.success_updated_user") });
     } catch (err: any) {
       toast({ title: err.message, variant: "destructive" });
       setLoading(false);
@@ -75,22 +78,22 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader className='text-left'>
-          <DialogTitle>Edit User</DialogTitle>
-          <DialogDescription>Edit user {email}</DialogDescription>
+          <DialogTitle>{t("admin.edit_user")}</DialogTitle>
+          <DialogDescription>{`${t("admin.edit_user_description")} "${email}"`}</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input
             type='text'
             name='name'
             value={formData.name}
-            placeholder='Name'
+            placeholder={t("admin.name_placeholder")}
             onChange={handleChange}
           />
           <Input
             type='email'
             name='email'
             value={formData.email}
-            placeholder='Email'
+            placeholder={t("admin.email_placeholder")}
             onChange={handleChange}
           />
           <Select
@@ -102,15 +105,15 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
             value={formData.role}
           >
             <SelectTrigger>
-              <SelectValue placeholder='Select role' />
+              <SelectValue placeholder={t("admin.role_placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value='user'>User</SelectItem>
-              <SelectItem value='admin'>Admin</SelectItem>
+              <SelectItem value='user'>{t("admin.user")}</SelectItem>
+              <SelectItem value='admin'>{t("admin.admin")}</SelectItem>
             </SelectContent>
           </Select>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Loading..." : "Edit User"}
+            {loading ? t("loading") : t("admin.edit_user")}
           </Button>
         </div>
       </DialogContent>

@@ -7,6 +7,7 @@ import { FunctionComponent, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import EditUserDrawer from "@/components/EditUserDrawer";
 import EditUserDialog from "@/components/EditUserDialog";
+import { useTranslation } from "react-i18next";
 
 interface UserItemProps {
   fetchUsers: () => void;
@@ -25,6 +26,8 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   email,
   created,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   const isDesktop = useMediaQuery({
     query: "(min-width: 768px)",
   });
@@ -65,7 +68,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           className='w-full'
           onClick={() => deleteUser(id)}
         >
-          {deleteLoading ? "Deleting..." : "Delete"}
+          {deleteLoading ? t("delete_loading") : t("delete")}
         </Button>
         <Button
           disabled={deleteLoading}
@@ -73,7 +76,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
           className='w-full'
           onClick={() => setEditUserOpen(true)}
         >
-          Edit
+          {t("edit")}
         </Button>
       </div>
       {isDesktop ? (

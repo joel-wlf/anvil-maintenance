@@ -11,6 +11,7 @@ import { pb } from "@/lib/pocketbase";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Device, Task } from "@/components/pages/CreateTask";
 import { RecordModel } from "pocketbase";
+import { useTranslation } from "react-i18next";
 
 interface DeviceSelectProps {
   setTask: (cb: (value: Task | RecordModel) => Task) => void;
@@ -21,6 +22,8 @@ const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({
   setTask,
   disabled,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   const [devices, setDevices] = useState<Device[] | RecordModel[] | null>([]);
 
   async function fetchDevices() {
@@ -44,11 +47,11 @@ const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({
       disabled={disabled}
     >
       <SelectTrigger className='w-full disabled:opacity-100'>
-        <SelectValue placeholder='Select Device' />
+        <SelectValue placeholder={t("workflow.select_device")} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Currently Functional</SelectLabel>
+          <SelectLabel>{t("facility.currently_functional")}</SelectLabel>
           {devices!.map(
             (device: any) =>
               device.functional && (
@@ -59,7 +62,7 @@ const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({
           )}
         </SelectGroup>
         <SelectGroup>
-          <SelectLabel>Not Functional</SelectLabel>
+          <SelectLabel>{t("facility.not_functional")}</SelectLabel>
           {devices!.map(
             (device: any) =>
               !device.functional && (

@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { pb } from "@/lib/pocketbase";
 import { Clock } from "lucide-react";
 import { FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
 interface LocationItemProps {
@@ -24,6 +25,8 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
   created,
   fetchLocations,
 }) => {
+  const { t } = useTranslation(["translation"]);
+
   const { toast } = useToast();
 
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -42,7 +45,7 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
     } catch (err: any) {
       setDeleteLoading(false);
       toast({
-        description: "Failed to delete location. Make sure it isn't used in other devices or tasks.",
+        description: t("messages.err_location_delete"),
         variant: "destructive",
       });
     }
@@ -71,7 +74,7 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
           className='w-full'
           onClick={() => deleteLocation(id)}
         >
-          {deleteLoading ? "Deleting..." : "Delete"}
+          {deleteLoading ? t("delete_loading") : t("delete")}
         </Button>
         <Button
           variant='outline'
@@ -79,7 +82,7 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
           className='w-full'
           onClick={() => setEditLocationOpen(true)}
         >
-          Edit
+          {t("edit")}
         </Button>
       </div>
       {isDesktop ? (

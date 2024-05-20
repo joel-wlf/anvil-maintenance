@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { FunctionComponent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface MenuProps {
@@ -26,6 +27,8 @@ interface MenuProps {
 }
 
 const Menu: FunctionComponent<MenuProps> = ({ children }) => {
+    const { t } = useTranslation(["translation"]);
+
   const backendUrl: () => string = () => {
     return localStorage.getItem("backendUrl") || "";
   };
@@ -80,38 +83,38 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
               onClick={() => navigate("/settings")}
             >
               <Settings className='mr-2' size='1.3em' />
-              Settings
+              Settings{t("menu.settings")}
             </Button>
             <Button className='w-full' variant='outline' onClick={logout}>
               <LogOut className='mr-2' size='1.3em' />
-              Log Out
+              {t("menu.log_out")}
             </Button>
           </div>
           <Separator />
           <MenuItem
             icon={<LayoutDashboard className='mr-3' size='1.3em' />}
-            title='Dashboard'
+            title={t("menu.dashboard")}
             to='/dashboard'
           />
           <MenuItem
             icon={<CheckCircle className='mr-3' size='1.3em' />}
-            title='Tasks'
+            title={t("menu.tasks")}
             to='/tasks'
           />
           <MenuItem
             icon={<LandPlot className='mr-3' size='1.3em' />}
-            title='Facility'
+            title={t("menu.facility")}
             to='/facility'
           />
           <MenuItem
             icon={<FileBadge className='mr-3' size='1.3em' />}
-            title='Documentation'
+            title={t("menu.facility")}
             to='/documentation'
           />
           {pb.authStore.model?.role == "admin" && (
             <MenuItem
               icon={<ShieldHalf className='mr-3' size='1.3em' />}
-              title='Admin'
+              title={t("menu.admin")}
               to='/admin'
             />
           )}
@@ -171,35 +174,35 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
             </nav>
             <div className='fixed top-[10vh] w-lvw h-[90vh] px-5 text-[#adadad]'>
               <MobileMenuItem
-                title='Dashboard'
+                title={t("menu.dashboard")}
                 icon={<LayoutDashboard />}
                 to='/dashboard'
                 child={1}
                 setMenuOpen={setMenuOpen}
               />
               <MobileMenuItem
-                title='Tasks'
+                title={t("menu.tasks")}
                 icon={<CheckCircle />}
                 to='/tasks'
                 child={2}
                 setMenuOpen={setMenuOpen}
               />
               <MobileMenuItem
-                title='Facility'
+                title={t("menu.facility")}
                 icon={<LandPlot />}
                 to='/facility'
                 child={3}
                 setMenuOpen={setMenuOpen}
               />
               <MobileMenuItem
-                title='Documentation'
+                title={t("menu.documentation")}
                 icon={<FileBadge />}
                 to='/documentation'
                 child={4}
                 setMenuOpen={setMenuOpen}
               />
               <MobileMenuItem
-                title='Settings'
+                title={t("menu.settings")}
                 icon={<Settings />}
                 to='/settings'
                 child={5}
@@ -207,7 +210,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
               />
               {pb.authStore.model?.role == "admin" && (
                 <MobileMenuItem
-                  title='Admin'
+                  title={t("menu.admin")}
                   icon={<ShieldHalf />}
                   to='/admin'
                   child={6}

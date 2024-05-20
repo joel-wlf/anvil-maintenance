@@ -16,8 +16,11 @@ import { RecordModel } from "pocketbase";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PencilLine, PlayCircle, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function ViewTask() {
+  const { t } = useTranslation(["translation"]);
+
   const navigate = useNavigate();
 
   const { toast } = useToast();
@@ -55,7 +58,7 @@ function ViewTask() {
     setDue(request.due);
     setSubtasks(request.expand?.subtasks || []);
   }
-  
+
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -67,7 +70,7 @@ function ViewTask() {
   async function deleteTask() {
     try {
       await pb.collection("tasks").delete(taskId!);
-      toast({ title: "Successfully deleted task." });
+      toast({ title: t("messages.success_deleted_task") });
       navigate("/tasks");
     } catch (err: any) {
       toast({ title: err.message, variant: "destructive" });
@@ -77,12 +80,12 @@ function ViewTask() {
   async function submit() {
     try {
       setDisabled(true);
-      if (task.title == "") throw new Error("Please enter a title.");
-      if (task.status == "") throw new Error("Please select a status.");
-      if (task.due == "") throw new Error("Please select a due date.");
-      if (task.device == "") throw new Error("Please select a device date.");
+      if (task.title == "") throw new Error(t("messages.err_enter_title"));
+      if (task.status == "") throw new Error(t("messages.err_select_status"));
+      if (task.due == "") throw new Error(t("messages.err_select_due"));
+      if (task.device == "") throw new Error(t("messages.err_select_device"));
       await pb.collection("tasks").update(taskId!, task);
-      toast({ title: "Successfully updated task." });
+      toast({ title: t("messages.success_updated_task") });
       setMode("view");
     } catch (err: any) {
       setDisabled(false);
@@ -112,15 +115,19 @@ function ViewTask() {
         onChange={handleChange}
         name='title'
         value={task.title}
-        placeholder='Task Title...'
+        placeholder={t("view_task.title_placeholder")}
         disabled={disabled}
         className='p-0 disabled:opacity-100'
       />
       {mode == "view" && (
         <div className='flex items-center w-full gap-2'>
-          <Button variant='outline' className='w-full' onClick={() => navigate(`/workflow/${task.id}`)}>
+          <Button
+            variant='outline'
+            className='w-full'
+            onClick={() => navigate(`/workflow/${task.id}`)}
+          >
             <PlayCircle size='1.3em' className='mr-2' />
-            Start Workflow
+            {t("view_task.start_workflow")}
           </Button>
           <Button
             variant='outline'
@@ -164,7 +171,7 @@ function ViewTask() {
       <Separator />
       <Textarea
         className='resize-none disabled:opacity-100'
-        placeholder='Notes...'
+        placeholder={t("view_tasks.notes_placeholder")}
         name='notes'
         value={task.notes}
         onChange={handleChange}
@@ -172,7 +179,7 @@ function ViewTask() {
       />
       {mode == "edit" && (
         <Button className='w-full' onClick={submit} disabled={disabled}>
-          {disabled ? "Loading..." : "Save Task"}
+          {disabled ? t("loading") : t("view_task.action")}
         </Button>
       )}
     </div>
