@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { differenceInDays } from "date-fns";
 import TaskViewCard from "@/components/TaskViewCard";
 import { RecordModel } from "pocketbase";
+import { useTranslation } from "react-i18next";
 
 export interface Task {
   id: string;
@@ -19,6 +20,8 @@ export interface Task {
 }
 
 function Tasks() {
+  const { t } = useTranslation(['translation'])
+
   const navigate = useNavigate();
 
   const [tasks, setTasks] = useState<Task[] | RecordModel[]>();
@@ -71,14 +74,14 @@ function Tasks() {
   }, []);
   return (
     <div>
-      <p className='text-2xl md:text-3xl font-semibold md:pt-2'>Tasks</p>
+      <p className='text-2xl md:text-3xl font-semibold md:pt-2'>{t("tasks.title")}</p>
       <Button
         variant='outline'
         className='my-3 w-full'
         onClick={() => navigate("/tasks/createTask")}
       >
         <Plus className='mr-2' size='1.3em' />
-        Create Task
+        {t("tasks.create_task")}
       </Button>
       <div className='flex flex-col gap-3'>
         {dueTasks?.length != 0 ? (

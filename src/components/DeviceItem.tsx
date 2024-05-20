@@ -14,6 +14,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { FunctionComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
 interface DeviceItemProps {
@@ -35,7 +36,9 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
   created,
   fetchDevices,
 }) => {
-const {toast} = useToast()
+  const { t } = useTranslation(["translation"]);
+
+  const {toast} = useToast()
 
   const [collapsed, setCollapsed] = useState(true);
 
@@ -56,7 +59,7 @@ const {toast} = useToast()
       setDeleteLoading(false);
       toast({
         description:
-          "Failed to delete device. Make sure it isn't used in other tasks.",
+          t("messages.err_device_delete"),
         variant: "destructive",
       });
     }
@@ -99,7 +102,7 @@ const {toast} = useToast()
           <div className='flex text-[#adadad] items-center justify-start w-auto gap-2'>
             <Activity size='1.3em' />
             <Button className='p-0 text-[#adadad]' variant='link'>
-              {functional ? "Functional" : "Not Functional"}
+              {functional ? t("facility.functional") : t("facility.not_functional")}
             </Button>
           </div>
           <Separator className='my-1' />
@@ -112,7 +115,7 @@ const {toast} = useToast()
           <Separator className='my-1 mb-2' />
           <Button variant='outline' className='w-full mb-2'>
             <Locate size='1.3em' className='mr-2' />
-            Create Task with Device
+            {t("facility.device_link")}
           </Button>
           <div className='flex gap-2'>
             <Button
@@ -121,7 +124,7 @@ const {toast} = useToast()
               className='w-full'
               onClick={() => deleteDevice(id)}
             >
-              {deleteLoading ? "Deleting..." : "Delete"}
+              {deleteLoading ? t("delete_loading") : t("delete")}
             </Button>
             <Button
               variant='outline'
@@ -129,7 +132,7 @@ const {toast} = useToast()
               className='w-full'
               onClick={() => setEditDeviceOpen(true)}
             >
-              Edit
+              {t("edit")}
             </Button>
           </div>
         </>

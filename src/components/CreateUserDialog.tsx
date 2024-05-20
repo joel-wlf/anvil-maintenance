@@ -17,6 +17,7 @@ import {
 import { ChangeEvent, FunctionComponent, useState } from "react";
 import { pb } from "@/lib/pocketbase";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface CreateUserDialogProps {
   open: boolean;
@@ -29,6 +30,8 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
   setOpen,
   fetchUsers,
 }) => {
+  const { t } = useTranslation(['translation'])
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -50,20 +53,20 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
   async function handleSubmit() {
     try {
       setLoading(true);
-      if (formData.name == "") throw new Error("Please enter a name.");
+      if (formData.name == "") throw new Error(t("messages.err_enter_name"));
       if (formData.email == "")
-        throw new Error("Please enter an email address.");
-      if (formData.role == "") throw new Error("Please select a role.");
-      if (formData.password == "") throw new Error("Please enter a password.");
+        throw new Error(t("messages.err_enter_email"));
+      if (formData.role == "") throw new Error(t("messages.err_select_role"));
+      if (formData.password == "") throw new Error(t("messages.err_enter_password"));
       if (formData.passwordConfirm == "")
-        throw new Error("Please confirm your password.");
+        throw new Error(t("messages.err_confirm_password"));
       if (formData.password != formData.passwordConfirm)
-        throw new Error("The passwords don't match.");
+        throw new Error(t("messages.err_password_match"));
       await pb.collection("users").create(formData);
       fetchUsers();
       setLoading(false);
       setOpen(false);
-      toast({ title: "Successfully created user." });
+      toast({ title: t("messages.success_created_user") });
     } catch (err: any) {
       setLoading(false);
       toast({ title: err.message, variant: "destructive" });
@@ -74,9 +77,9 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader className='text-left'>
-          <DialogTitle>Create User</DialogTitle>
+          <DialogTitle>{t("admin.create_user")}</DialogTitle>
           <DialogDescription>
-            Create a new user for your organisation
+            {t("admin.create_user_description")}
           </DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
@@ -84,14 +87,14 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
             type='text'
             name='name'
             value={formData.name}
-            placeholder='Name'
+            placeholder={t("admin.name_placeholder")}
             onChange={handleChange}
           />
           <Input
             type='email'
             name='email'
             value={formData.email}
-            placeholder='Email'
+            placeholder={t("admin.email_placeholder")}
             onChange={handleChange}
           />
           <Select
@@ -106,8 +109,8 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
               <SelectValue placeholder='Select role' />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value='user'>User</SelectItem>
-              <SelectItem value='admin'>Admin</SelectItem>
+              <SelectItem value='user'>{t("admin.user")}</SelectItem>
+              <SelectItem value='admin'>{t("admin.admin")}</SelectItem>
             </SelectContent>
           </Select>
           <div className='flex items-center justify-between gap-2'>
@@ -115,19 +118,19 @@ const CreateUserDialog: FunctionComponent<CreateUserDialogProps> = ({
               type='password'
               name='password'
               value={formData.password}
-              placeholder='Password (min. 8)'
+              placeholder={t("admin.password_placeholder")}
               onChange={handleChange}
             />
             <Input
               type='password'
               name='passwordConfirm'
               value={formData.passwordConfirm}
-              placeholder='Confirm Password'
+              placeholder={t("admin.password_confirm_placeholder")}
               onChange={handleChange}
             />
           </div>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Loading..." : "Create User"}
+            {loading ? t("loading") : t("admin.create_user")}
           </Button>
         </div>
       </DialogContent>

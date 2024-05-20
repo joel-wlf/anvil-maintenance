@@ -12,10 +12,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { pb } from "@/lib/pocketbase";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 
 function Facility() {
+  const { t } = useTranslation(["translation"]);
+
   const navigate = useNavigate();
 
   const isDesktop = useMediaQuery({
@@ -55,8 +58,8 @@ function Facility() {
     <div className='h-full w-full'>
       <Tabs defaultValue='devices' className='md:hidden w-full'>
         <TabsList className='grid w-full grid-cols-2'>
-          <TabsTrigger value='devices'>Devices</TabsTrigger>
-          <TabsTrigger value='locations'>Locations</TabsTrigger>
+          <TabsTrigger value='devices'>{t("facility.devices")}</TabsTrigger>
+          <TabsTrigger value='locations'>{t("facility.locations")}</TabsTrigger>
         </TabsList>
         <TabsContent value='devices'>
           <Button
@@ -65,7 +68,7 @@ function Facility() {
             onClick={() => setAddDeviceOpen(true)}
           >
             <Plus className='mr-2' size='1.3em' />
-            Add Device
+            {t("facility.add_device")}
           </Button>
           <div className='flex flex-col gap-2 my-2'>
             {devices[0] ? (
@@ -113,7 +116,7 @@ function Facility() {
             onClick={() => setAddLocationOpen(true)}
           >
             <Plus className='mr-2' size='1.3em' />
-            Add Location
+            {t("facility.add_location")}
           </Button>
           <div className='flex flex-col gap-2 my-2'>
             {locations[0] ? (
@@ -155,7 +158,9 @@ function Facility() {
       </Tabs>
       <div className='hidden md:flex h-full'>
         <ScrollArea className='w-full h-full'>
-          <p className='text-2xl md:text-3xl font-semibold pt-2'>Devices</p>
+          <p className='text-2xl md:text-3xl font-semibold pt-2'>
+            {t("facility.devices")}
+          </p>
           <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-2 my-3'>
             <Button
               variant='outline'
@@ -163,7 +168,7 @@ function Facility() {
               onClick={() => setAddDeviceOpen(true)}
             >
               <Plus className='mr-2' size='1.3em' />
-              Add Device
+              {t("facility.add_device")}
             </Button>
             <div className='hidden xl:block grid-item'></div>
             {devices[0] ? (
@@ -206,7 +211,9 @@ function Facility() {
         </ScrollArea>
         <Separator className='mx-5' orientation='vertical' />
         <ScrollArea className='w-full h-full'>
-          <p className='text-2xl md:text-3xl font-semibold pt-2'>Locations</p>
+          <p className='text-2xl md:text-3xl font-semibold pt-2'>
+            {t("facility.locations")}
+          </p>
           <div className='grid grid-cols-1 xl:grid-cols-2 w-full gap-2 my-3'>
             <Button
               variant='outline'
@@ -214,7 +221,7 @@ function Facility() {
               onClick={() => setAddLocationOpen(true)}
             >
               <Plus className='mr-2' size='1.3em' />
-              Add Location
+              {t("facility.add_location")}
             </Button>
             <div className='hidden xl:block grid-item'></div>
             {locations[0] ? (
