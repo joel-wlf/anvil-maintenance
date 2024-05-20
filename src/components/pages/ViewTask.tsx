@@ -171,7 +171,7 @@ function ViewTask() {
       <Separator />
       <Textarea
         className='resize-none disabled:opacity-100'
-        placeholder={t("view_tasks.notes_placeholder")}
+        placeholder={t("view_task.notes_placeholder")}
         name='notes'
         value={task.notes}
         onChange={handleChange}
