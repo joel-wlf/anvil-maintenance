@@ -83,7 +83,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
               onClick={() => navigate("/settings")}
             >
               <Settings className='mr-2' size='1.3em' />
-              Settings{t("menu.settings")}
+              {t("menu.settings")}
             </Button>
             <Button className='w-full' variant='outline' onClick={logout}>
               <LogOut className='mr-2' size='1.3em' />
