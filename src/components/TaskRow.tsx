@@ -25,7 +25,7 @@ const TaskRow: FunctionComponent<TaskRowProps> = ({ data, loading }) => {
                 {" - " + data.expand.device.name}
               </span>
             </div>
-            <div className='flex items-center gap-1 overflow-scroll text-nowrap text-sm text-[#adadad]'>
+            <div className='flex items-center gap-1 text-nowrap text-sm text-[#adadad]'>
               <CalendarDays size='1.1em' /> {data.due.split(" ")[0]}
               <p>|</p>
               <MapPin size='1.1em' /> {data.expand.device.expand.location.name}
