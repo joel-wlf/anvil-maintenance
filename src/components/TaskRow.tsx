@@ -19,7 +19,7 @@ const TaskRow: FunctionComponent<TaskRowProps> = ({ data, loading }) => {
         <Separator className='my-2' />
         <div className='flex' onClick={() => navigate(`/tasks/${data.id}`)}>
           <div className='w-5/6'>
-            <div className='text-lg overflow-scroll'>
+            <div className='text-lg'>
               {data.title}
               <span className='text-[#adadad]'>
                 {" - " + data.expand.device.name}
