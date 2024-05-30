@@ -76,7 +76,7 @@ function Workflow() {
 
   async function fetchTask() {
     const request = await pb.collection("tasks").getOne(taskId!, {
-      expand: "subtasks,location,device.location",
+      expand: "subtasks,device.location",
       requestKey: null,
     });
     setTask(request);
@@ -136,7 +136,7 @@ function Workflow() {
 
   async function generatePdf() {
     await saveSig();
-    makePdf(imageURL);
+    makePdf(task, subtasks, imageURL);
   }
 
   async function reschedule() {
