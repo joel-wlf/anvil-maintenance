@@ -79,12 +79,19 @@ export function makePdf(task: Task | RecordModel, subtasks: Subtask[] | RecordMo
   // Define the subtasks data
   let subtasksTable = [];
 
-  for (let subtask of subtasks) {
-    if (subtask.done) {
-      subtasksTable.push([["erledigt"], [subtask.name]]);
-    } else {
-      subtasksTable.push([["ausstehend"], [subtask.name]]);
+  // Add subtasks to the table
+  if (subtasks.length != 0) {
+    console.log("Subtasks found: ", subtasks);
+    for (let subtask of subtasks) {
+      if (subtask.done) {
+        subtasksTable.push([["erledigt"], [subtask.name]]);
+      } else {
+        subtasksTable.push([["ausstehend"], [subtask.name]]);
+      }
     }
+  } else {
+    console.log("No subtasks found");
+    subtasksTable.push(["Keine Unteraufgaben für diese Aufgabe vorhanden."]);
   }
 
   //Subtasks
