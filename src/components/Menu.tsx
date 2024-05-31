@@ -108,7 +108,7 @@ const Menu: FunctionComponent<MenuProps> = ({ children }) => {
           />
           <MenuItem
             icon={<FileBadge className='mr-3' size='1.3em' />}
-            title={t("menu.facility")}
+            title={t("menu.documentation")}
             to='/documentation'
           />
           {pb.authStore.model?.role == "admin" && (
