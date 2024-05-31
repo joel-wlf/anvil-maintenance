@@ -81,7 +81,7 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
       {mode == "view" && 
         task.assignees.length == 0 && (
           <div className='flex items-center justify-center text-[#adadad] w-full'>
-            {t("tasks.no_asignees")}
+            {t("tasks.no_assignees")}
           </div>
         )}
       {users &&
