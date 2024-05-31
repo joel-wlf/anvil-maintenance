@@ -38,6 +38,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { addDays, addMonths, addWeeks, addYears } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "react-i18next";
+import { makePdf } from "@/lib/pdf"
 
 function Workflow() {
   const { t } = useTranslation(['translation'])
@@ -134,8 +135,8 @@ function Workflow() {
   }
 
   async function generatePdf() {
-    saveSig();
-    console.log(imageURL);
+    await saveSig();
+    makePdf(imageURL);
   }
 
   async function reschedule() {
@@ -220,19 +221,25 @@ function Workflow() {
         </div>
         {loading ? (
           <Card className='flex flex-col gap-1 p-2'>
-            <p className='font-semibold text-lg px-2'>{t("workflow.subtasks")}</p>
+            <p className='font-semibold text-lg px-2'>
+              {t("workflow.subtasks")}
+            </p>
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
           </Card>
         ) : (
           <Card className='p-2'>
-            <p className='font-semibold text-lg px-2'>{t("workflow.subtasks")}</p>
+            <p className='font-semibold text-lg px-2'>
+              {t("workflow.subtasks")}
+            </p>
             <Subtasks />
           </Card>
         )}
         <Card className='flex flex-col gap-2 p-2'>
-          <p className='font-semibold text-lg px-2'>{t("workflow.reschedule")}</p>
+          <p className='font-semibold text-lg px-2'>
+            {t("workflow.reschedule")}
+          </p>
           <div className='flex gap-2'>
             <Input
               type='number'
@@ -281,13 +288,12 @@ function Workflow() {
             <SignaturePad
               ref={sigCanvas}
               penColor='black'
-              backgroundColor="white"
+              backgroundColor='white'
               canvasProps={{
                 className:
                   "border-[1px] border-[#333] rounded-lg w-full h-[20vh]",
               }}
             />
-            <img src={imageURL!} alt="" />
             <DialogFooter>
               <Button className='w-full' onClick={generatePdf}>
                 {t("workflow.action2")}

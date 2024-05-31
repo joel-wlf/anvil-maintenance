@@ -59,7 +59,7 @@ function Facility() {
       <Tabs defaultValue='devices' className='md:hidden w-full'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='devices'>{t("facility.devices")}</TabsTrigger>
-          <TabsTrigger value='locations'>Locations</TabsTrigger>
+          <TabsTrigger value='locations'>{t("facility.locations")}</TabsTrigger>
         </TabsList>
         <TabsContent value='devices'>
           <Button
