@@ -76,12 +76,12 @@ function Workflow() {
 
   async function fetchTask() {
     const request = await pb.collection("tasks").getOne(taskId!, {
-      expand: "subtasks,device.location",
+      expand: "subtasks,device.location,assignees",
       requestKey: null,
     });
     setTask(request);
-    setLoading(false);
     setSubtasks(request.expand?.subtasks || []);
+    setLoading(false);
   }
 
   function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
@@ -136,11 +136,10 @@ function Workflow() {
 
   async function generatePdf() {
     await saveSig();
-    await saveSig();
     const formData = new FormData();
     formData.append("file", makePdf(task, subtasks, imageURL), `${task.id}.pdf`);
     formData.append("task", "r13kujtpdjym4lc");
-    await pb.collection("documentation").create(formData);
+    // await pb.collection("documentation").create(formData);
   }
 
   async function reschedule() {
@@ -283,7 +282,7 @@ function Workflow() {
             </Button>
           </DialogTrigger>
           <DialogContent className='w-[95%] rounded-lg'>
-            <DialogHeader className='items-start'>
+            <DialogHeader className='items-start text-start'>
               <DialogTitle>{t("workflow.sign_here")}</DialogTitle>
               <DialogDescription>
                 {t("workflow.sign_description")}

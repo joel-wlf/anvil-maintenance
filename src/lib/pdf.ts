@@ -1,4 +1,4 @@
-import { Subtask, Task } from "@/components/pages/CreateTask";
+import { Subtask, Task, User } from "@/components/pages/CreateTask";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { RecordModel } from "pocketbase";
@@ -55,12 +55,14 @@ export function makePdf(task: Task | RecordModel, subtasks: Subtask[] | RecordMo
     { maxWidth: pageWidth - 20 }
   );
 
+  console.log(task)
+
   //Create table
   const data = [
     ["Fällig bis", task.due.split(" ")[0]],
     ["Gerät", task.expand.device.name],
     ["Standort", task.expand.device.expand.location.name],
-    ["Zugewiesen an", "Joel Wolf"],
+    ["Zugewiesen an", task.expand.assignees.map((assignee: User) => assignee.name).join(", ")],
   ];
 
   //Add table to PDF
@@ -119,7 +121,7 @@ export function makePdf(task: Task | RecordModel, subtasks: Subtask[] | RecordMo
   });
 
   doc.text(
-    'Der Unterzeichner bestätigt hiermit die Druchführund der oben genannten Wartungsarbeiten am Gerät "Waschmaschine am Standort "Putzraum" gemäß den vorgegebenen Richtlinien und Fristen:',
+    'Der Unterzeichner bestätigt hiermit die Druchführund der oben genannten Wartungsarbeiten am Gerät "Waschmaschine" am Standort "Putzraum" gemäß den vorgegebenen Richtlinien und Fristen:',
     10,
     pageHeight - 70,
     { maxWidth: pageWidth - 20 }
