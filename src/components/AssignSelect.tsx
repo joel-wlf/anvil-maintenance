@@ -30,9 +30,9 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
   task,
   setTask,
   disabled,
-  mode
+  mode,
 }) => {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(["translation"]);
 
   const [users, setUsers] = useState<User[] | RecordModel[] | null>([]);
 
