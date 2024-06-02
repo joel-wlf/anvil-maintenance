@@ -38,6 +38,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { addDays, addMonths, addWeeks, addYears } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "react-i18next";
+import { makePdf } from "@/lib/pdf"
 
 function Workflow() {
   const { t } = useTranslation(['translation'])
@@ -75,12 +76,12 @@ function Workflow() {
 
   async function fetchTask() {
     const request = await pb.collection("tasks").getOne(taskId!, {
-      expand: "subtasks,location,device.location",
+      expand: "subtasks,device.location,assignees",
       requestKey: null,
     });
     setTask(request);
-    setLoading(false);
     setSubtasks(request.expand?.subtasks || []);
+    setLoading(false);
   }
 
   function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
@@ -129,13 +130,20 @@ function Workflow() {
     }
   }
 
-  function saveSig() {
-    setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+  async function saveSig() {
+    setImageURL(await sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
   }
 
   async function generatePdf() {
-    saveSig();
-    console.log(imageURL);
+    await saveSig();
+    const formData = new FormData();
+    formData.append("file", makePdf(task, subtasks, imageURL), `${task.id}.pdf`);
+    formData.append("task", "r13kujtpdjym4lc");
+    try {
+      await pb.collection("documentation").create(formData);
+    } catch (err: any) {
+      toast({ title: err.message, variant: "destructive" });
+    }
   }
 
   async function reschedule() {
@@ -220,19 +228,25 @@ function Workflow() {
         </div>
         {loading ? (
           <Card className='flex flex-col gap-1 p-2'>
-            <p className='font-semibold text-lg px-2'>{t("workflow.subtasks")}</p>
+            <p className='font-semibold text-lg px-2'>
+              {t("workflow.subtasks")}
+            </p>
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
             <Skeleton className='h-4 w-full' />
           </Card>
         ) : (
           <Card className='p-2'>
-            <p className='font-semibold text-lg px-2'>{t("workflow.subtasks")}</p>
+            <p className='font-semibold text-lg px-2'>
+              {t("workflow.subtasks")}
+            </p>
             <Subtasks />
           </Card>
         )}
         <Card className='flex flex-col gap-2 p-2'>
-          <p className='font-semibold text-lg px-2'>{t("workflow.reschedule")}</p>
+          <p className='font-semibold text-lg px-2'>
+            {t("workflow.reschedule")}
+          </p>
           <div className='flex gap-2'>
             <Input
               type='number'
@@ -272,7 +286,7 @@ function Workflow() {
             </Button>
           </DialogTrigger>
           <DialogContent className='w-[95%] rounded-lg'>
-            <DialogHeader className='items-start'>
+            <DialogHeader className='items-start text-start'>
               <DialogTitle>{t("workflow.sign_here")}</DialogTitle>
               <DialogDescription>
                 {t("workflow.sign_description")}
@@ -281,13 +295,12 @@ function Workflow() {
             <SignaturePad
               ref={sigCanvas}
               penColor='black'
-              backgroundColor="white"
+              backgroundColor='white'
               canvasProps={{
                 className:
                   "border-[1px] border-[#333] rounded-lg w-full h-[20vh]",
               }}
             />
-            <img src={imageURL!} alt="" />
             <DialogFooter>
               <Button className='w-full' onClick={generatePdf}>
                 {t("workflow.action2")}

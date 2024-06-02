@@ -78,11 +78,12 @@ const AssignSelect: FunctionComponent<AssignSelectProps> = ({
 
   return (
     <div className='flex gap-2 flex-wrap'>
-      {mode == "view" && task.assignees.length == 0 && (
-        <div className='flex items-center justify-center text-[#adadad] w-full'>
-          {t("tasks.no_assignees")}
-        </div>
-      )}
+      {mode == "view" && 
+        task.assignees.length == 0 && (
+          <div className='flex items-center justify-center text-[#adadad] w-full'>
+            {t("tasks.no_assignees")}
+          </div>
+        )}
       {users &&
         task.assignees.map((assignee: any) => {
           const userObj = users.find((user: any) => user.id === assignee);
