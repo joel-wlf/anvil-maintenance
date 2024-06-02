@@ -1,0 +1,13 @@
+{
+    "explain1": "This document serves as proof of the proper execution of the current task:",
+    "due": "Due by",
+    "device": "Device",
+    "location": "Location",
+    "assigned_to": "Assigned to",
+    "explain2": "The following subtasks are part of the task \"{{name}}\":",
+    "done": "done",
+    "not_done": "not done",
+    "no_subtasks": "No subtasks available for this task.",
+    "explain3": "The undersigned hereby confirms the execution of the above-mentioned task on the device \"{{device_name}}\" at the location \"{{location_name}}\" in accordance with the specified guidelines and deadlines:",
+    "explain4": "_______________________________\nThis document may contain personal data that must be treated confidentially.\nhttps: //anvil-maintenance.vercel.app"
+}

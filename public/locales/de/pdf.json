@@ -1,0 +1,13 @@
+{
+    "explain1": "Dieses Dokument dient zum Nachweis der ordnungsgemäßen Durchführung der vorliegenden Aufgabe:",
+    "due": "Fällig bis",
+    "device": "Gerät",
+    "location": "Standort",
+    "assigned_to": "Zugewiesen an",
+    "explain2": "Folgende Unteraufgaben gehören zu der Aufgabe \"{{name}}\":",
+    "done": "erledigt",
+    "not_done": "nicht erledigt",
+    "no_subtasks": "Keine Unteraufgaben für diese Aufgabe vorhanden.",
+    "explain3": "Der Unterzeichner bestätigt hiermit die Druchführund der oben genannten Aufgabe am Gerät \"{{device_name}}\" am Standort \"{{location_name}}\" gemäß den vorgegebenen Richtlinien und Fristen:",
+    "explain4": "_______________________________\nDieses Dokument enthält möglicherweise personenbezogene Daten, die vertraulich zu behandeln sind.\nhttps: //anvil-maintenance.vercel.app"
+}

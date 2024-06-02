@@ -139,7 +139,11 @@ function Workflow() {
     const formData = new FormData();
     formData.append("file", makePdf(task, subtasks, imageURL), `${task.id}.pdf`);
     formData.append("task", "r13kujtpdjym4lc");
-    // await pb.collection("documentation").create(formData);
+    try {
+      await pb.collection("documentation").create(formData);
+    } catch (err: any) {
+      toast({ title: err.message, variant: "destructive" });
+    }
   }
 
   async function reschedule() {
