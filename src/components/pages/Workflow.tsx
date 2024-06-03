@@ -130,12 +130,8 @@ function Workflow() {
     }
   }
 
-  async function saveSig() {
-    setImageURL(await sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
-  }
-
   async function generatePdf() {
-    await saveSig();
+    setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
     const formData = new FormData();
     formData.append("file", makePdf(task, subtasks, imageURL), `${task.id}.pdf`);
     formData.append("task", "r13kujtpdjym4lc");
