@@ -74,15 +74,21 @@ function Workflow() {
     notes: "",
   });
 
-  async function fetchTask() {
+async function fetchTask() {
+  try {
     const request = await pb.collection("tasks").getOne(taskId!, {
       expand: "subtasks,device.location,assignees",
       requestKey: null,
     });
     setTask(request);
     setSubtasks(request.expand?.subtasks || []);
+  } catch (err: any) {
+    toast({ title: err.message, variant: "destructive" });
+  } finally {
     setLoading(false);
   }
+}
+
 
   function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
     setRescheduled(false);
@@ -268,7 +274,7 @@ function Workflow() {
           <Button
             onClick={reschedule}
             variant='outline'
-            disabled={rescheduled || !amount || loading}
+            disabled={rescheduled || !amount || loading || amount <= 0}
           >
             {t("workflow.reschedule_action")}
             <Repeat size='1.3em' className='ml-2' />
