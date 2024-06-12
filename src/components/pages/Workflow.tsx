@@ -51,8 +51,6 @@ function Workflow() {
 
   const [loading, setLoading] = useState(true);
 
-  const [imageURL, setImageURL] = useState(null);
-
   const [rescheduled, setRescheduled] = useState(false);
 
   const [amount, setAmount] = useState<any>();
