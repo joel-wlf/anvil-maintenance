@@ -137,15 +137,11 @@ async function fetchTask() {
   }
 
   async function generatePdf() {
-    setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
-    const formData = new FormData();
-    formData.append("file", makePdf(task, subtasks, imageURL), `${task.id}.pdf`);
-    formData.append("task", task.id!);
-    try {
-      await pb.collection("documentation").create(formData);
-    } catch (err: any) {
-      toast({ title: err.message, variant: "destructive" });
-    }
+    makePdf(
+      task,
+      subtasks,
+      await sigCanvas.current.getTrimmedCanvas().toDataURL("image/png")
+    );
   }
 
   async function reschedule() {
