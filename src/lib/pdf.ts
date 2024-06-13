@@ -16,7 +16,7 @@ export async function makePdf(
   task: Task | RecordModel,
   subtasks: Subtask[] | RecordModel[],
   signatureUrl: string | null
-): Promise<Blob>  {
+) {
   const doc = new jsPDF({
     format: "a4",
     unit: "mm",
@@ -141,17 +141,13 @@ export async function makePdf(
   signature.onload = async () => {
     doc.addImage(signature, "png", 10, pageHeight - 60, 75, 20);
   
-      const url = doc.output("bloburi");
-    
-      window.open(url);
-
       blob = doc.output("blob");
       const formData = new FormData();
 
       formData.append("file", blob, `${task.id}.pdf`);
       formData.append("task", task.id!);
-      await pb.collection("documentation").create(formData);
+      const request = await pb.collection("documentation").create(formData);
 
+      doc.save(request.file)
     };
-    return await blob
 }
