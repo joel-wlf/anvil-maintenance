@@ -27,6 +27,8 @@ function ViewTask() {
 
   const { taskId } = useParams();
 
+  const [loading, setLoading] = useState(false)
+
   const setMenuMode = useContext(MenuModeContext).setMode;
 
   const [disabled, setDisabled] = useState(true);
@@ -51,12 +53,14 @@ function ViewTask() {
   });
 
   async function fetchTask() {
+    setLoading(true)
     const request = await pb
       .collection("tasks")
       .getOne(taskId!, { expand: "subtasks", requestKey: null });
     setTask(request);
     setDue(request.due);
     setSubtasks(request.expand?.subtasks || []);
+    setLoading(false)
   }
 
   function handleChange(
@@ -124,6 +128,7 @@ function ViewTask() {
           <Button
             variant='outline'
             className='w-full'
+            disabled={loading}
             onClick={() => navigate(`/workflow/${task.id}`)}
           >
             <PlayCircle size='1.3em' className='mr-2' />
@@ -131,6 +136,7 @@ function ViewTask() {
           </Button>
           <Button
             variant='outline'
+            disabled={loading}
             onClick={() => {
               setDisabled(false);
               setMode("edit");
@@ -138,7 +144,7 @@ function ViewTask() {
           >
             <PencilLine size='1.3em' />
           </Button>
-          <Button variant='outline' onClick={deleteTask}>
+          <Button variant='outline' disabled={loading} onClick={deleteTask}>
             <Trash2 size='1.3em' />
           </Button>
         </div>
