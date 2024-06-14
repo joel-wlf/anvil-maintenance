@@ -38,10 +38,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { addDays, addMonths, addWeeks, addYears } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "react-i18next";
-import { makePdf } from "@/lib/pdf"
+import { makePdf } from "@/lib/pdf";
 
 function Workflow() {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(["translation"]);
 
   const { taskId } = useParams();
 
@@ -50,6 +50,8 @@ function Workflow() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
+
+  const [generating, setGenerating] = useState(false);
 
   const [rescheduled, setRescheduled] = useState(false);
 
@@ -72,21 +74,20 @@ function Workflow() {
     notes: "",
   });
 
-async function fetchTask() {
-  try {
-    const request = await pb.collection("tasks").getOne(taskId!, {
-      expand: "subtasks,device.location,assignees",
-      requestKey: null,
-    });
-    setTask(request);
-    setSubtasks(request.expand?.subtasks || []);
-  } catch (err: any) {
-    toast({ title: err.message, variant: "destructive" });
-  } finally {
-    setLoading(false);
+  async function fetchTask() {
+    try {
+      const request = await pb.collection("tasks").getOne(taskId!, {
+        expand: "subtasks,device.location,assignees",
+        requestKey: null,
+      });
+      setTask(request);
+      setSubtasks(request.expand?.subtasks || []);
+    } catch (err: any) {
+      toast({ title: err.message, variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
   }
-}
-
 
   function handleAmountChange(e: ChangeEvent<HTMLInputElement>) {
     setRescheduled(false);
@@ -115,8 +116,7 @@ async function fetchTask() {
 
   const Subtasks = () => {
     if (subtasks.length != 0) {
-      return (
-      subtasks!.map((subtask: any) => {
+      return subtasks!.map((subtask: any) => {
         return (
           <Subtask
             key={subtask.id}
@@ -128,18 +128,27 @@ async function fetchTask() {
             deleteDisabled
           />
         );
-      }))
+      });
     } else {
-      return <div className='text-center text-[#adadad]'>{t("messages.no_subtasks")}</div>
+      return (
+        <div className='text-center text-[#adadad]'>
+          {t("messages.no_subtasks")}
+        </div>
+      );
     }
-  }
+  };
 
   async function generatePdf() {
-    makePdf(
-      task,
-      subtasks,
-      await sigCanvas.current.getTrimmedCanvas().toDataURL("image/png")
-    );
+    setGenerating(true);
+
+    const signatureDataUrl = await sigCanvas.current
+      .getTrimmedCanvas()
+      .toDataURL("image/png");
+    await makePdf(task, subtasks, signatureDataUrl);
+
+    await pb.collection("tasks").update(task.id!, { status: "done" });
+
+    navigate("/tasks");
   }
 
   async function reschedule() {
@@ -298,8 +307,12 @@ async function fetchTask() {
               }}
             />
             <DialogFooter>
-              <Button className='w-full' onClick={generatePdf}>
-                {t("workflow.action2")}
+              <Button
+                className='w-full'
+                onClick={generatePdf}
+                disabled={generating}
+              >
+                {generating ? t("workflow.generating") : t("workflow.action2")}
                 <Download size='1.3em' className='ml-2' />
               </Button>
             </DialogFooter>
