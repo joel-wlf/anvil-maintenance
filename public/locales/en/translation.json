@@ -113,6 +113,7 @@
         "years": "Years",
         "action": "Document + Save",
         "action2": "Generate Report + Mark as Done",
+        "generating": "Generating...",
         "sign_here": "Sign here",
         "sign_description": "Sign the document to confirm your work.",
         "select_device": "Select Device",
