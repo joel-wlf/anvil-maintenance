@@ -119,6 +119,10 @@
         "select_device": "Select Device",
         "due": "Due"
     },
+    "settings": {
+        "title": "Settings",
+        "language": "Language"
+    },
     "delete": "Delete",
     "delete_loading": "Deleting...",
     "edit": "Edit",
