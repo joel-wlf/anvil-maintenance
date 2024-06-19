@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { Card } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 function Settings() {
   const { t, i18n } = useTranslation(["translation"]);
@@ -22,13 +22,13 @@ function Settings() {
         {t("settings.title")}
       </p>
       <div className='flex flex-col w-full gap-2 my-2'>
-        <Card className='flex flex-col gap-1 w-full p-3'>
+        <Card className='flex flex-col gap-2 w-full p-3'>
           <p className='text-xl md:text-2xl font-semibold'>
             {t("settings.language")}
           </p>
-          <Select onValueChange={(e: string) => i18n.changeLanguage(e)}>
+          <Select value={i18n.language} onValueChange={(e: string) => i18n.changeLanguage(e)}>
             <SelectTrigger>
-              <SelectValue placeholder='Select a fruit' />
+              <SelectValue placeholder={t("settings.lang_placeholder")} />
             </SelectTrigger>
             <SelectContent>
                 <SelectItem value='en'>English</SelectItem>

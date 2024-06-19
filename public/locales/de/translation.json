@@ -119,6 +119,11 @@
         "select_device": "Gerät auswählen",
         "due": "Fällig bis"
     },
+    "settings": {
+        "title": "Optionen",
+        "language": "Sprache",
+        "lang_placeholder": "Sprache auswählen"
+    },
     "delete": "Löschen",
     "delete_loading": "Löschen...",
     "edit": "Bearbeiten",
