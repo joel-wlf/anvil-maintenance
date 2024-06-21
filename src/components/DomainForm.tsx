@@ -13,7 +13,7 @@ interface DomainFormProps {
 }
 
 const DomainForm: FunctionComponent<DomainFormProps> = ({ setStep }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState<{
     url: string;

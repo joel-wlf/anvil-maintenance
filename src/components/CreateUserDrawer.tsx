@@ -30,7 +30,7 @@ const CreateUserDrawer: FunctionComponent<CreateUserDrawerProps> = ({
   setOpen,
   fetchUsers,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: "",

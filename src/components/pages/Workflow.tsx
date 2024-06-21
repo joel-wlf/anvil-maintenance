@@ -41,7 +41,7 @@ import { useTranslation } from "react-i18next";
 import { makePdf } from "@/lib/pdf";
 
 function Workflow() {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const { taskId } = useParams();
 

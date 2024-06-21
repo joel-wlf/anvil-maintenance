@@ -19,7 +19,7 @@ import { PencilLine, PlayCircle, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 function ViewTask() {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ function ViewTask() {
 
   const { taskId } = useParams();
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const setMenuMode = useContext(MenuModeContext).setMode;
 
@@ -53,14 +53,14 @@ function ViewTask() {
   });
 
   async function fetchTask() {
-    setLoading(true)
+    setLoading(true);
     const request = await pb
       .collection("tasks")
       .getOne(taskId!, { expand: "subtasks", requestKey: null });
     setTask(request);
     setDue(request.due);
     setSubtasks(request.expand?.subtasks || []);
-    setLoading(false)
+    setLoading(false);
   }
 
   function handleChange(

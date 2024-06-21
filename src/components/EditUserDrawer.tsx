@@ -38,7 +38,7 @@ const EditUserDrawer: FunctionComponent<EditUserDrawerProps> = ({
   setOpen,
   fetchUsers,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: name,

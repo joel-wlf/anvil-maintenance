@@ -26,7 +26,7 @@ const SubtaskView: FunctionComponent<SubtaskViewProps> = ({
   changeDisabled,
   mode,
 }) => {
-    const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [subTasksLoading, setSubtasksLoading] = useState(false);
 

@@ -32,7 +32,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
   setOpen,
   fetchDevices,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -134,7 +134,9 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
                 })
               }
             />
-            <Label htmlFor='functional'>{t("facility.currently_functional")}</Label>
+            <Label htmlFor='functional'>
+              {t("facility.currently_functional")}
+            </Label>
           </div>
           <Button onClick={handleSubmit} disabled={loading}>
             {loading ? t("loading") : t("facility.add_device")}

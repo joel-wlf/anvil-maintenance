@@ -22,7 +22,7 @@ const DueSelect: FunctionComponent<DueSelectProps> = ({
   setDue,
   disabled,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   return (
     <Popover>

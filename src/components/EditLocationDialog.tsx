@@ -29,7 +29,7 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
   setOpen,
   fetchLocations,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: name,
@@ -66,7 +66,9 @@ const EditLocationDialog: FunctionComponent<EditLocationDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>{t("facility.edit_location")}</DialogTitle>
-          <DialogDescription>{`${t("facility.edit_location_description")} "${name}"`}</DialogDescription>
+          <DialogDescription>{`${t(
+            "facility.edit_location_description"
+          )} "${name}"`}</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

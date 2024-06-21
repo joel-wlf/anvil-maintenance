@@ -26,7 +26,7 @@ const TaskViewCard: FunctionComponent<TaskViewCardProps> = ({
   noData,
   data,
 }) => {
-    const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [collapsed, setCollapsed] = useState(collapsible);
 

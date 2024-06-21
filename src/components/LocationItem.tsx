@@ -25,7 +25,7 @@ const LocationItem: FunctionComponent<LocationItemProps> = ({
   created,
   fetchLocations,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const { toast } = useToast();
 

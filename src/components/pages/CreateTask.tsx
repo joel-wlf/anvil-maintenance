@@ -66,7 +66,7 @@ export interface Subtask {
 }
 
 function CreateTask() {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const navigate = useNavigate();
 

@@ -23,7 +23,7 @@ const AddLocationDrawer: FunctionComponent<AddLocationDrawerProps> = ({
   setOpen,
   fetchLocations,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: "",

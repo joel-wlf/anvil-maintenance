@@ -26,7 +26,7 @@ const UserItem: FunctionComponent<UserItemProps> = ({
   email,
   created,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 768px)",

@@ -22,7 +22,7 @@ const DeviceSelect: FunctionComponent<DeviceSelectProps> = ({
   setTask,
   disabled,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [devices, setDevices] = useState<Device[] | RecordModel[] | null>([]);
 

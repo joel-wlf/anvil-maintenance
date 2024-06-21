@@ -17,7 +17,7 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 
 function Facility() {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const navigate = useNavigate();
 

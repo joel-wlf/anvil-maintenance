@@ -36,9 +36,9 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
   created,
   fetchDevices,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const [collapsed, setCollapsed] = useState(true);
 
@@ -58,8 +58,7 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
     } catch (err: any) {
       setDeleteLoading(false);
       toast({
-        description:
-          t("messages.err_device_delete"),
+        description: t("messages.err_device_delete"),
         variant: "destructive",
       });
     }
@@ -102,7 +101,9 @@ const DeviceItem: FunctionComponent<DeviceItemProps> = ({
           <div className='flex text-[#adadad] items-center justify-start w-auto gap-2'>
             <Activity size='1.3em' />
             <Button className='p-0 text-[#adadad]' variant='link'>
-              {functional ? t("facility.functional") : t("facility.not_functional")}
+              {functional
+                ? t("facility.functional")
+                : t("facility.not_functional")}
             </Button>
           </div>
           <Separator className='my-1' />

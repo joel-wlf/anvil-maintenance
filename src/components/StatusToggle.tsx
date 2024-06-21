@@ -14,9 +14,9 @@ const StatusToggle: FunctionComponent<StatusToggleProps> = ({
   setTask,
   value,
   defaultValue,
-  disabled
+  disabled,
 }) => {
-    const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   return (
     <ToggleGroup

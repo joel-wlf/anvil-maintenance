@@ -11,7 +11,7 @@ import CreateUserDialog from "@/components/CreateUserDialog";
 import { useTranslation } from "react-i18next";
 
 function Admin() {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const navigate = useNavigate();
 

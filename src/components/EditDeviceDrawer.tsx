@@ -42,7 +42,7 @@ const AddDeviceDrawer: FunctionComponent<AddDeviceDrawerProps> = ({
   setOpen,
   fetchDevices,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: name,

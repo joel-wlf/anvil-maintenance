@@ -124,6 +124,9 @@
         "language": "Language",
         "lang_placeholder": "Select language"
     },
+    "documentation": {
+        "title": "Documentation"
+    },
     "delete": "Delete",
     "delete_loading": "Deleting...",
     "edit": "Edit",

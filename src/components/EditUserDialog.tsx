@@ -38,7 +38,7 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
   setOpen,
   fetchUsers,
 }) => {
-    const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: name,
@@ -60,8 +60,7 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
     try {
       setLoading(true);
       if (formData.name == "") throw new Error(t("messages.err_enter_name"));
-      if (formData.email == "")
-        throw new Error(t("messages.err_enter_email"));
+      if (formData.email == "") throw new Error(t("messages.err_enter_email"));
       if (formData.role == "") throw new Error(t("messages.err_select_role"));
       await pb.collection("users").update(id, formData);
       fetchUsers();
@@ -79,7 +78,9 @@ const EditUserDialog: FunctionComponent<EditUserDialogProps> = ({
       <DialogContent>
         <DialogHeader className='text-left'>
           <DialogTitle>{t("admin.edit_user")}</DialogTitle>
-          <DialogDescription>{`${t("admin.edit_user_description")} "${email}"`}</DialogDescription>
+          <DialogDescription>{`${t(
+            "admin.edit_user_description"
+          )} "${email}"`}</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-2 px-4 pb-5'>
           <Input

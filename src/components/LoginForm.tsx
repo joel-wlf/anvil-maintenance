@@ -14,7 +14,7 @@ interface LoginFormProps {
 }
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ setStep }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState<{
     email: string;

@@ -29,7 +29,7 @@ const EditLocationDrawer: FunctionComponent<EditLocationDrawerProps> = ({
   setOpen,
   fetchLocations,
 }) => {
-  const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const [formData, setFormData] = useState({
     name: name,

@@ -27,7 +27,7 @@ interface MenuProps {
 }
 
 const Menu: FunctionComponent<MenuProps> = ({ children }) => {
-    const { t } = useTranslation(["translation"]);
+  const { t } = useTranslation("translation");
 
   const backendUrl: () => string = () => {
     return localStorage.getItem("backendUrl") || "";
