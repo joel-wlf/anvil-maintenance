@@ -148,6 +148,8 @@ function Workflow() {
 
     await pb.collection("tasks").update(task.id!, { status: "done" });
 
+    toast({title: t("messages.download_started")})
+
     navigate("/tasks");
   }
 

@@ -52,7 +52,8 @@
         "success_updated_location": "Successfully updated location.",
         "success_deleted_task": "Successfully deleted task.",
         "success_rescheduled_task": "Successfully rescheduled task.",
-        "no_subtasks": "No subtasks here."
+        "no_subtasks": "No subtasks here.",
+        "download_started": "Downloading..."
     },
     "create_task": {
         "title_placeholder": "Task Title...",

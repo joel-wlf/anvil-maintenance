@@ -52,7 +52,8 @@
         "success_updated_location": "Standort erfolgreich aktualisiert.",
         "success_deleted_task": "Task erfolgreich gelöscht.",
         "success_rescheduled_task": "Task erfolgreich neu geplant.",
-        "no_subtasks": "Keine Subtasks vorhanden."
+        "no_subtasks": "Keine Subtasks vorhanden.",
+        "download_started": "Wird heruntergeladen..."
     },
     "create_task": {
         "title_placeholder": "Titel...",
