@@ -15,55 +15,7 @@ import { RecordModel } from "pocketbase";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-export interface User {
-  collectionId: string;
-  collectionName: string;
-  created: string;
-  email: string;
-  emailVisibility: boolean;
-  id: string;
-  name: string;
-  role: string;
-  updated: string;
-  username: string;
-  verified: boolean;
-}
-
-export interface Device {
-  collectionId: string;
-  collectionName: string;
-  created: Date;
-  description: string;
-  functional: boolean;
-  id: string;
-  location: string;
-  name: string;
-  updated: Date;
-}
-
-export interface Task {
-  id?: string;
-  created_by: string;
-  title: string;
-  status: string;
-  due: string;
-  device: string;
-  assignees: string[];
-  subtasks: string[];
-  notes: string;
-  expand?: any;
-}
-
-export interface Subtask {
-  collectionId?: string;
-  collectionName?: string;
-  created?: Date;
-  id?: string;
-  updated?: Date;
-  done?: boolean;
-  name: string;
-}
+import { Task, Subtask } from "@/types";
 
 function CreateTask() {
   const { t } = useTranslation("translation");
@@ -86,7 +38,7 @@ function CreateTask() {
     created_by: pb.authStore.model?.id,
     title: "",
     status: "pending",
-    due: "",
+    due: null,
     device: "",
     assignees: [],
     subtasks: [],
@@ -106,7 +58,7 @@ function CreateTask() {
       setSubmitLoading(true);
       if (task.title == "") throw new Error(t("messages.err_enter_title"));
       if (task.status == "") throw new Error(t("messages.err_select_status"));
-      if (task.due == "") throw new Error(t("messages.err_select_due"));
+      if (task.due == null) throw new Error(t("messages.err_select_due"));
       if (task.device == "") throw new Error(t("messages.err_select_device"));
       await pb.collection("tasks").create(task);
       toast({ title: t("messages.success_created_task") });

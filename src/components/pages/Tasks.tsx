@@ -7,20 +7,10 @@ import { differenceInDays } from "date-fns";
 import TaskViewCard from "@/components/TaskViewCard";
 import { RecordModel } from "pocketbase";
 import { useTranslation } from "react-i18next";
-
-export interface Task {
-  id: string;
-  title: string;
-  status: "pending" | "progress" | "done";
-  created_by: string;
-  assignees: string[];
-  device: string;
-  due: string;
-  subtasks: string[];
-}
+import { Task } from "@/types";
 
 function Tasks() {
-  const { t } = useTranslation(['translation'])
+  const { t } = useTranslation(["translation"]);
 
   const navigate = useNavigate();
 
@@ -29,9 +19,7 @@ function Tasks() {
   const currentDate = new Date();
 
   const dueTasks = tasks?.filter((task: any) => {
-    if (differenceInDays(task.due, currentDate) <= 7 &&
-    task.status != "done"
-    ) {
+    if (differenceInDays(task.due, currentDate) <= 7 && task.status != "done") {
       return task;
     }
   });
@@ -74,7 +62,9 @@ function Tasks() {
   }, []);
   return (
     <div>
-      <p className='text-2xl md:text-3xl font-semibold md:pt-2'>{t("tasks.title")}</p>
+      <p className='text-2xl md:text-3xl font-semibold md:pt-2'>
+        {t("tasks.title")}
+      </p>
       <Button
         variant='outline'
         className='my-3 w-full'

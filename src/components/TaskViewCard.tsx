@@ -1,5 +1,5 @@
 import TaskRow from "@/components/TaskRow";
-import { Task } from "@/components/pages/Tasks";
+import { Task } from "@/types";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {

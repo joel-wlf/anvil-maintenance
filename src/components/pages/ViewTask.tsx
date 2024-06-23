@@ -4,7 +4,7 @@ import DeviceSelect from "@/components/DeviceSelect";
 import DueSelect from "@/components/DueSelect";
 import StatusToggle from "@/components/StatusToggle";
 import SubtaskView from "@/components/SubtaskView";
-import { Subtask, Task } from "@/components/pages/CreateTask";
+import { Subtask, Task } from "@/types";
 import { BigInput } from "@/components/ui/big-input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -45,7 +45,7 @@ function ViewTask() {
     created_by: pb.authStore.model?.id,
     title: "",
     status: "pending",
-    due: "",
+    due: new Date(),
     device: "",
     assignees: [],
     subtasks: [],

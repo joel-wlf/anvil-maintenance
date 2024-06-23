@@ -1,5 +1,5 @@
 import Subtask from "@/components/Subtask";
-import { Task } from "@/components/pages/CreateTask";
+import { Task } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -67,7 +67,7 @@ function Workflow() {
     created_by: "",
     title: "",
     status: "",
-    due: "",
+    due: new Date(),
     device: "",
     assignees: [],
     subtasks: [],

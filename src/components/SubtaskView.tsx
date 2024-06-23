@@ -1,5 +1,5 @@
 import Subtask from "@/components/Subtask";
-import { Task } from "@/components/pages/CreateTask";
+import { Task } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { pb } from "@/lib/pocketbase";
