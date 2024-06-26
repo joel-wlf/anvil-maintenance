@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Document } from "@/types";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
+import DocumentRow from "@/components/DocumentRow"
 
 function Documentation() {
   const navigate = useNavigate();
@@ -24,25 +24,20 @@ function Documentation() {
       .collection("documentation")
       .getFullList({ requestKey: null, expand: "task" });
     setDocuments(request);
-    console.log(request);
     setLoading(false);
-  }
-
-  function downloadDoc(record: Document | RecordModel, fileName: string) {
-    const url = pb.files.getUrl(record, fileName);
-    window.open(url + "?download=1", "_self");
   }
 
   const DocumentView = () => {
     return documents?.map((document) => {
       const created = format(document.created, "dd-MM-yyyy");
       return (
-        <Button
+        <DocumentRow
           key={document.id}
-          onClick={() => downloadDoc(document, document.file)}
-        >
-          {created}
-        </Button>
+          loading={false}
+          document={document}
+          created={created}
+          fetchDocuments={fetchDocuments}
+        />
       );
     });
   };
@@ -59,7 +54,17 @@ function Documentation() {
       <p className='text-2xl md:text-3xl font-semibold md:pt-2'>
         {t("documentation.title")}
       </p>
-      {loading ? <>loading</> : <DocumentView />}
+      {loading ? (
+        <>
+          <DocumentRow loading={true} />
+          <DocumentRow loading={true} />
+          <DocumentRow loading={true} />
+          <DocumentRow loading={true} />
+          <DocumentRow loading={true} />
+        </>
+      ) : (
+        <DocumentView />
+      )}
     </>
   );
 }

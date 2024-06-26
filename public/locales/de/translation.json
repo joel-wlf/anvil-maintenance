@@ -52,6 +52,7 @@
         "success_updated_location": "Standort erfolgreich aktualisiert.",
         "success_deleted_task": "Task erfolgreich gelöscht.",
         "success_rescheduled_task": "Task erfolgreich neu geplant.",
+        "success_deleted_doc": "Dokument erfolgreich gelöscht.",
         "no_subtasks": "Keine Subtasks vorhanden.",
         "download_started": "Wird heruntergeladen..."
     },

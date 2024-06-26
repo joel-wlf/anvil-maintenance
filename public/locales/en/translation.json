@@ -52,6 +52,7 @@
         "success_updated_location": "Successfully updated location.",
         "success_deleted_task": "Successfully deleted task.",
         "success_rescheduled_task": "Successfully rescheduled task.",
+        "success_deleted_doc": "Successfully deleted document.",
         "no_subtasks": "No subtasks here.",
         "download_started": "Downloading..."
     },
