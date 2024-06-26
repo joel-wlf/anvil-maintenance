@@ -56,11 +56,11 @@ function Documentation() {
       </p>
       {loading ? (
         <>
-          <DocumentRow loading={true} />
-          <DocumentRow loading={true} />
-          <DocumentRow loading={true} />
-          <DocumentRow loading={true} />
-          <DocumentRow loading={true} />
+          <DocumentRow loading={true} fetchDocuments={fetchDocuments} />
+          <DocumentRow loading={true} fetchDocuments={fetchDocuments} />
+          <DocumentRow loading={true} fetchDocuments={fetchDocuments} />
+          <DocumentRow loading={true} fetchDocuments={fetchDocuments} />
+          <DocumentRow loading={true} fetchDocuments={fetchDocuments} />
         </>
       ) : (
         <DocumentView />

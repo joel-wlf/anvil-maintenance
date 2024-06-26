@@ -14,7 +14,7 @@ interface DocumentRowProps {
   loading: boolean;
   document?: Document | RecordModel;
   created?: string;
-  fetchDocuments?: () => void;
+  fetchDocuments: () => void;
 }
 
 const DocumentRow: FunctionComponent<DocumentRowProps> = ({
